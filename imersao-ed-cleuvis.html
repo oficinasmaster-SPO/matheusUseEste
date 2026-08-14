@@ -3,25 +3,34 @@
 <style>
 /* ── TOKENS ── */
 :root {
-  --bg:#F5F2EC; --surface:#EDEAE2; --surface-2:#E4E0D4;
-  --border:rgba(26,20,10,.10); --text-1:#1A1710; --text-2:#5A5248;
-  --muted:#8A867E; --accent:#C4780E; --accent-h:#A8620A;
+  --bg:#F4F1E8; --surface:#EDEAE0; --surface-2:#E5E1D4;
+  --border:rgba(26,20,10,.09); --text-1:#1A1710; --text-2:#5A5248;
+  --muted:#8A867E; --accent:#B86800; --accent-h:#9A5600;
+  --accent-glow:rgba(184,104,0,.18);
   --ax:#FFFFFF; --ok:#1A6030; --bad:#8A1818;
-  --r:4px; --rl:10px;
+  --r:6px; --rl:12px;
+  --shadow-sm:0 1px 4px rgba(26,20,10,.07),0 3px 10px rgba(26,20,10,.05);
+  --shadow-md:0 2px 8px rgba(26,20,10,.08),0 8px 24px rgba(26,20,10,.07);
 }
 @media(prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#111318; --surface:#191C24; --surface-2:#20242E;
-    --border:rgba(245,242,236,.08); --text-1:#F5F2EC; --text-2:#A8A49C;
-    --muted:#6A6660; --accent:#D4883A; --accent-h:#E09040;
-    --ax:#111318; --ok:#2A8A46; --bad:#C44040;
+    --bg:#0F1115; --surface:#181B22; --surface-2:#1E2128;
+    --border:rgba(245,242,236,.07); --text-1:#F0EDE4; --text-2:#9A968E;
+    --muted:#605C54; --accent:#D4883A; --accent-h:#E09040;
+    --accent-glow:rgba(212,136,58,.15);
+    --ax:#0F1115; --ok:#2A8A46; --bad:#C44040;
+    --shadow-sm:0 1px 4px rgba(0,0,0,.3),0 3px 10px rgba(0,0,0,.2);
+    --shadow-md:0 2px 8px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#111318; --surface:#191C24; --surface-2:#20242E;
-  --border:rgba(245,242,236,.08); --text-1:#F5F2EC; --text-2:#A8A49C;
-  --muted:#6A6660; --accent:#D4883A; --accent-h:#E09040;
-  --ax:#111318; --ok:#2A8A46; --bad:#C44040;
+  --bg:#0F1115; --surface:#181B22; --surface-2:#1E2128;
+  --border:rgba(245,242,236,.07); --text-1:#F0EDE4; --text-2:#9A968E;
+  --muted:#605C54; --accent:#D4883A; --accent-h:#E09040;
+  --accent-glow:rgba(212,136,58,.15);
+  --ax:#0F1115; --ok:#2A8A46; --bad:#C44040;
+  --shadow-sm:0 1px 4px rgba(0,0,0,.3),0 3px 10px rgba(0,0,0,.2);
+  --shadow-md:0 2px 8px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
 }
 
 /* ── RESET ── */
@@ -38,205 +47,289 @@ a{color:var(--accent);text-decoration:none}
 button{cursor:pointer;border:none;font:inherit;background:none}
 ul{list-style:none}
 
-/* ── TYPE SCALE ── */
-h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:700;text-wrap:balance;line-height:1.15}
-.eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-.lead{font-size:1rem;line-height:1.75;color:var(--text-2)}
+/* ── TYPE ── */
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:700;text-wrap:balance;line-height:1.13}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);
+}
+.eyebrow::before{
+  content:'';display:block;width:20px;height:2px;background:var(--accent);border-radius:2px;flex-shrink:0;
+}
+.lead{font-size:1rem;line-height:1.78;color:var(--text-2)}
 
 /* ── LAYOUT ── */
 .wrap{max-width:680px;margin:0 auto;padding:0 20px}
-.section{padding:clamp(48px,9vw,72px) 0;border-bottom:1px solid var(--border)}
+.section{padding:clamp(52px,9vw,80px) 0;border-bottom:1px solid var(--border)}
 .section:last-child{border-bottom:none}
-.sh{margin-bottom:32px}
-.sh .eyebrow{margin-bottom:10px}
-.sh h2{font-size:clamp(1.45rem,4.8vw,2.1rem);margin-bottom:12px}
+.sh{margin-bottom:36px}
+.sh .eyebrow{margin-bottom:14px}
+.sh h2{font-size:clamp(1.5rem,5vw,2.2rem);margin-bottom:14px}
 
 /* ── STICKY BAR ── */
 .sticky{
   position:fixed;bottom:0;left:0;right:0;z-index:99;
-  background:#0D0F13;border-top:1px solid rgba(212,136,58,.4);
-  padding:10px 16px;display:flex;align-items:center;gap:10px;
+  background:#0A0C10;border-top:2px solid var(--accent);
+  padding:10px 16px 10px;display:flex;align-items:center;gap:10px;
 }
 .sticky-meta{
-  font-size:.65rem;color:rgba(245,242,236,.45);
-  white-space:nowrap;line-height:1.4;flex-shrink:0;display:none;
+  font-size:.63rem;color:rgba(245,242,236,.4);
+  white-space:nowrap;line-height:1.5;flex-shrink:0;display:none;
 }
 @media(min-width:380px){.sticky-meta{display:block}}
 .sticky .btn{
-  flex:1;padding:14px 16px;font-size:.9rem;font-weight:700;
-  background:#D4883A;color:#0D0F13;border-radius:var(--r);
+  flex:1;padding:14px 18px;font-size:.92rem;font-weight:700;
+  background:var(--accent);color:#fff;border-radius:var(--r);
   text-align:center;display:flex;align-items:center;justify-content:center;
-  white-space:nowrap;min-height:50px;
+  white-space:nowrap;min-height:50px;letter-spacing:.02em;
+  transition:background .15s;
 }
+.sticky .btn:hover{background:var(--accent-h)}
 
 /* ── HERO ── */
 .hero{
   min-height:100svh;
-  background-color:#111318;
+  background-color:#0A0C10;
   background-image:
-    linear-gradient(to bottom,rgba(17,19,24,.75) 0%,rgba(17,19,24,.90) 50%,#111318 100%),
+    linear-gradient(160deg,rgba(10,12,16,.7) 0%,rgba(10,12,16,.85) 45%,#0A0C10 100%),
     url('https://oficinasmaster.com.br/wp-content/uploads/2025/03/capa-imersao-02.jpg');
   background-size:cover;background-position:center 20%;
   display:flex;flex-direction:column;justify-content:flex-end;
-  padding:96px 20px 112px;position:relative;
+  padding:80px 20px 116px;position:relative;
 }
 .hero::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,#D4883A 25%,#D4883A 75%,transparent);
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent 0%,var(--accent) 20%,var(--accent) 80%,transparent 100%);
 }
-.hero-logo{margin-bottom:32px;height:30px;opacity:.82;filter:brightness(10)}
-.hero .eyebrow{color:#D4883A;margin-bottom:16px}
-.hero h1{font-size:clamp(1.85rem,8vw,3.5rem);color:#F5F2EC;margin-bottom:20px}
+
+/* live badge */
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(212,136,58,.4);
+  border-radius:100px;padding:6px 14px 6px 8px;
+  background:rgba(212,136,58,.1);margin-bottom:28px;
+  width:fit-content;
+}
+.hero-badge-dot{
+  width:8px;height:8px;border-radius:50%;background:#D4883A;flex-shrink:0;
+  box-shadow:0 0 0 0 rgba(212,136,58,.6);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(212,136,58,.5)}
+  50%{box-shadow:0 0 0 6px rgba(212,136,58,0)}
+}
+.hero-badge-text{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#D4883A}
+
+.hero .eyebrow{color:rgba(212,136,58,.7);margin-bottom:20px}
+.hero .eyebrow::before{background:rgba(212,136,58,.5)}
+.hero h1{
+  font-size:clamp(2rem,8.5vw,3.8rem);
+  color:#F0EDE4;margin-bottom:20px;
+  text-shadow:0 2px 20px rgba(0,0,0,.4);
+}
 .hero h1 em{font-style:normal;color:#D4883A}
-.hero .lead{color:rgba(245,242,236,.7);margin-bottom:28px;font-size:.95rem}
+.hero .lead{color:rgba(240,237,228,.65);margin-bottom:28px;font-size:.97rem}
 
 .hero-qualifier{
   margin-bottom:24px;border-radius:var(--r);overflow:hidden;
-  border:1px solid rgba(212,136,58,.3);
+  border:1px solid rgba(212,136,58,.25);
 }
 .hero-qualifier img{width:100%;height:auto;display:block}
 
-.hero-meta{
-  display:flex;flex-direction:column;gap:8px;
-  padding:14px 16px;margin-bottom:28px;
-  border:1px solid rgba(212,136,58,.22);border-left:3px solid #D4883A;
-  border-radius:var(--r);background:rgba(212,136,58,.06);
+.hero-chips{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.hero-chip{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.09);
+  border-left:3px solid rgba(212,136,58,.6);
+  border-radius:var(--r);
+  font-size:.875rem;color:rgba(240,237,228,.75);
 }
-.hero-meta-row{font-size:.875rem;color:rgba(245,242,236,.78);display:flex;align-items:center;gap:9px}
-.hmi{width:15px;height:15px;flex-shrink:0}
+.hmi{width:15px;height:15px;flex-shrink:0;color:#D4883A}
 
 .btn-hero{
-  display:flex;align-items:center;justify-content:center;gap:8px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
   width:100%;padding:18px 24px;border-radius:var(--r);
-  background:#D4883A;color:#0D0F13;font-size:1rem;font-weight:700;
-  letter-spacing:.02em;transition:background .15s,transform .15s;min-height:56px;
+  background:var(--accent);color:#fff;font-size:1rem;font-weight:700;
+  letter-spacing:.025em;transition:background .15s,transform .12s;min-height:58px;
+  box-shadow:0 4px 20px rgba(184,104,0,.35);
 }
-.btn-hero:hover{background:#E09040;transform:translateY(-1px)}
+.btn-hero:hover{background:var(--accent-h);transform:translateY(-1px)}
 
 /* ── MEDIA STRIP ── */
-.media{padding:20px 0;border-bottom:1px solid var(--border)}
-.media .eyebrow{text-align:center;margin-bottom:12px;color:var(--muted)}
-.media-logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 20px}
-.media-logo{font-family:Georgia,serif;font-size:.88rem;font-weight:700;color:var(--muted);letter-spacing:.05em;opacity:.5}
+.media{padding:20px 0;border-bottom:1px solid var(--border);background:var(--surface)}
+.media .eyebrow{justify-content:center;width:100%;margin-bottom:14px;color:var(--muted)}
+.media .eyebrow::before{background:var(--muted);opacity:.5}
+.media-logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 10px}
+.media-logo{
+  font-family:Georgia,serif;font-size:.82rem;font-weight:700;
+  color:var(--muted);letter-spacing:.05em;opacity:.45;
+  padding:4px 12px;border:1px solid var(--border);border-radius:100px;
+}
 .media-logo.italic{font-style:italic}
 
-/* ── STATS — stacked on mobile, 3-col on wider ── */
+/* ── STATS ── */
 .stats{
   display:grid;grid-template-columns:1fr;
-  gap:1px;background:var(--border);
-  border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin:32px 0;
+  border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;
+  margin:36px 0;box-shadow:var(--shadow-sm);
 }
 @media(min-width:520px){.stats{grid-template-columns:repeat(3,1fr)}}
-.stat{background:var(--surface);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center}
-@media(min-width:520px){.stat{padding:22px 12px}}
-.stat-n{
-  display:block;font-family:Georgia,serif;font-size:2rem;font-weight:700;
-  color:var(--accent);font-variant-numeric:tabular-nums;line-height:1;margin-bottom:7px;
+.stat{
+  background:var(--surface);padding:28px 24px;text-align:center;
+  position:relative;
 }
-@media(min-width:520px){.stat-n{font-size:1.6rem}}
-.stat-l{font-size:.8rem;color:var(--text-2);line-height:1.4;max-width:18ch}
+.stat+.stat{border-top:1px solid var(--border)}
+@media(min-width:520px){.stat+.stat{border-top:none;border-left:1px solid var(--border)}}
+.stat::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:.6;
+}
+.stat-n{
+  display:block;font-family:Georgia,serif;font-size:2.6rem;font-weight:700;
+  color:var(--accent);font-variant-numeric:tabular-nums;line-height:1;margin-bottom:8px;
+}
+.stat-l{font-size:.8rem;color:var(--text-2);line-height:1.45;max-width:18ch;margin:0 auto}
 
-/* ── BEFORE/AFTER — stacked on mobile ── */
+/* ── BEFORE/AFTER ── */
 .ba{
   display:grid;grid-template-columns:1fr;
-  gap:1px;background:var(--border);border-radius:var(--rl);overflow:hidden;margin:32px 0;
+  border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;
+  margin:32px 0;box-shadow:var(--shadow-sm);
 }
 @media(min-width:560px){.ba{grid-template-columns:1fr 1fr}}
-.ba-col{background:var(--surface);padding:22px 18px}
-.ba-tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:2px;margin-bottom:16px}
-.ba-tag.b{background:rgba(138,24,24,.12);color:var(--bad)}
-.ba-tag.a{background:rgba(26,96,48,.12);color:var(--ok)}
+.ba-col{background:var(--surface);padding:24px 20px}
+.ba-col.before{border-left:4px solid var(--bad)}
+.ba-col.after{border-left:4px solid var(--ok)}
+@media(min-width:560px){.ba-col.before{border-left:none;border-top:4px solid var(--bad)}.ba-col.after{border-left:none;border-top:4px solid var(--ok)}}
+.ba-tag{display:inline-flex;align-items:center;gap:6px;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:100px;margin-bottom:18px}
+.ba-tag.b{background:rgba(138,24,24,.1);color:var(--bad)}
+.ba-tag.a{background:rgba(26,96,48,.1);color:var(--ok)}
 .ba-list{display:flex;flex-direction:column;gap:10px}
-.ba-list li{font-size:.875rem;line-height:1.5;color:var(--text-2);display:flex;gap:9px;align-items:flex-start}
-.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.before .dot{background:rgba(138,24,24,.5)} .after .dot{background:rgba(26,96,48,.65)}
+.ba-list li{font-size:.88rem;line-height:1.5;color:var(--text-2);display:flex;gap:10px;align-items:flex-start}
+.ba-icon{font-size:.8rem;flex-shrink:0;margin-top:2px;font-weight:700}
+.before .ba-icon{color:var(--bad)} .after .ba-icon{color:var(--ok)}
 
-/* ── METHOD SECTION (dark ferrari) ── */
+/* ── SECTION-FERRARI (dark) ── */
 .section-ferrari{
-  padding:clamp(48px,9vw,72px) 0;border-bottom:1px solid rgba(255,255,255,.08);
-  background-color:#0e1014;
+  padding:clamp(52px,9vw,80px) 0;border-bottom:1px solid rgba(255,255,255,.07);
+  background-color:#080A0D;
   background-image:
-    linear-gradient(to bottom,rgba(14,16,20,.88) 0%,rgba(14,16,20,.92) 100%),
+    linear-gradient(160deg,rgba(8,10,13,.85) 0%,rgba(8,10,13,.94) 100%),
     url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/bg-ferrari.webp');
-  background-size:cover;background-position:center;
-  color:#F5F2EC;
+  background-size:cover;background-position:center;color:#F0EDE4;
 }
 .section-ferrari .eyebrow{color:#D4883A}
-.section-ferrari h2{color:#F5F2EC}
-.section-ferrari .lead{color:rgba(245,242,236,.65)}
+.section-ferrari .eyebrow::before{background:#D4883A}
+.section-ferrari h2{color:#F0EDE4}
+.section-ferrari .lead{color:rgba(240,237,228,.58)}
 
-.speedos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}
-.speedo img{width:100%;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(212,136,58,.2))}
-.speedo-label{text-align:center;font-size:.75rem;color:rgba(245,242,236,.62);margin-top:8px;font-weight:600;line-height:1.3}
+.speedos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:32px 0}
+.speedo img{width:100%;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(212,136,58,.25))}
+.speedo-label{text-align:center;font-size:.75rem;color:rgba(240,237,228,.55);margin-top:8px;font-weight:600;line-height:1.3}
 
-/* pillars — 1 col mobile, 2 col at 460+ */
-.pillars{display:grid;grid-template-columns:1fr;gap:10px;margin:28px 0}
+/* numbered pillars */
+.pillars{display:grid;grid-template-columns:1fr;gap:12px;margin:32px 0}
 @media(min-width:460px){.pillars{grid-template-columns:1fr 1fr}}
 .pillar{
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-top:3px solid #D4883A;border-radius:var(--rl);padding:20px 18px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--rl);padding:22px 20px;position:relative;overflow:hidden;
 }
-.pillar h3{font-size:1.05rem;margin-bottom:8px;color:#F5F2EC}
-.pillar p{font-size:.85rem;color:rgba(245,242,236,.62);line-height:1.6;margin-bottom:12px}
+.pillar::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);
+}
+.pillar-num{
+  font-family:Georgia,serif;font-size:2.4rem;font-weight:700;
+  color:#D4883A;opacity:.18;line-height:1;margin-bottom:2px;
+  position:absolute;top:12px;right:16px;
+}
+.pillar h3{font-size:1.08rem;margin-bottom:8px;color:#F0EDE4}
+.pillar p{font-size:.85rem;color:rgba(240,237,228,.58);line-height:1.65;margin-bottom:14px}
 .tags{display:flex;flex-wrap:wrap;gap:5px}
-.tag{font-size:.63rem;padding:3px 8px;border:1px solid rgba(255,255,255,.15);border-radius:2px;color:rgba(245,242,236,.5);letter-spacing:.04em;text-transform:uppercase}
+.tag{font-size:.62rem;padding:3px 9px;border:1px solid rgba(255,255,255,.13);border-radius:100px;color:rgba(240,237,228,.45);letter-spacing:.04em;text-transform:uppercase}
 
-/* ONU block — stacked on mobile */
 .onu-block{
-  display:grid;grid-template-columns:1fr;gap:16px;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-left:3px solid #D4883A;border-radius:var(--rl);padding:20px;margin-top:24px;
+  display:grid;grid-template-columns:1fr;gap:18px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--rl);padding:22px;margin-top:28px;
 }
-@media(min-width:460px){.onu-block{grid-template-columns:90px 1fr;align-items:center}}
-.onu-block img{width:80px;height:auto;border-radius:var(--r)}
-.onu-block .eyebrow{margin-bottom:7px;color:#D4883A}
-.onu-block p{font-size:.875rem;color:rgba(245,242,236,.65);line-height:1.7}
+@media(min-width:460px){.onu-block{grid-template-columns:84px 1fr;align-items:center}}
+.onu-block img{width:76px;height:auto;border-radius:var(--r)}
+.onu-block .eyebrow{margin-bottom:8px}
+.onu-block p{font-size:.88rem;color:rgba(240,237,228,.62);line-height:1.72}
 
-.ciclo-wrap{margin:28px 0;text-align:center}
-.ciclo-wrap img{max-width:340px;margin:0 auto;width:100%;height:auto}
+.ciclo-wrap{margin:32px 0;text-align:center}
+.ciclo-wrap img{max-width:340px;margin:0 auto;width:100%;height:auto;opacity:.88}
 
 /* ── DAYS ── */
-.days{display:grid;grid-template-columns:1fr;gap:12px;margin:32px 0}
+.days{display:grid;grid-template-columns:1fr;gap:14px;margin:32px 0}
 @media(min-width:480px){.days{grid-template-columns:1fr 1fr}}
-.day{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
-.day-head{padding:14px 18px;background:var(--accent);display:flex;justify-content:space-between;align-items:center;gap:8px}
-.day-head h3{font-size:.95rem;color:#111318}
-.day-head span{font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(17,19,24,.55);white-space:nowrap}
-.day-body{padding:14px 18px}
-.day-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.875rem;color:var(--text-2);align-items:flex-start}
+.day{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--rl);overflow:hidden;box-shadow:var(--shadow-sm);
+}
+.day-head{
+  padding:16px 20px;background:var(--accent);
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+}
+.day-head h3{font-size:.95rem;color:#fff;font-family:Georgia,serif}
+.day-head span{font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);white-space:nowrap}
+.day-body{padding:16px 20px}
+.day-item{
+  display:flex;gap:12px;padding:10px 0;
+  border-bottom:1px solid var(--border);
+  font-size:.875rem;color:var(--text-2);align-items:flex-start;
+}
 .day-item:last-child{border-bottom:none}
-.dbullet{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px}
+.dbullet{
+  width:20px;height:20px;border-radius:50%;flex-shrink:0;
+  background:rgba(184,104,0,.12);border:1px solid rgba(184,104,0,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.55rem;font-weight:700;color:var(--accent);
+}
 
 /* ── CASES ── */
-.cases{display:flex;flex-direction:column;gap:10px;margin:32px 0}
+.cases{display:flex;flex-direction:column;gap:12px;margin:32px 0}
 .case{
   background:var(--surface);border:1px solid var(--border);
   border-radius:var(--rl);overflow:hidden;
   display:grid;grid-template-columns:96px 1fr;
+  box-shadow:var(--shadow-sm);
 }
-@media(min-width:400px){.case{grid-template-columns:116px 1fr}}
+@media(min-width:400px){.case{grid-template-columns:120px 1fr}}
 .case-photo{
-  min-height:120px;
+  min-height:130px;
   background-color:var(--surface-2);background-size:cover;background-position:center top;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:center;position:relative;
 }
-.case-init{font-family:Georgia,serif;font-size:1.6rem;font-weight:700;color:var(--muted);opacity:.3}
-.case-body{padding:16px 14px}
-.case-who{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.case-result{font-family:Georgia,serif;font-size:1.1rem;font-weight:700;color:var(--ok);font-variant-numeric:tabular-nums;line-height:1.2;margin-bottom:6px}
+.case-photo::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;width:24px;
+  background:linear-gradient(90deg,transparent,var(--surface));
+}
+.case-init{font-family:Georgia,serif;font-size:1.8rem;font-weight:700;color:var(--muted);opacity:.2}
+.case-body{padding:18px 16px}
+.case-who{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.case-result{
+  font-family:Georgia,serif;font-size:1.2rem;font-weight:700;
+  color:var(--ok);font-variant-numeric:tabular-nums;line-height:1.15;margin-bottom:7px;
+}
 .case-desc{font-size:.83rem;color:var(--text-2);line-height:1.55}
 .stat-banner{
-  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);
-  border-radius:var(--rl);padding:18px 20px;margin-bottom:24px;
+  background:var(--surface);border:1px solid var(--border);
+  border-left:4px solid var(--accent);border-radius:var(--rl);
+  padding:20px 22px;margin-bottom:28px;box-shadow:var(--shadow-sm);
 }
-.stat-banner strong{display:block;font-family:Georgia,serif;font-size:1rem;color:var(--accent);margin-bottom:5px;line-height:1.4}
+.stat-banner strong{display:block;font-family:Georgia,serif;font-size:1.05rem;color:var(--accent);margin-bottom:6px;line-height:1.4}
 .stat-banner span{font-size:.82rem;color:var(--text-2)}
 
-/* ── PHOTO GALLERY ── */
-.gallery-section{padding:clamp(36px,7vw,52px) 0;border-bottom:1px solid var(--border)}
-.gallery-section .sh{margin-bottom:20px}
+/* ── GALLERY ── */
+.gallery-section{padding:clamp(40px,7vw,56px) 0;border-bottom:1px solid var(--border)}
+.gallery-section .sh{margin-bottom:22px}
 .gallery-strip{
-  display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;
+  display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;-ms-overflow-style:none;
   margin:0 -20px;padding:0 20px;
@@ -244,152 +337,249 @@ h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:700;text-wrap:b
 .gallery-strip::after{content:'';flex-shrink:0;width:12px}
 .gallery-strip::-webkit-scrollbar{display:none}
 .gallery-strip img{
-  width:72vw;max-width:260px;height:185px;object-fit:cover;flex-shrink:0;
-  border-radius:var(--r);scroll-snap-align:start;
+  width:72vw;max-width:260px;height:190px;object-fit:cover;flex-shrink:0;
+  border-radius:var(--rl);scroll-snap-align:start;
   border:1px solid var(--border);
 }
-.gallery-hint{text-align:center;font-size:.72rem;color:var(--muted);margin-top:12px}
+.gallery-hint{text-align:center;font-size:.72rem;color:var(--muted);margin-top:14px;letter-spacing:.04em}
 
-/* ── MENTORS (dark bg-8) ── */
+/* ── MENTORS (dark) ── */
 .section-mentors{
-  padding:clamp(48px,9vw,72px) 0;border-bottom:1px solid rgba(255,255,255,.06);
-  background-color:#0e1014;
+  padding:clamp(52px,9vw,80px) 0;border-bottom:1px solid rgba(255,255,255,.06);
+  background-color:#080A0D;
   background-image:
-    linear-gradient(to bottom,rgba(14,16,20,.9) 0%,rgba(14,16,20,.94) 100%),
+    linear-gradient(160deg,rgba(8,10,13,.9) 0%,rgba(8,10,13,.95) 100%),
     url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/bg-8.webp');
-  background-size:cover;background-position:center;color:#F5F2EC;
+  background-size:cover;background-position:center;color:#F0EDE4;
 }
 .section-mentors .eyebrow{color:#D4883A}
-.section-mentors h2{color:#F5F2EC}
-.section-mentors .lead{color:rgba(245,242,236,.6)}
+.section-mentors .eyebrow::before{background:#D4883A}
+.section-mentors h2{color:#F0EDE4}
+.section-mentors .lead{color:rgba(240,237,228,.55)}
 
-/* mentor: full-width photo on small screens, side-by-side at 420+ */
 .mentor{
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-radius:var(--rl);overflow:hidden;margin-bottom:14px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--rl);overflow:hidden;margin-bottom:16px;
   display:grid;grid-template-columns:1fr;
 }
-@media(min-width:420px){.mentor{grid-template-columns:110px 1fr}}
+@media(min-width:420px){.mentor{grid-template-columns:120px 1fr}}
 .mentor-photo{
-  height:200px;
+  height:220px;
   background:rgba(255,255,255,.05);background-size:cover;background-position:center top;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:center;position:relative;
 }
-@media(min-width:420px){.mentor-photo{height:auto;min-height:160px}}
-.mentor-init{font-family:Georgia,serif;font-size:2.5rem;font-weight:700;color:#D4883A;opacity:.35}
-.mentor-body{padding:20px 18px}
-.mentor-name{font-family:Georgia,serif;font-size:1.05rem;font-weight:700;margin-bottom:3px;color:#F5F2EC}
-.mentor-role{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:#D4883A;margin-bottom:10px}
-.mentor-bio{font-size:.875rem;color:rgba(245,242,236,.68);line-height:1.7}
-.mentor-stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px}
-.ms strong{display:block;font-family:Georgia,serif;font-size:.95rem;color:#D4883A}
-.ms span{font-size:.68rem;color:rgba(245,242,236,.4)}
+.mentor-photo::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:40px;
+  background:linear-gradient(to bottom,transparent,rgba(8,10,13,.5));
+}
+@media(min-width:420px){
+  .mentor-photo{height:auto;min-height:180px}
+  .mentor-photo::after{
+    top:0;left:auto;right:0;bottom:0;width:30px;height:auto;
+    background:linear-gradient(to right,transparent,rgba(8,10,13,.4));
+  }
+}
+.mentor-init{font-family:Georgia,serif;font-size:3rem;font-weight:700;color:#D4883A;opacity:.3;position:relative;z-index:1}
+.mentor-body{padding:22px 20px}
+.mentor-name{font-family:Georgia,serif;font-size:1.1rem;font-weight:700;margin-bottom:4px;color:#F0EDE4}
+.mentor-role{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:#D4883A;margin-bottom:12px}
+.mentor-bio{font-size:.875rem;color:rgba(240,237,228,.65);line-height:1.75}
+.mentor-stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07)}
+.ms strong{display:block;font-family:Georgia,serif;font-size:1rem;color:#D4883A;margin-bottom:2px}
+.ms span{font-size:.65rem;color:rgba(240,237,228,.35);text-transform:uppercase;letter-spacing:.06em}
 
 /* ── DELIVERABLES ── */
 .delivs{display:flex;flex-direction:column}
-.deliv{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);font-size:.9rem;color:var(--text-2);line-height:1.55}
+.deliv{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:15px 0;border-bottom:1px solid var(--border);
+  font-size:.9rem;color:var(--text-2);line-height:1.55;
+}
 .deliv:last-child{border-bottom:none}
-.dck{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:rgba(26,96,48,.15);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;color:var(--ok)}
+.dck{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  background:rgba(26,96,48,.12);border:1px solid rgba(26,96,48,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:700;color:var(--ok);
+}
 
-/* ── BONUSES — stacked on mobile, 2-col price on wider ── */
-.bonuses{display:flex;flex-direction:column;gap:10px;margin:32px 0}
+/* ── BONUSES ── */
+.bonuses{display:flex;flex-direction:column;gap:12px;margin:32px 0}
 .bonus{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);
-  padding:18px 16px;display:grid;grid-template-columns:1fr;gap:10px;
+  padding:20px 18px;display:grid;grid-template-columns:1fr;gap:12px;
+  box-shadow:var(--shadow-sm);
 }
 @media(min-width:420px){.bonus{grid-template-columns:1fr auto;align-items:start}}
-.bonus-title{font-size:.9rem;font-weight:700;color:var(--text-1);margin-bottom:5px}
-.bonus-desc{font-size:.83rem;color:var(--text-2);line-height:1.6}
+.bonus-title{font-size:.95rem;font-weight:700;color:var(--text-1);margin-bottom:6px}
+.bonus-desc{font-size:.83rem;color:var(--text-2);line-height:1.65}
 .bonus-price{flex-shrink:0}
 @media(min-width:420px){.bonus-price{text-align:right}}
-.bonus-was{font-size:.72rem;color:var(--muted);text-decoration:line-through;margin-bottom:2px}
-.bonus-now{font-family:Georgia,serif;font-size:.92rem;font-weight:700;color:var(--ok);letter-spacing:.02em}
-.bonus-total{background:rgba(26,96,48,.08);border:1px solid rgba(26,96,48,.2);border-radius:var(--rl);padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.bonus-total span{font-size:.82rem;color:var(--text-2)}
-.bonus-total strong{font-family:Georgia,serif;font-size:1.05rem;color:var(--ok);font-variant-numeric:tabular-nums;white-space:nowrap}
+.bonus-was{font-size:.72rem;color:var(--muted);text-decoration:line-through;margin-bottom:3px}
+.bonus-now{
+  font-family:Georgia,serif;font-size:.95rem;font-weight:700;
+  color:var(--ok);letter-spacing:.03em;
+}
+.bonus-total{
+  background:rgba(26,96,48,.07);border:1px solid rgba(26,96,48,.18);
+  border-radius:var(--rl);padding:18px 20px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.bonus-total span{font-size:.85rem;color:var(--text-2)}
+.bonus-total strong{font-family:Georgia,serif;font-size:1.1rem;color:var(--ok);font-variant-numeric:tabular-nums;white-space:nowrap}
 
 /* ── INVESTMENT ── */
-.value-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:22px 18px;margin:28px 0}
-.value-box .eyebrow{margin-bottom:14px}
-.value-line{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--border);font-size:.85rem;gap:12px}
+.value-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--rl);padding:24px 20px;margin:28px 0;
+  box-shadow:var(--shadow-sm);
+}
+.value-box .eyebrow{margin-bottom:16px}
+.value-line{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:11px 0;border-bottom:1px solid var(--border);font-size:.875rem;gap:14px;
+}
 .value-line:last-child{border-bottom:none}
 .value-line span{color:var(--text-2)}
 .value-line strong{font-family:Georgia,serif;font-variant-numeric:tabular-nums;color:var(--text-1);white-space:nowrap;flex-shrink:0}
-.price-box{border:2px solid var(--accent);border-radius:var(--rl);padding:28px 20px;margin:24px 0;text-align:center;background:rgba(196,120,14,.04)}
-.price-eye{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-.price-main{font-family:Georgia,serif;font-size:clamp(2.2rem,7vw,2.8rem);font-weight:700;color:var(--text-1);font-variant-numeric:tabular-nums;line-height:1;margin-bottom:8px}
-.price-note{font-size:.82rem;color:var(--muted);margin-bottom:20px}
-.price-calc{background:rgba(26,96,48,.09);border:1px solid rgba(26,96,48,.2);border-radius:var(--r);padding:12px 14px;font-size:.82rem;color:var(--ok);margin-bottom:22px;text-align:left;line-height:1.6}
+
+.price-box{
+  border:2px solid var(--accent);border-radius:var(--rl);
+  padding:32px 24px;margin:24px 0;text-align:center;
+  background:linear-gradient(160deg,var(--accent-glow),transparent 60%);
+  box-shadow:var(--shadow-md),0 0 0 1px var(--accent-glow);
+}
+.price-eye{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.price-main{
+  font-family:Georgia,serif;
+  font-size:clamp(3rem,10vw,4.2rem);
+  font-weight:700;color:var(--text-1);
+  font-variant-numeric:tabular-nums;line-height:1;margin-bottom:8px;
+}
+.price-note{font-size:.82rem;color:var(--muted);margin-bottom:22px}
+.price-calc{
+  background:rgba(26,96,48,.08);border:1px solid rgba(26,96,48,.18);
+  border-radius:var(--r);padding:13px 16px;font-size:.82rem;
+  color:var(--ok);margin-bottom:24px;text-align:left;line-height:1.65;
+}
 .btn-primary{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  width:100%;padding:17px 24px;border-radius:var(--r);
-  background:var(--accent);color:var(--ax);font-size:.95rem;font-weight:700;
-  letter-spacing:.02em;transition:background .15s,transform .15s;min-height:54px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:18px 24px;border-radius:var(--r);
+  background:var(--accent);color:#fff;font-size:.97rem;font-weight:700;
+  letter-spacing:.025em;transition:background .15s,transform .12s;min-height:56px;
+  box-shadow:0 4px 18px rgba(184,104,0,.3);
 }
 .btn-primary:hover{background:var(--accent-h);transform:translateY(-1px)}
 
 /* ── GUARANTEE ── */
-.guar{border:2px solid var(--accent);border-radius:var(--rl);padding:32px 20px;margin:32px 0;text-align:center}
-.guar-badge{width:110px;height:auto;margin:0 auto 20px;display:block}
-.guar h2{font-size:1.2rem;margin-bottom:12px}
-.guar-conditions{display:flex;flex-direction:column;gap:10px;margin-top:20px;text-align:left}
-.guar-cond{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px 16px;font-size:.875rem;color:var(--text-2);line-height:1.65}
-.guar-cond strong{color:var(--text-1);display:block;margin-bottom:5px;font-size:.88rem}
+.guar{
+  border:2px solid var(--accent);border-radius:var(--rl);
+  padding:36px 24px;margin:32px 0;text-align:center;
+  background:linear-gradient(160deg,var(--accent-glow),transparent 50%);
+  box-shadow:var(--shadow-sm);
+}
+.guar-badge{width:110px;height:auto;margin:0 auto 22px;display:block}
+.guar h2{font-size:1.25rem;margin-bottom:12px}
+.guar-conditions{display:flex;flex-direction:column;gap:10px;margin-top:22px;text-align:left}
+.guar-cond{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px 18px;
+  font-size:.875rem;color:var(--text-2);line-height:1.65;
+  box-shadow:var(--shadow-sm);
+}
+.guar-cond strong{color:var(--text-1);display:block;margin-bottom:5px;font-size:.9rem}
 
-/* ── FOR WHOM — stacked on mobile ── */
-.fw{display:grid;grid-template-columns:1fr;gap:12px;margin:32px 0}
+/* ── FOR WHOM ── */
+.fw{display:grid;grid-template-columns:1fr;gap:14px;margin:32px 0}
 @media(min-width:560px){.fw{grid-template-columns:1fr 1fr}}
-.fw-col{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px 18px}
-.fw-col h3{font-size:.95rem;margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid}
-.fw-col.is h3{color:var(--ok);border-color:var(--ok)}
-.fw-col.not h3{color:var(--bad);border-color:var(--bad)}
-.fw-list{display:flex;flex-direction:column;gap:8px}
-.fw-list li{font-size:.85rem;color:var(--text-2);line-height:1.5;padding-left:15px;position:relative}
-.fw-list li::before{content:'›';position:absolute;left:0;font-weight:700}
-.fw-col.is .fw-list li::before{color:var(--ok)}
-.fw-col.not .fw-list li::before{color:var(--bad)}
+.fw-col{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--rl);padding:22px 20px;box-shadow:var(--shadow-sm);
+}
+.fw-col.is{border-top:4px solid var(--ok)}
+.fw-col.not{border-top:4px solid var(--bad)}
+.fw-col h3{font-size:.95rem;margin-bottom:14px}
+.fw-col.is h3{color:var(--ok)}
+.fw-col.not h3{color:var(--bad)}
+.fw-list{display:flex;flex-direction:column;gap:9px}
+.fw-list li{
+  font-size:.875rem;color:var(--text-2);line-height:1.5;
+  display:flex;align-items:flex-start;gap:9px;
+}
+.fw-icon{font-size:.8rem;font-weight:700;flex-shrink:0;margin-top:2px}
+.fw-col.is .fw-icon{color:var(--ok)}
+.fw-col.not .fw-icon{color:var(--bad)}
 
 /* ── FAQ ── */
-.faq{display:flex;flex-direction:column;gap:2px;margin:32px 0}
-details{background:var(--surface);border:1px solid var(--border);border-radius:var(--r)}
+.faq{display:flex;flex-direction:column;gap:3px;margin:32px 0}
+details{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
 summary{
-  padding:16px 18px;font-size:.9rem;font-weight:600;cursor:pointer;
+  padding:17px 20px;font-size:.9rem;font-weight:600;cursor:pointer;
   list-style:none;display:flex;justify-content:space-between;align-items:center;
-  gap:12px;user-select:none;line-height:1.45;
+  gap:14px;user-select:none;line-height:1.45;
 }
 summary::-webkit-details-marker{display:none}
-summary::after{content:'+';font-size:1.2rem;font-weight:300;color:var(--accent);flex-shrink:0}
-details[open] summary::after{content:'−'}
-.faq-body{padding:0 18px 18px;font-size:.875rem;color:var(--text-2);line-height:1.75}
+.chevron{
+  width:20px;height:20px;flex-shrink:0;border:1.5px solid var(--accent);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s,background .15s;
+  background:transparent;
+}
+details[open] .chevron{transform:rotate(45deg);background:var(--accent)}
+.chevron svg{width:9px;height:9px;stroke:var(--accent);stroke-width:2;fill:none}
+details[open] .chevron svg{stroke:#fff}
+.faq-body{padding:0 20px 18px;font-size:.875rem;color:var(--text-2);line-height:1.78}
 
 /* ── CTA FINAL ── */
-.cta-final{background:#111318;color:#F5F2EC;padding:clamp(52px,10vw,80px) 20px clamp(80px,12vw,100px)}
-.cta-final .sh h2{color:#F5F2EC;font-size:clamp(1.5rem,5vw,2.3rem)}
-.cta-final .sh .lead{color:rgba(245,242,236,.6)}
-.cta-form{display:flex;flex-direction:column;gap:12px;margin-top:32px}
-.field{display:flex;flex-direction:column;gap:6px}
-.field label{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,242,236,.45)}
-.field input,.field select{
-  padding:14px;background:rgba(245,242,236,.07);
-  border:1px solid rgba(245,242,236,.14);border-radius:var(--r);
-  color:#F5F2EC;font-size:1rem;font-family:inherit;width:100%;
-  -webkit-appearance:none;appearance:none;min-height:50px;
+.cta-final{
+  background:#080A0D;color:#F0EDE4;
+  padding:clamp(56px,10vw,88px) 20px clamp(88px,12vw,108px);
+  position:relative;
 }
-.field input::placeholder{color:rgba(245,242,236,.28)}
-.field input:focus,.field select:focus{outline:2px solid #D4883A;outline-offset:1px;border-color:transparent}
-.field select option{background:#1C1F26;color:#F5F2EC}
+.cta-final::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent 0%,#D4883A 20%,#D4883A 80%,transparent 100%);
+}
+.cta-final .sh h2{color:#F0EDE4;font-size:clamp(1.5rem,5.5vw,2.4rem)}
+.cta-final .sh .lead{color:rgba(240,237,228,.55)}
+.cta-form{display:flex;flex-direction:column;gap:13px;margin-top:36px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:rgba(240,237,228,.4)}
+.field input,.field select{
+  padding:14px 16px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:var(--r);
+  color:#F0EDE4;font-size:1rem;font-family:inherit;width:100%;
+  -webkit-appearance:none;appearance:none;min-height:52px;
+  transition:border-color .15s;
+}
+.field input::placeholder{color:rgba(240,237,228,.25)}
+.field input:focus,.field select:focus{
+  outline:none;border-color:#D4883A;
+  box-shadow:0 0 0 3px rgba(212,136,58,.15);
+}
+.field select option{background:#1C1F26;color:#F0EDE4}
 .btn-submit{
   display:flex;align-items:center;justify-content:center;
-  background:#D4883A;color:#0D0F13;font-size:1rem;font-weight:700;
-  padding:18px 24px;border-radius:var(--r);width:100%;margin-top:4px;
-  transition:background .15s,transform .15s;min-height:56px;
+  background:var(--accent);color:#fff;font-size:1rem;font-weight:700;
+  padding:18px 24px;border-radius:var(--r);width:100%;margin-top:6px;
+  transition:background .15s,transform .12s;min-height:58px;
+  letter-spacing:.025em;box-shadow:0 4px 20px rgba(184,104,0,.35);
 }
-.btn-submit:hover{background:#E09040;transform:translateY(-1px)}
-.form-note{font-size:.72rem;color:rgba(245,242,236,.36);text-align:center;line-height:1.7;margin-top:6px}
+.btn-submit:hover{background:var(--accent-h);transform:translateY(-1px)}
+.form-note{font-size:.72rem;color:rgba(240,237,228,.3);text-align:center;line-height:1.75;margin-top:8px}
 
 /* ── FOOTER ── */
-.footer{background:#0D0F13;padding:24px 20px;text-align:center;font-size:.72rem;color:rgba(245,242,236,.25);line-height:1.8;border-top:1px solid rgba(245,242,236,.06)}
-.footer a{color:rgba(245,242,236,.3)}
+.footer{
+  background:#050608;padding:28px 20px;text-align:center;
+  font-size:.72rem;color:rgba(240,237,228,.2);line-height:1.85;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.footer a{color:rgba(240,237,228,.28)}
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -405,9 +595,16 @@ details[open] summary::after{content:'−'}
   <div class="wrap">
     <img
       src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/logo.svg"
-      alt="Oficinas Master" class="hero-logo"
+      alt="Oficinas Master"
+      style="margin-bottom:32px;height:30px;opacity:.8;filter:brightness(10)"
       onerror="this.style.display='none'"
     >
+
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      <span class="hero-badge-text">Vagas abertas · Setembro 2025</span>
+    </div>
+
     <p class="eyebrow">Imersão presencial · Alphaville — SP</p>
     <h1>
       Sua oficina já fatura<br>
@@ -428,25 +625,25 @@ details[open] summary::after{content:'−'}
       >
     </div>
 
-    <div class="hero-meta">
-      <div class="hero-meta-row">
+    <div class="hero-chips">
+      <div class="hero-chip">
         <svg class="hmi" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="6.5" stroke="#D4883A" stroke-width="1.5"/>
-          <path d="M8 4.5v3.75l2.25 1.35" stroke="#D4883A" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8 4.5v3.75l2.25 1.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
         24 e 25 de setembro de 2025
       </div>
-      <div class="hero-meta-row">
+      <div class="hero-chip">
         <svg class="hmi" viewBox="0 0 16 16" fill="none">
-          <path d="M8 1.5C5.52 1.5 3.5 3.52 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5C12.5 3.52 10.48 1.5 8 1.5z" stroke="#D4883A" stroke-width="1.5"/>
-          <circle cx="8" cy="6" r="1.5" fill="#D4883A"/>
+          <path d="M8 1.5C5.52 1.5 3.5 3.52 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5C12.5 3.52 10.48 1.5 8 1.5z" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="8" cy="6" r="1.5" fill="currentColor"/>
         </svg>
         Barueri – Alphaville, São Paulo
       </div>
-      <div class="hero-meta-row">
+      <div class="hero-chip">
         <svg class="hmi" viewBox="0 0 16 16" fill="none">
-          <rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="#D4883A" stroke-width="1.5"/>
-          <path d="M5 8l2.5 2.5L11 5.5" stroke="#D4883A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5 8l2.5 2.5L11 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Para oficinas com faturamento acima de R$ 100 mil/mês
       </div>
@@ -501,25 +698,25 @@ details[open] summary::after{content:'−'}
       <div class="ba-col before">
         <span class="ba-tag b">A realidade hoje</span>
         <ul class="ba-list">
-          <li><div class="dot"></div>Funcionário do seu funcionário — tudo sobra para você</li>
-          <li><div class="dot"></div>Nada funciona sem você, nem uma decisão</li>
-          <li><div class="dot"></div>Dificuldade em atrair mecânicos melhores</li>
-          <li><div class="dot"></div>Mais de 12 horas de trabalho por dia</li>
-          <li><div class="dot"></div>Mal consegue tirar férias</li>
-          <li><div class="dot"></div>Estresse e falta de tempo para a família</li>
-          <li><div class="dot"></div>Faturamento alto, margem baixa</li>
+          <li><span class="ba-icon">✕</span>Funcionário do seu funcionário — tudo sobra para você</li>
+          <li><span class="ba-icon">✕</span>Nada funciona sem você, nem uma decisão</li>
+          <li><span class="ba-icon">✕</span>Dificuldade em atrair mecânicos melhores</li>
+          <li><span class="ba-icon">✕</span>Mais de 12 horas de trabalho por dia</li>
+          <li><span class="ba-icon">✕</span>Mal consegue tirar férias</li>
+          <li><span class="ba-icon">✕</span>Estresse e falta de tempo para a família</li>
+          <li><span class="ba-icon">✕</span>Faturamento alto, margem baixa</li>
         </ul>
       </div>
       <div class="ba-col after">
         <span class="ba-tag a">Após a Imersão</span>
         <ul class="ba-list">
-          <li><div class="dot"></div>Gestão por indicadores, não por intuição</li>
-          <li><div class="dot"></div>Pessoas certas nos lugares certos</li>
-          <li><div class="dot"></div>Processos que funcionam sem o dono</li>
-          <li><div class="dot"></div>Controle real de margem e caixa</li>
-          <li><div class="dot"></div>Previsibilidade comercial de verdade</li>
-          <li><div class="dot"></div>Você atua como empresário, não operador</li>
-          <li><div class="dot"></div>Empresa preparada para crescer</li>
+          <li><span class="ba-icon">✓</span>Gestão por indicadores, não por intuição</li>
+          <li><span class="ba-icon">✓</span>Pessoas certas nos lugares certos</li>
+          <li><span class="ba-icon">✓</span>Processos que funcionam sem o dono</li>
+          <li><span class="ba-icon">✓</span>Controle real de margem e caixa</li>
+          <li><span class="ba-icon">✓</span>Previsibilidade comercial de verdade</li>
+          <li><span class="ba-icon">✓</span>Você atua como empresário, não operador</li>
+          <li><span class="ba-icon">✓</span>Empresa preparada para crescer</li>
         </ul>
       </div>
     </div>
@@ -552,6 +749,7 @@ details[open] summary::after{content:'−'}
 
     <div class="pillars">
       <div class="pillar">
+        <div class="pillar-num">01</div>
         <h3>Lucro</h3>
         <p>Precificação correta, controle de margem, gestão de caixa e indicadores financeiros reais.</p>
         <div class="tags">
@@ -560,6 +758,7 @@ details[open] summary::after{content:'−'}
         </div>
       </div>
       <div class="pillar">
+        <div class="pillar-num">02</div>
         <h3>Vendas</h3>
         <p>Captação, conversão, ticket médio e previsibilidade de receita para crescer com consistência.</p>
         <div class="tags">
@@ -568,6 +767,7 @@ details[open] summary::after{content:'−'}
         </div>
       </div>
       <div class="pillar">
+        <div class="pillar-num">03</div>
         <h3>Operação</h3>
         <p>Pátio, processos, produtividade e execução que funcionam mesmo quando o dono não está.</p>
         <div class="tags">
@@ -576,6 +776,7 @@ details[open] summary::after{content:'−'}
         </div>
       </div>
       <div class="pillar">
+        <div class="pillar-num">04</div>
         <h3>Pessoas</h3>
         <p>Contratação, liderança, desempenho e cultura para montar um time de alta performance.</p>
         <div class="tags">
@@ -589,17 +790,12 @@ details[open] summary::after{content:'−'}
       <img
         src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/ciclo-copy.webp"
         alt="Ciclo do Sistema Oficinas Master" loading="lazy"
-        style="opacity:.85"
         onerror="this.parentElement.style.display='none'"
       >
     </div>
 
     <div class="onu-block">
-      <img
-        src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/onu-copy.webp"
-        alt="Reconhecimento ONU" loading="lazy"
-        onerror="this.style.display='none'"
-      >
+      <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/onu-copy.webp" alt="Reconhecimento ONU" loading="lazy" onerror="this.style.display='none'">
       <div>
         <p class="eyebrow">Reconhecimento Internacional</p>
         <p>A ÚNICA consultoria automotiva reconhecida internacionalmente pela ONU pelos nossos esforços em geração de emprego, combate à fome e desenvolvimento de oportunidades para o crescimento do país e do mundo.</p>
@@ -623,11 +819,11 @@ details[open] summary::after{content:'−'}
           <span>24 de setembro</span>
         </div>
         <div class="day-body">
-          <div class="day-item"><div class="dbullet"></div><span>Diagnóstico da empresa — onde você está e onde precisa chegar</span></div>
-          <div class="day-item"><div class="dbullet"></div><span>Pilar Lucro: precificação, margem e caixa</span></div>
-          <div class="day-item"><div class="dbullet"></div><span>Pilar Operação: pátio, processos e produtividade</span></div>
-          <div class="day-item"><div class="dbullet"></div><span>Mapeamento dos gargalos reais da sua oficina</span></div>
-          <div class="day-item"><div class="dbullet"></div><span>Networking com empresários do setor</span></div>
+          <div class="day-item"><div class="dbullet">1</div><span>Diagnóstico da empresa — onde você está e onde precisa chegar</span></div>
+          <div class="day-item"><div class="dbullet">2</div><span>Pilar Lucro: precificação, margem e caixa</span></div>
+          <div class="day-item"><div class="dbullet">3</div><span>Pilar Operação: pátio, processos e produtividade</span></div>
+          <div class="day-item"><div class="dbullet">4</div><span>Mapeamento dos gargalos reais da sua oficina</span></div>
+          <div class="day-item"><div class="dbullet">5</div><span>Networking com empresários do setor</span></div>
         </div>
       </div>
       <div class="day">
@@ -636,11 +832,11 @@ details[open] summary::after{content:'−'}
           <span>25 de setembro</span>
         </div>
         <div class="day-body">
-          <div class="day-item"><div class="dbullet"></div><span>Pilar Vendas: captação, conversão e previsibilidade</span></div>
-          <div class="day-item"><div class="dbullet"></div><span>Pilar Pessoas: contratação, liderança e cultura</span></div>
-          <div class="day-item"><div class="dbullet"></div><span>Plano de ação individual — próximos 90 dias</span></div>
-          <div class="day-item"><div class="dbullet"></div><span>Mentorias individuais com especialistas</span></div>
-          <div class="day-item"><div class="dbullet"></div><span>Compromisso de implementação</span></div>
+          <div class="day-item"><div class="dbullet">1</div><span>Pilar Vendas: captação, conversão e previsibilidade</span></div>
+          <div class="day-item"><div class="dbullet">2</div><span>Pilar Pessoas: contratação, liderança e cultura</span></div>
+          <div class="day-item"><div class="dbullet">3</div><span>Plano de ação individual — próximos 90 dias</span></div>
+          <div class="day-item"><div class="dbullet">4</div><span>Mentorias individuais com especialistas</span></div>
+          <div class="day-item"><div class="dbullet">5</div><span>Compromisso de implementação</span></div>
         </div>
       </div>
     </div>
@@ -652,7 +848,7 @@ details[open] summary::after{content:'−'}
   <div class="wrap">
     <div class="sh">
       <p class="eyebrow">Dentro da imersão</p>
-      <h2 style="font-size:clamp(1.25rem,4vw,1.5rem)">Veja como é o ambiente — empresários, aplicação e transformação.</h2>
+      <h2 style="font-size:clamp(1.3rem,4.5vw,1.6rem)">Veja como é o ambiente — empresários, aplicação e transformação.</h2>
     </div>
   </div>
   <div class="gallery-strip" role="region" aria-label="Fotos da imersão">
@@ -667,9 +863,7 @@ details[open] summary::after{content:'−'}
     <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/9.webp" alt="Imersão Oficinas Master" loading="lazy">
     <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/10.webp" alt="Imersão Oficinas Master" loading="lazy">
   </div>
-  <div class="wrap">
-    <p class="gallery-hint">← deslize para ver mais →</p>
-  </div>
+  <div class="wrap"><p class="gallery-hint">← deslize para ver mais →</p></div>
 </div>
 
 <!-- CASES -->
@@ -688,9 +882,7 @@ details[open] summary::after{content:'−'}
 
     <div class="cases">
       <div class="case">
-        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/MARCELO-NOVA-ERA.webp')">
-          <div class="case-init">M</div>
-        </div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/MARCELO-NOVA-ERA.webp')"><div class="case-init">M</div></div>
         <div class="case-body">
           <div class="case-who">Marcelo · Nova Era</div>
           <div class="case-result">R$ 12 milhões/ano</div>
@@ -698,9 +890,7 @@ details[open] summary::after{content:'−'}
         </div>
       </div>
       <div class="case">
-        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/FABIO-ZACHI-.webp')">
-          <div class="case-init">F</div>
-        </div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/FABIO-ZACHI-.webp')"><div class="case-init">F</div></div>
         <div class="case-body">
           <div class="case-who">Fabio Zachi</div>
           <div class="case-result">R$ 54 milhões/ano</div>
@@ -708,9 +898,7 @@ details[open] summary::after{content:'−'}
         </div>
       </div>
       <div class="case">
-        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/CIBELE-ZACHI.webp')">
-          <div class="case-init">C</div>
-        </div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/CIBELE-ZACHI.webp')"><div class="case-init">C</div></div>
         <div class="case-body">
           <div class="case-who">Cibele Zachi</div>
           <div class="case-result">150 colaboradores · 5 lojas</div>
@@ -718,9 +906,7 @@ details[open] summary::after{content:'−'}
         </div>
       </div>
       <div class="case">
-        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/GABRIEL-BRANTES.webp')">
-          <div class="case-init">G</div>
-        </div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/GABRIEL-BRANTES.webp')"><div class="case-init">G</div></div>
         <div class="case-body">
           <div class="case-who">Gabriel Brantes · Bavaria BMW</div>
           <div class="case-result">Referência nacional desde 1987</div>
@@ -728,9 +914,7 @@ details[open] summary::after{content:'−'}
         </div>
       </div>
       <div class="case">
-        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/GELSON-KOPLIN-.webp')">
-          <div class="case-init">G</div>
-        </div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/GELSON-KOPLIN-.webp')"><div class="case-init">G</div></div>
         <div class="case-body">
           <div class="case-who">Gelson Koplin</div>
           <div class="case-result">3 franquias premium</div>
@@ -751,8 +935,7 @@ details[open] summary::after{content:'−'}
     </div>
 
     <div class="mentor">
-      <div class="mentor-photo"
-        style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/sobre-rafa-copy.webp')">
+      <div class="mentor-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/sobre-rafa-copy.webp')">
         <div class="mentor-init">R</div>
       </div>
       <div class="mentor-body">
@@ -768,8 +951,7 @@ details[open] summary::after{content:'−'}
     </div>
 
     <div class="mentor">
-      <div class="mentor-photo"
-        style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/sobre-fer-copy.webp')">
+      <div class="mentor-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/sobre-fer-copy.webp')">
         <div class="mentor-init">F</div>
       </div>
       <div class="mentor-body">
@@ -818,30 +1000,21 @@ details[open] summary::after{content:'−'}
           <div class="bonus-title">Diagnóstico de Aceleração Empresarial</div>
           <p class="bonus-desc">Reunião com um especialista do Rafa Marrafon antes da imersão — clareza das áreas que precisam de melhoria. O mesmo diagnóstico usado na operação de centenas de oficinas no Brasil.</p>
         </div>
-        <div class="bonus-price">
-          <div class="bonus-was">&nbsp;</div>
-          <div class="bonus-now">GRÁTIS</div>
-        </div>
+        <div class="bonus-price"><div class="bonus-was">&nbsp;</div><div class="bonus-now">GRÁTIS</div></div>
       </div>
       <div class="bonus">
         <div>
           <div class="bonus-title">Imersão On-line Rafa</div>
           <p class="bonus-desc">Programa intensivo de 3 meses para donos de oficinas que desejam transformar seus negócios no próprio ritmo — complementa o que foi aplicado na imersão presencial.</p>
         </div>
-        <div class="bonus-price">
-          <div class="bonus-was">R$997</div>
-          <div class="bonus-now">GRÁTIS</div>
-        </div>
+        <div class="bonus-price"><div class="bonus-was">R$997</div><div class="bonus-now">GRÁTIS</div></div>
       </div>
       <div class="bonus">
         <div>
           <div class="bonus-title">Mentoria On-line Rafa</div>
           <p class="bonus-desc">Acompanhamento personalizado para resolver problemas específicos, implementar estratégias e alcançar metas de crescimento no ritmo da sua empresa.</p>
         </div>
-        <div class="bonus-price">
-          <div class="bonus-was">R$22.500</div>
-          <div class="bonus-now">GRÁTIS</div>
-        </div>
+        <div class="bonus-price"><div class="bonus-was">R$22.500</div><div class="bonus-now">GRÁTIS</div></div>
       </div>
     </div>
     <div class="bonus-total">
@@ -887,13 +1060,9 @@ details[open] summary::after{content:'−'}
 <section class="section" id="garantia">
   <div class="wrap">
     <div class="guar">
-      <img
-        src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/GARANTIA-copy.webp"
-        alt="Garantia incondicional" class="guar-badge" loading="lazy"
-        onerror="this.style.display='none'"
-      >
+      <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/GARANTIA-copy.webp" alt="Garantia incondicional" class="guar-badge" loading="lazy" onerror="this.style.display='none'">
       <h2>Você não precisa assumir o risco sozinho.</h2>
-      <p style="font-size:.875rem;color:var(--text-2);line-height:1.75;max-width:44ch;margin:12px auto 0">
+      <p style="font-size:.875rem;color:var(--text-2);line-height:1.78;max-width:44ch;margin:12px auto 0">
         Temos não uma, mas duas garantias. Porque acreditamos que o conhecimento adquirido pode transformar a sua empresa — e estamos prontos para assumir o risco junto com você.
       </p>
       <div class="guar-conditions">
@@ -922,23 +1091,23 @@ details[open] summary::after{content:'−'}
       <div class="fw-col is">
         <h3>É para você se:</h3>
         <ul class="fw-list">
-          <li>Sua oficina fatura acima de R$ 100 mil/mês</li>
-          <li>Quer crescer sem aumentar a dor de cabeça proporcionalmente</li>
-          <li>Sua empresa ainda depende demais de você</li>
-          <li>Quer transformar faturamento em lucro real</li>
-          <li>Está disposto a implementar o que aprender</li>
-          <li>Busca transformação profunda, não palestra motivacional</li>
-          <li>Quer estar próximo de empresários no mesmo nível</li>
+          <li><span class="fw-icon">✓</span>Sua oficina fatura acima de R$ 100 mil/mês</li>
+          <li><span class="fw-icon">✓</span>Quer crescer sem aumentar a dor de cabeça proporcionalmente</li>
+          <li><span class="fw-icon">✓</span>Sua empresa ainda depende demais de você</li>
+          <li><span class="fw-icon">✓</span>Quer transformar faturamento em lucro real</li>
+          <li><span class="fw-icon">✓</span>Está disposto a implementar o que aprender</li>
+          <li><span class="fw-icon">✓</span>Busca transformação profunda, não palestra motivacional</li>
+          <li><span class="fw-icon">✓</span>Quer estar próximo de empresários no mesmo nível</li>
         </ul>
       </div>
       <div class="fw-col not">
         <h3>Não é para você se:</h3>
         <ul class="fw-list">
-          <li>Sua oficina fatura abaixo de R$ 50 mil/mês</li>
-          <li>Procura uma fórmula mágica sem implementação</li>
-          <li>Quer apenas uma palestra de motivação</li>
-          <li>Não pretende aplicar o que aprender</li>
-          <li>Procura o treinamento mais barato do mercado</li>
+          <li><span class="fw-icon">✕</span>Sua oficina fatura abaixo de R$ 50 mil/mês</li>
+          <li><span class="fw-icon">✕</span>Procura uma fórmula mágica sem implementação</li>
+          <li><span class="fw-icon">✕</span>Quer apenas uma palestra de motivação</li>
+          <li><span class="fw-icon">✕</span>Não pretende aplicar o que aprender</li>
+          <li><span class="fw-icon">✕</span>Procura o treinamento mais barato do mercado</li>
         </ul>
       </div>
     </div>
@@ -954,31 +1123,31 @@ details[open] summary::after{content:'−'}
     </div>
     <div class="faq">
       <details>
-        <summary>Para qual tipo de oficina é a imersão?</summary>
+        <summary>Para qual tipo de oficina é a imersão? <span class="chevron"><svg viewBox="0 0 10 10"><line x1="5" y1="2" x2="5" y2="8"/><line x1="2" y1="5" x2="8" y2="5"/></svg></span></summary>
         <div class="faq-body">Para donos e donas de oficinas automotivas — mecânica, elétrica, multimarcas, funilaria, revisão, pneus ou afins — com faturamento a partir de R$ 100 mil por mês. O fator decisivo é o estágio de crescimento em que o empresário se encontra.</div>
       </details>
       <details>
-        <summary>Quantos dias dura a imersão?</summary>
+        <summary>Quantos dias dura a imersão? <span class="chevron"><svg viewBox="0 0 10 10"><line x1="5" y1="2" x2="5" y2="8"/><line x1="2" y1="5" x2="8" y2="5"/></svg></span></summary>
         <div class="faq-body">São 2 dias presenciais completos — 24 e 25 de setembro — em Barueri, Alphaville, São Paulo. Os dois dias são intensivos: diagnóstico, aplicação prática, plano de ação individual e mentorias.</div>
       </details>
       <details>
-        <summary>O que acontece se eu não ficar satisfeito?</summary>
+        <summary>O que acontece se eu não ficar satisfeito? <span class="chevron"><svg viewBox="0 0 10 10"><line x1="5" y1="2" x2="5" y2="8"/><line x1="2" y1="5" x2="8" y2="5"/></svg></span></summary>
         <div class="faq-body">Você recebe 100% do investimento de volta, sem burocracia. A Oficinas Master oferece duas garantias: (1) satisfação — se ao final do evento não estiver satisfeito, devolvemos tudo; (2) resultado — se aplicar o método completo e em 12 meses não aumentar seus lucros, também devolvemos tudo.</div>
       </details>
       <details>
-        <summary>Como funciona o processo de inscrição?</summary>
+        <summary>Como funciona o processo de inscrição? <span class="chevron"><svg viewBox="0 0 10 10"><line x1="5" y1="2" x2="5" y2="8"/><line x1="2" y1="5" x2="8" y2="5"/></svg></span></summary>
         <div class="faq-body">Você preenche o formulário de aplicação. Nossa equipe analisa o perfil e entra em contato para uma conversa de qualificação. Se for um fit, você recebe as condições e confirma sua vaga.</div>
       </details>
       <details>
-        <summary>Posso parcelar o investimento?</summary>
+        <summary>Posso parcelar o investimento? <span class="chevron"><svg viewBox="0 0 10 10"><line x1="5" y1="2" x2="5" y2="8"/><line x1="2" y1="5" x2="8" y2="5"/></svg></span></summary>
         <div class="faq-body">Sim. Oferecemos condições de parcelamento — consulte nossa equipe durante o processo de aplicação para conhecer as opções disponíveis.</div>
       </details>
       <details>
-        <summary>O que devo levar ou preparar?</summary>
+        <summary>O que devo levar ou preparar? <span class="chevron"><svg viewBox="0 0 10 10"><line x1="5" y1="2" x2="5" y2="8"/><line x1="2" y1="5" x2="8" y2="5"/></svg></span></summary>
         <div class="faq-body">Recomendamos trazer um bloco de notas, caneta e laptop ou tablet. Use roupas confortáveis e traga agasalho, pois a temperatura pode variar. Após confirmar sua vaga, você recebe um diagnóstico pré-imersão para chegar preparado e aproveitar cada hora.</div>
       </details>
       <details>
-        <summary>Onde acontece o evento?</summary>
+        <summary>Onde acontece o evento? <span class="chevron"><svg viewBox="0 0 10 10"><line x1="5" y1="2" x2="5" y2="8"/><line x1="2" y1="5" x2="8" y2="5"/></svg></span></summary>
         <div class="faq-body">A imersão acontece em Barueri – Alphaville – São Paulo. O endereço completo e informações de hospedagem são enviados após confirmação da vaga.</div>
       </details>
     </div>
