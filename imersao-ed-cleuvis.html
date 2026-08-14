@@ -1,39 +1,41 @@
 <title>Imersão Oficinas Master</title>
 
 <style>
-/* ─── TOKENS ─────────────────────────────────────────── */
+/* ─── BASE URL ─────────────── */
 :root {
-  --bg:          #F5F2EC;
-  --surface:     #EDEAE2;
-  --surface-2:   #E4E0D4;
-  --border:      rgba(26,20,10,.10);
-  --text-1:      #1A1710;
-  --text-2:      #5A5248;
-  --text-muted:  #8A867E;
-  --accent:      #C4780E;
-  --accent-h:    #A8620A;
-  --accent-fg:   #FFFFFF;
-  --positive:    #1A6030;
-  --negative:    #8A1818;
-  --r:           4px;
-  --rl:          8px;
+  --cdn: 'https://oficinasmaster.com.br/wp-content/uploads';
+
+  /* TOKENS */
+  --bg:        #F5F2EC;
+  --surface:   #EDEAE2;
+  --surface-2: #E4E0D4;
+  --border:    rgba(26,20,10,.10);
+  --text-1:    #1A1710;
+  --text-2:    #5A5248;
+  --muted:     #8A867E;
+  --accent:    #C4780E;
+  --accent-h:  #A8620A;
+  --ax:        #FFFFFF;
+  --ok:        #1A6030;
+  --bad:       #8A1818;
+  --r: 4px; --rl: 8px;
 }
 @media(prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --bg:#111318; --surface:#191C24; --surface-2:#20242E;
     --border:rgba(245,242,236,.08); --text-1:#F5F2EC; --text-2:#A8A49C;
-    --text-muted:#6A6660; --accent:#D4883A; --accent-h:#E09040;
-    --accent-fg:#111318; --positive:#2A8A46; --negative:#C44040;
+    --muted:#6A6660; --accent:#D4883A; --accent-h:#E09040;
+    --ax:#111318; --ok:#2A8A46; --bad:#C44040;
   }
 }
 :root[data-theme="dark"]{
   --bg:#111318; --surface:#191C24; --surface-2:#20242E;
   --border:rgba(245,242,236,.08); --text-1:#F5F2EC; --text-2:#A8A49C;
-  --text-muted:#6A6660; --accent:#D4883A; --accent-h:#E09040;
-  --accent-fg:#111318; --positive:#2A8A46; --negative:#C44040;
+  --muted:#6A6660; --accent:#D4883A; --accent-h:#E09040;
+  --ax:#111318; --ok:#2A8A46; --bad:#C44040;
 }
 
-/* ─── RESET ─────────────────────────────────────────── */
+/* ─── RESET ─────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
 body{
@@ -47,105 +49,90 @@ a{color:var(--accent);text-decoration:none}
 button{cursor:pointer;border:none;font:inherit;background:none}
 ul{list-style:none}
 
-/* ─── TYPOGRAPHY ─────────────────────────────────────────── */
-h1,h2,h3{
-  font-family:Georgia,'Times New Roman',serif;font-weight:700;
-  text-wrap:balance;line-height:1.15;
-}
-.eyebrow{
-  font-size:.72rem;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--accent);
-}
+/* ─── TYPE ─────────────── */
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:700;text-wrap:balance;line-height:1.15}
+.eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
 .lead{font-size:1.05rem;line-height:1.75;color:var(--text-2)}
 
-/* ─── LAYOUT ─────────────────────────────────────────── */
+/* ─── LAYOUT ─────────────── */
 .wrap{max-width:680px;margin:0 auto;padding:0 20px}
 .section{padding:72px 0;border-bottom:1px solid var(--border)}
 .section:last-child{border-bottom:none}
 .sh{margin-bottom:44px}
 .sh .eyebrow{margin-bottom:10px}
 .sh h2{font-size:clamp(1.5rem,4.8vw,2.15rem);margin-bottom:14px}
-.sh .lead{max-width:54ch}
 
-/* ─── STICKY BAR ─────────────────────────────────────────── */
+/* ─── STICKY BAR ─────────────── */
 .sticky{
   position:fixed;bottom:0;left:0;right:0;z-index:99;
   background:#111318;border-top:1px solid rgba(212,136,58,.4);
   padding:10px 20px;display:flex;align-items:center;gap:12px;
 }
-.sticky-meta{
-  display:none;font-size:.7rem;color:rgba(245,242,236,.45);
-  white-space:nowrap;line-height:1.4;
-}
+.sticky-meta{display:none;font-size:.7rem;color:rgba(245,242,236,.45);white-space:nowrap;line-height:1.4}
 @media(min-width:400px){.sticky-meta{display:block}}
 .sticky .btn{
   flex:1;padding:13px 18px;font-size:.9rem;font-weight:700;
   background:#D4883A;color:#111318;border-radius:var(--r);
   text-align:center;display:inline-flex;align-items:center;justify-content:center;
-  transition:background .15s;
 }
-.sticky .btn:hover{background:#E09040}
 
-/* ─── HERO ─────────────────────────────────────────── */
+/* ─── HERO ─────────────── */
 .hero{
-  min-height:100svh;background:#111318;
+  min-height:100svh;
+  background-color:#111318;
+  background-image:
+    linear-gradient(to bottom,rgba(17,19,24,.82) 0%,rgba(17,19,24,.92) 55%,#111318 100%),
+    url('https://oficinasmaster.com.br/wp-content/uploads/2025/03/capa-imersao-02.jpg');
+  background-size:cover;background-position:center 20%;
   display:flex;flex-direction:column;justify-content:center;
   padding:88px 20px 100px;position:relative;
-  background-image:
-    linear-gradient(to bottom,rgba(17,19,24,.88) 0%,rgba(17,19,24,.94) 60%,rgba(17,19,24,1) 100%),
-    url('https://oficinasmaster.com.br/wp-content/uploads/2025/03/capa-imersao-02.jpg');
-  background-size:cover;background-position:center top;
 }
 .hero::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,#D4883A 25%,#D4883A 75%,transparent);
 }
-.hero-logo{margin-bottom:32px;height:36px;opacity:.85}
-.hero .eyebrow{color:#D4883A;margin-bottom:24px}
-.hero h1{
-  font-size:clamp(2rem,7vw,3.5rem);color:#F5F2EC;
-  margin-bottom:24px;
-}
+.hero-logo{margin-bottom:28px;height:32px;opacity:.82;filter:brightness(10)}
+.hero .eyebrow{color:#D4883A;margin-bottom:22px}
+.hero h1{font-size:clamp(2rem,7vw,3.5rem);color:#F5F2EC;margin-bottom:22px}
 .hero h1 em{font-style:normal;color:#D4883A}
-.hero .lead{color:rgba(245,242,236,.68);margin-bottom:32px;font-size:1rem}
+.hero .lead{color:rgba(245,242,236,.68);margin-bottom:28px;font-size:1rem}
+
+/* Qualifier banner image */
+.hero-qualifier{
+  margin-bottom:28px;border-radius:var(--r);overflow:hidden;
+  border:1px solid rgba(212,136,58,.3);
+}
+.hero-qualifier img{width:100%;height:auto;display:block}
+
 .hero-meta{
-  display:flex;flex-direction:column;gap:8px;
-  padding:16px 18px;margin-bottom:32px;
-  border:1px solid rgba(212,136,58,.25);border-left:3px solid #D4883A;
+  display:flex;flex-direction:column;gap:7px;
+  padding:14px 18px;margin-bottom:28px;
+  border:1px solid rgba(212,136,58,.22);border-left:3px solid #D4883A;
   border-radius:var(--r);background:rgba(212,136,58,.05);
 }
-.hero-meta-row{
-  font-size:.875rem;color:rgba(245,242,236,.75);
-  display:flex;align-items:center;gap:9px;
-}
+.hero-meta-row{font-size:.875rem;color:rgba(245,242,236,.75);display:flex;align-items:center;gap:9px}
 .hmi{width:14px;height:14px;flex-shrink:0}
+
 .btn-hero{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  width:100%;padding:18px 24px;border-radius:var(--r);
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;width:100%;padding:18px 24px;border-radius:var(--r);
   background:#D4883A;color:#111318;font-size:.95rem;font-weight:700;
   letter-spacing:.025em;transition:background .15s,transform .15s;
 }
 .btn-hero:hover{background:#E09040;transform:translateY(-1px)}
 
-/* ─── MEDIA STRIP ─────────────────────────────────────────── */
-.media{padding:24px 0;border-bottom:1px solid var(--border)}
-.media .eyebrow{text-align:center;margin-bottom:14px;color:var(--text-muted)}
-.media-logos{
-  display:flex;flex-wrap:wrap;justify-content:center;
-  align-items:center;gap:16px 28px;
-}
-.media-logo{
-  font-family:Georgia,serif;font-size:.9rem;font-weight:700;
-  color:var(--text-muted);letter-spacing:.05em;opacity:.5;
-}
-.media-logo.istoé{font-style:italic}
+/* ─── MEDIA STRIP ─────────────── */
+.media{padding:22px 0;border-bottom:1px solid var(--border)}
+.media .eyebrow{text-align:center;margin-bottom:14px;color:var(--muted)}
+.media-logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 24px}
+.media-logo{font-family:Georgia,serif;font-size:.9rem;font-weight:700;color:var(--muted);letter-spacing:.05em;opacity:.5}
+.media-logo.italic{font-style:italic}
 
-/* ─── STATS ─────────────────────────────────────────── */
+/* ─── STATS ─────────────── */
 .stats{
   display:grid;grid-template-columns:repeat(3,1fr);
   gap:1px;background:var(--border);
-  border:1px solid var(--border);border-radius:var(--rl);
-  overflow:hidden;margin:40px 0;
+  border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin:40px 0;
 }
 .stat{background:var(--surface);padding:20px 12px;text-align:center}
 .stat-n{
@@ -154,347 +141,253 @@ h1,h2,h3{
 }
 .stat-l{font-size:.68rem;color:var(--text-2);line-height:1.35}
 
-/* ─── BEFORE/AFTER ─────────────────────────────────────────── */
+/* ─── BEFORE/AFTER ─────────────── */
 .ba{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:1px;background:var(--border);border-radius:var(--rl);
-  overflow:hidden;margin:40px 0;
+  gap:1px;background:var(--border);border-radius:var(--rl);overflow:hidden;margin:40px 0;
 }
 .ba-col{background:var(--surface);padding:24px 18px}
-.ba-tag{
-  display:inline-block;font-size:.65rem;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:3px 9px;border-radius:2px;margin-bottom:14px;
-}
-.ba-tag.b{background:rgba(138,24,24,.12);color:var(--negative)}
-.ba-tag.a{background:rgba(26,96,48,.12);color:var(--positive)}
+.ba-tag{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:2px;margin-bottom:14px}
+.ba-tag.b{background:rgba(138,24,24,.12);color:var(--bad)}
+.ba-tag.a{background:rgba(26,96,48,.12);color:var(--ok)}
 .ba-list{display:flex;flex-direction:column;gap:9px}
-.ba-list li{
-  font-size:.825rem;line-height:1.45;color:var(--text-2);
-  display:flex;gap:8px;align-items:flex-start;
-}
+.ba-list li{font-size:.825rem;line-height:1.45;color:var(--text-2);display:flex;gap:8px;align-items:flex-start}
 .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.before .dot{background:rgba(138,24,24,.5)}
-.after  .dot{background:rgba(26,96,48,.65)}
+.before .dot{background:rgba(138,24,24,.5)} .after .dot{background:rgba(26,96,48,.65)}
 
-/* ─── PILLARS ─────────────────────────────────────────── */
-.pillars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:40px 0}
+/* ─── METHOD — dark ferrari bg ─────────────── */
+.section-ferrari{
+  padding:72px 0;border-bottom:1px solid rgba(255,255,255,.08);
+  background-color:#0e1014;
+  background-image:
+    linear-gradient(to bottom,rgba(14,16,20,.88) 0%,rgba(14,16,20,.92) 100%),
+    url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/bg-ferrari.webp');
+  background-size:cover;background-position:center;
+  color:#F5F2EC;
+}
+.section-ferrari .eyebrow{color:#D4883A}
+.section-ferrari h2{color:#F5F2EC}
+.section-ferrari .lead{color:rgba(245,242,236,.65)}
+
+/* speedometer images */
+.speedos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:36px 0}
+.speedo img{width:100%;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(212,136,58,.2))}
+.speedo-label{text-align:center;font-size:.78rem;color:rgba(245,242,236,.6);margin-top:8px;font-weight:600}
+
+/* pillars — on dark bg */
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:36px 0}
 .pillar{
-  background:var(--surface);border:1px solid var(--border);
-  border-top:3px solid var(--accent);border-radius:var(--rl);padding:20px 18px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-top:3px solid #D4883A;border-radius:var(--rl);padding:20px 18px;
 }
-.pillar h3{font-size:1rem;margin-bottom:7px;color:var(--text-1)}
-.pillar p{font-size:.8rem;color:var(--text-2);line-height:1.55;margin-bottom:11px}
+.pillar h3{font-size:1rem;margin-bottom:7px;color:#F5F2EC}
+.pillar p{font-size:.8rem;color:rgba(245,242,236,.6);line-height:1.55;margin-bottom:11px}
 .tags{display:flex;flex-wrap:wrap;gap:4px}
-.tag{
-  font-size:.6rem;padding:2px 7px;border:1px solid var(--border);
-  border-radius:2px;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;
-}
+.tag{font-size:.6rem;padding:2px 7px;border:1px solid rgba(255,255,255,.15);border-radius:2px;color:rgba(245,242,236,.5);letter-spacing:.05em;text-transform:uppercase}
 
-/* ─── ONU ─────────────────────────────────────────── */
-.onu{
-  background:var(--surface);border:1px solid var(--border);
-  border-left:3px solid var(--accent);border-radius:var(--rl);
-  padding:22px 20px;margin-top:24px;
+/* ONU block — on dark bg */
+.onu-block{
+  display:grid;grid-template-columns:100px 1fr;gap:20px;
+  align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-left:3px solid #D4883A;border-radius:var(--rl);padding:20px;margin-top:24px;
 }
-.onu .eyebrow{margin-bottom:8px}
-.onu p{font-size:.875rem;color:var(--text-2);line-height:1.7}
+.onu-block img{width:100px;height:auto;border-radius:var(--r)}
+.onu-block .eyebrow{margin-bottom:7px;color:#D4883A}
+.onu-block p{font-size:.83rem;color:rgba(245,242,236,.65);line-height:1.65}
 
-/* ─── DAYS ─────────────────────────────────────────── */
+/* ciclo image */
+.ciclo-wrap{margin:36px 0;text-align:center}
+.ciclo-wrap img{max-width:360px;margin:0 auto;width:100%;height:auto}
+
+/* ─── DAYS ─────────────── */
 .days{display:grid;grid-template-columns:1fr;gap:14px;margin:40px 0}
 @media(min-width:460px){.days{grid-template-columns:1fr 1fr}}
-.day{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--rl);overflow:hidden;
-}
-.day-head{
-  padding:14px 18px;background:var(--accent);
-  display:flex;justify-content:space-between;align-items:center;
-}
-.day-head h3{font-size:.9rem;color:#111318}
-.day-head span{font-size:.65rem;letter-spacing:.07em;text-transform:uppercase;color:rgba(17,19,24,.55)}
+.day{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.day-head{padding:14px 18px;background:var(--accent);display:flex;justify-content:space-between;align-items:center}
+.day-head h3{font-size:.9rem;color:#111318} .day-head span{font-size:.65rem;letter-spacing:.07em;text-transform:uppercase;color:rgba(17,19,24,.55)}
 .day-body{padding:16px 18px}
-.day-item{
-  display:flex;gap:10px;padding:8px 0;
-  border-bottom:1px solid var(--border);
-  font-size:.82rem;color:var(--text-2);align-items:flex-start;
-}
+.day-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.82rem;color:var(--text-2);align-items:flex-start}
 .day-item:last-child{border-bottom:none}
 .dbullet{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px}
 
-/* ─── CASES ─────────────────────────────────────────── */
+/* ─── CASES ─────────────── */
 .cases{display:flex;flex-direction:column;gap:12px;margin:40px 0}
 .case{
   background:var(--surface);border:1px solid var(--border);
   border-radius:var(--rl);overflow:hidden;
-  display:grid;grid-template-columns:80px 1fr;
+  display:grid;grid-template-columns:90px 1fr;
 }
 .case-photo{
-  width:80px;background:var(--surface-2);
-  background-size:cover;background-position:center top;
-  min-height:100px;position:relative;
-  flex-shrink:0;
+  width:90px;min-height:110px;
+  background-color:var(--surface-2);background-size:cover;background-position:center top;
+  position:relative;display:flex;align-items:center;justify-content:center;
 }
-.case-photo-init{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:Georgia,serif;font-size:1.4rem;font-weight:700;
-  color:var(--text-muted);opacity:.35;
-}
+.case-init{font-family:Georgia,serif;font-size:1.6rem;font-weight:700;color:var(--muted);opacity:.35}
 .case-body{padding:18px 16px}
-.case-name{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px}
-.case-result{
-  font-family:Georgia,serif;font-size:1.25rem;font-weight:700;
-  color:var(--positive);font-variant-numeric:tabular-nums;line-height:1.1;
-  margin-bottom:6px;
-}
+.case-who{font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.case-result{font-family:Georgia,serif;font-size:1.2rem;font-weight:700;color:var(--ok);font-variant-numeric:tabular-nums;line-height:1.15;margin-bottom:5px}
 .case-desc{font-size:.8rem;color:var(--text-2);line-height:1.5}
-
-/* ─── STAT BANNER ─────────────────────────────────────────── */
 .stat-banner{
-  background:var(--surface);border:1px solid var(--border);
-  border-left:3px solid var(--accent);border-radius:var(--rl);
-  padding:20px 20px;margin-bottom:32px;
+  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:var(--rl);padding:18px 20px;margin-bottom:28px;
 }
-.stat-banner strong{
-  display:block;font-family:Georgia,serif;font-size:1.15rem;
-  color:var(--accent);margin-bottom:4px;line-height:1.3;
-}
-.stat-banner span{font-size:.82rem;color:var(--text-2)}
+.stat-banner strong{display:block;font-family:Georgia,serif;font-size:1.1rem;color:var(--accent);margin-bottom:4px;line-height:1.35}
+.stat-banner span{font-size:.8rem;color:var(--text-2)}
 
-/* ─── MENTORS ─────────────────────────────────────────── */
+/* ─── PHOTO GALLERY ─────────────── */
+.gallery-section{padding:48px 0;border-bottom:1px solid var(--border)}
+.gallery-section .sh{margin-bottom:24px}
+.gallery-strip{
+  display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-ms-overflow-style:none;
+  margin:0 -20px;padding:0 20px;
+}
+.gallery-strip::-webkit-scrollbar{display:none}
+.gallery-strip img{
+  width:220px;height:155px;object-fit:cover;flex-shrink:0;
+  border-radius:var(--r);scroll-snap-align:start;
+  border:1px solid var(--border);
+}
+.gallery-hint{text-align:center;font-size:.72rem;color:var(--muted);margin-top:12px}
+
+/* ─── MENTORS — dark bg-8 ─────────────── */
+.section-mentors{
+  padding:72px 0;border-bottom:1px solid rgba(255,255,255,.06);
+  background-color:#0e1014;
+  background-image:
+    linear-gradient(to bottom,rgba(14,16,20,.9) 0%,rgba(14,16,20,.94) 100%),
+    url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/bg-8.webp');
+  background-size:cover;background-position:center;
+  color:#F5F2EC;
+}
+.section-mentors .eyebrow{color:#D4883A}
+.section-mentors h2{color:#F5F2EC}
+.section-mentors .lead{color:rgba(245,242,236,.6)}
 .mentor{
-  background:var(--surface);border:1px solid var(--border);
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
   border-radius:var(--rl);overflow:hidden;
-  display:grid;grid-template-columns:80px 1fr;
+  display:grid;grid-template-columns:100px 1fr;
   margin-bottom:14px;
 }
 .mentor-photo{
-  background:var(--surface-2);background-size:cover;background-position:center top;
-  min-height:120px;
+  width:100px;background:rgba(255,255,255,.05);background-size:cover;background-position:center top;
+  min-height:140px;display:flex;align-items:center;justify-content:center;
 }
-.mentor-init{
-  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  font-family:Georgia,serif;font-size:2rem;font-weight:700;
-  color:var(--accent);opacity:.45;
-}
+.mentor-init{font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#D4883A;opacity:.4}
 .mentor-body{padding:20px 18px}
-.mentor-name{font-family:Georgia,serif;font-size:1rem;font-weight:700;margin-bottom:3px}
-.mentor-role{
-  font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:10px;
-}
-.mentor-bio{font-size:.825rem;color:var(--text-2);line-height:1.65}
-.mentor-stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
-.ms strong{display:block;font-family:Georgia,serif;font-size:.9rem;color:var(--accent)}
-.ms span{font-size:.67rem;color:var(--text-muted)}
+.mentor-name{font-family:Georgia,serif;font-size:1rem;font-weight:700;margin-bottom:3px;color:#F5F2EC}
+.mentor-role{font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:#D4883A;margin-bottom:10px}
+.mentor-bio{font-size:.825rem;color:rgba(245,242,236,.65);line-height:1.65}
+.mentor-stats{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px}
+.ms strong{display:block;font-family:Georgia,serif;font-size:.9rem;color:#D4883A}
+.ms span{font-size:.67rem;color:rgba(245,242,236,.4)}
 
-/* ─── DELIVERABLES ─────────────────────────────────────────── */
+/* ─── DELIVERABLES ─────────────── */
 .delivs{display:flex;flex-direction:column}
-.deliv{
-  display:flex;align-items:flex-start;gap:12px;padding:13px 0;
-  border-bottom:1px solid var(--border);font-size:.875rem;color:var(--text-2);
-  line-height:1.5;
-}
+.deliv{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--border);font-size:.875rem;color:var(--text-2);line-height:1.5}
 .deliv:last-child{border-bottom:none}
-.dck{
-  width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:1px;
-  background:rgba(26,96,48,.15);display:flex;align-items:center;justify-content:center;
-  font-size:.62rem;font-weight:700;color:var(--positive);
-}
+.dck{width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:1px;background:rgba(26,96,48,.15);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;color:var(--ok)}
 
-/* ─── BONUSES ─────────────────────────────────────────── */
+/* ─── BONUSES ─────────────── */
 .bonuses{display:flex;flex-direction:column;gap:12px;margin:40px 0}
-.bonus{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--rl);padding:20px 18px;
-  display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;
-}
+.bonus{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px 18px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
 .bonus-title{font-size:.9rem;font-weight:700;color:var(--text-1);margin-bottom:5px}
 .bonus-desc{font-size:.8rem;color:var(--text-2);line-height:1.55}
 .bonus-price{text-align:right;flex-shrink:0}
-.bonus-was{font-size:.72rem;color:var(--text-muted);text-decoration:line-through;margin-bottom:2px}
-.bonus-now{
-  font-family:Georgia,serif;font-size:.9rem;font-weight:700;
-  color:var(--positive);letter-spacing:.03em;
-}
-.bonus-total{
-  background:rgba(26,96,48,.08);border:1px solid rgba(26,96,48,.2);
-  border-radius:var(--rl);padding:16px 18px;
-  display:flex;justify-content:space-between;align-items:center;
-}
+.bonus-was{font-size:.72rem;color:var(--muted);text-decoration:line-through;margin-bottom:2px}
+.bonus-now{font-family:Georgia,serif;font-size:.9rem;font-weight:700;color:var(--ok);letter-spacing:.03em}
+.bonus-total{background:rgba(26,96,48,.08);border:1px solid rgba(26,96,48,.2);border-radius:var(--rl);padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
 .bonus-total span{font-size:.82rem;color:var(--text-2)}
-.bonus-total strong{
-  font-family:Georgia,serif;font-size:1.05rem;color:var(--positive);
-  font-variant-numeric:tabular-nums;
-}
+.bonus-total strong{font-family:Georgia,serif;font-size:1.05rem;color:var(--ok);font-variant-numeric:tabular-nums}
 
-/* ─── INVESTMENT ─────────────────────────────────────────── */
-.value-box{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--rl);padding:24px 20px;margin:36px 0;
-}
+/* ─── INVESTMENT ─────────────── */
+.value-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:24px 20px;margin:36px 0}
 .value-box .eyebrow{margin-bottom:16px}
-.value-line{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:10px 0;border-bottom:1px solid var(--border);font-size:.875rem;
-}
+.value-line{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:.875rem}
 .value-line:last-child{border-bottom:none}
 .value-line span{color:var(--text-2)}
-.value-line strong{
-  font-family:Georgia,serif;font-variant-numeric:tabular-nums;color:var(--text-1);
-}
-.price-box{
-  border:2px solid var(--accent);border-radius:var(--rl);
-  padding:28px 22px;margin:24px 0;text-align:center;
-  background:rgba(196,120,14,.04);
-}
-.price-eye{
-  font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:6px;
-}
-.price-main{
-  font-family:Georgia,serif;font-size:2.8rem;font-weight:700;
-  color:var(--text-1);font-variant-numeric:tabular-nums;line-height:1;margin-bottom:6px;
-}
-.price-note{font-size:.82rem;color:var(--text-muted);margin-bottom:20px}
-.price-calc{
-  background:rgba(26,96,48,.09);border:1px solid rgba(26,96,48,.2);
-  border-radius:var(--r);padding:11px 14px;font-size:.78rem;
-  color:var(--positive);margin-bottom:20px;text-align:left;line-height:1.55;
-}
-.btn-primary{
-  display:inline-flex;align-items:center;justify-content:center;
-  gap:8px;width:100%;padding:16px 24px;border-radius:var(--r);
-  background:var(--accent);color:var(--accent-fg);font-size:.92rem;font-weight:700;
-  letter-spacing:.02em;transition:background .15s,transform .15s;
-}
+.value-line strong{font-family:Georgia,serif;font-variant-numeric:tabular-nums;color:var(--text-1)}
+.price-box{border:2px solid var(--accent);border-radius:var(--rl);padding:28px 22px;margin:24px 0;text-align:center;background:rgba(196,120,14,.04)}
+.price-eye{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.price-main{font-family:Georgia,serif;font-size:2.8rem;font-weight:700;color:var(--text-1);font-variant-numeric:tabular-nums;line-height:1;margin-bottom:6px}
+.price-note{font-size:.82rem;color:var(--muted);margin-bottom:20px}
+.price-calc{background:rgba(26,96,48,.09);border:1px solid rgba(26,96,48,.2);border-radius:var(--r);padding:11px 14px;font-size:.78rem;color:var(--ok);margin-bottom:20px;text-align:left;line-height:1.55}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px 24px;border-radius:var(--r);background:var(--accent);color:var(--ax);font-size:.92rem;font-weight:700;letter-spacing:.02em;transition:background .15s,transform .15s}
 .btn-primary:hover{background:var(--accent-h);transform:translateY(-1px)}
 
-/* ─── GUARANTEE ─────────────────────────────────────────── */
-.guar{
-  border:2px solid var(--accent);border-radius:var(--rl);
-  padding:32px 22px;margin:40px 0;text-align:center;
-}
-.guar-icon{
-  width:52px;height:52px;border-radius:50%;background:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 16px;
-}
+/* ─── GUARANTEE ─────────────── */
+.guar{border:2px solid var(--accent);border-radius:var(--rl);padding:32px 22px;margin:40px 0;text-align:center}
+.guar-badge{width:120px;height:auto;margin:0 auto 20px;display:block}
 .guar h2{font-size:1.2rem;margin-bottom:12px}
-.guar p{font-size:.875rem;color:var(--text-2);line-height:1.75;max-width:44ch;margin:0 auto}
-.guar-conditions{
-  display:flex;flex-direction:column;gap:10px;
-  margin-top:20px;text-align:left;
-}
-.guar-cond{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
-  padding:14px 16px;font-size:.82rem;color:var(--text-2);line-height:1.55;
-}
+.guar-conditions{display:flex;flex-direction:column;gap:10px;margin-top:20px;text-align:left}
+.guar-cond{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;font-size:.82rem;color:var(--text-2);line-height:1.55}
 .guar-cond strong{color:var(--text-1);display:block;margin-bottom:4px;font-size:.85rem}
 
-/* ─── FOR WHOM ─────────────────────────────────────────── */
+/* ─── FOR WHOM ─────────────── */
 .fw{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:40px 0}
-.fw-col{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--rl);padding:20px 18px;
-}
+.fw-col{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px 18px}
 .fw-col h3{font-size:.92rem;margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid}
-.fw-col.is h3{color:var(--positive);border-color:var(--positive)}
-.fw-col.not h3{color:var(--negative);border-color:var(--negative)}
+.fw-col.is h3{color:var(--ok);border-color:var(--ok)} .fw-col.not h3{color:var(--bad);border-color:var(--bad)}
 .fw-list{display:flex;flex-direction:column;gap:7px}
-.fw-list li{
-  font-size:.79rem;color:var(--text-2);line-height:1.45;
-  padding-left:15px;position:relative;
-}
+.fw-list li{font-size:.79rem;color:var(--text-2);line-height:1.45;padding-left:15px;position:relative}
 .fw-list li::before{content:'›';position:absolute;left:0;font-weight:700}
-.fw-col.is .fw-list li::before{color:var(--positive)}
-.fw-col.not .fw-list li::before{color:var(--negative)}
+.fw-col.is .fw-list li::before{color:var(--ok)} .fw-col.not .fw-list li::before{color:var(--bad)}
 
-/* ─── FAQ ─────────────────────────────────────────── */
+/* ─── FAQ ─────────────── */
 .faq{display:flex;flex-direction:column;gap:2px;margin:40px 0}
-details{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
-}
-summary{
-  padding:15px 18px;font-size:.875rem;font-weight:600;cursor:pointer;
-  list-style:none;display:flex;justify-content:space-between;
-  align-items:center;gap:12px;user-select:none;
-}
+details{background:var(--surface);border:1px solid var(--border);border-radius:var(--r)}
+summary{padding:15px 18px;font-size:.875rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;user-select:none}
 summary::-webkit-details-marker{display:none}
 summary::after{content:'+';font-size:1.1rem;font-weight:300;color:var(--accent);flex-shrink:0}
 details[open] summary::after{content:'−'}
 .faq-body{padding:0 18px 16px;font-size:.85rem;color:var(--text-2);line-height:1.7}
 
-/* ─── CTA FINAL ─────────────────────────────────────────── */
-.cta-final{
-  background:#111318;color:#F5F2EC;padding:80px 20px 100px;
-}
-.cta-final .sh h2{color:#F5F2EC}
+/* ─── CTA FINAL ─────────────── */
+.cta-final{background:#111318;color:#F5F2EC;padding:80px 20px 100px}
+.cta-final .sh h2{color:#F5F2EC;font-size:clamp(1.55rem,5vw,2.3rem)}
 .cta-final .sh .lead{color:rgba(245,242,236,.6)}
 .cta-form{display:flex;flex-direction:column;gap:11px;margin-top:32px}
 .field{display:flex;flex-direction:column;gap:5px}
-.field label{
-  font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
-  color:rgba(245,242,236,.45);
-}
+.field label{font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,242,236,.45)}
 .field input,.field select{
   padding:13px 14px;background:rgba(245,242,236,.07);
   border:1px solid rgba(245,242,236,.14);border-radius:var(--r);
   color:#F5F2EC;font-size:.92rem;font-family:inherit;width:100%;
-  -webkit-appearance:none;appearance:none;transition:border-color .15s;
+  -webkit-appearance:none;appearance:none;
 }
 .field input::placeholder{color:rgba(245,242,236,.28)}
-.field input:focus,.field select:focus{
-  outline:2px solid #D4883A;outline-offset:1px;border-color:transparent;
-}
+.field input:focus,.field select:focus{outline:2px solid #D4883A;outline-offset:1px;border-color:transparent}
 .field select option{background:#1C1F26;color:#F5F2EC}
-.btn-submit{
-  display:flex;align-items:center;justify-content:center;
-  background:#D4883A;color:#111318;font-size:.95rem;font-weight:700;
-  padding:17px 24px;border-radius:var(--r);width:100%;margin-top:6px;
-  transition:background .15s,transform .15s;
-}
+.btn-submit{display:flex;align-items:center;justify-content:center;background:#D4883A;color:#111318;font-size:.95rem;font-weight:700;padding:17px 24px;border-radius:var(--r);width:100%;margin-top:6px;transition:background .15s,transform .15s}
 .btn-submit:hover{background:#E09040;transform:translateY(-1px)}
-.form-note{
-  font-size:.72rem;color:rgba(245,242,236,.36);
-  text-align:center;line-height:1.6;margin-top:4px;
-}
+.form-note{font-size:.72rem;color:rgba(245,242,236,.36);text-align:center;line-height:1.6;margin-top:4px}
 
-/* ─── FOOTER ─────────────────────────────────────────── */
-.footer{
-  background:#0D0F13;padding:24px 20px;
-  text-align:center;font-size:.72rem;
-  color:rgba(245,242,236,.25);line-height:1.7;border-top:1px solid rgba(245,242,236,.06);
-}
+/* ─── FOOTER ─────────────── */
+.footer{background:#0D0F13;padding:24px 20px;text-align:center;font-size:.72rem;color:rgba(245,242,236,.25);line-height:1.7;border-top:1px solid rgba(245,242,236,.06)}
+.footer a{color:rgba(245,242,236,.3)}
 
-/* ─── RESPONSIVE ─────────────────────────────────────────── */
+/* ─── RESPONSIVE ─────────────── */
 @media(max-width:420px){
   .ba{grid-template-columns:1fr}
   .fw{grid-template-columns:1fr}
   .pillars{grid-template-columns:1fr}
+  .speedos{grid-template-columns:repeat(3,1fr)}
 }
-@media(prefers-reduced-motion:reduce){
-  *{transition:none!important;animation:none!important}
-}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
-<!-- STICKY BAR -->
+<!-- STICKY -->
 <div class="sticky">
-  <div class="sticky-meta">
-    24 e 25/set<br>Alphaville · SP
-  </div>
-  <a href="https://form.typeform.com/to/NY2dpfCa" target="_blank" rel="noopener" class="btn">
-    Solicitar minha vaga →
-  </a>
+  <div class="sticky-meta">24 e 25/set<br>Alphaville · SP</div>
+  <a href="https://form.typeform.com/to/NY2dpfCa" target="_blank" rel="noopener" class="btn">Solicitar minha vaga →</a>
 </div>
 
-<!-- ══════════ HERO ══════════ -->
+<!-- ═══════════════════ HERO ═══════════════════ -->
 <section class="hero">
   <div class="wrap">
     <img
       src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/logo.svg"
-      alt="Oficinas Master"
-      class="hero-logo"
+      alt="Oficinas Master" class="hero-logo"
       onerror="this.style.display='none'"
     >
     <p class="eyebrow">Imersão presencial · Alphaville — SP</p>
@@ -505,8 +398,19 @@ details[open] summary::after{content:'−'}
       isso <em>virar empresa.</em>
     </h1>
     <p class="lead">
-      Dois dias presenciais para donos de oficinas que querem romper o próximo nível — com metodologia proprietária, aplicação prática e garantia de 100% do investimento.
+      Dois dias presenciais para donos de oficinas que querem romper o próximo nível — metodologia proprietária, aplicação prática e garantia incondicional de 100% do investimento.
     </p>
+
+    <!-- qualifier banner image -->
+    <div class="hero-qualifier">
+      <img
+        src="https://oficinasmaster.com.br/wp-content/uploads/2025/01/EXCLUSIVO-PARA-NEGOCIOS-QUE-FATUREM-ACIMA-DE-R-100.000MES.png"
+        alt="Exclusivo para negócios que faturem acima de R$100.000/mês"
+        loading="lazy"
+        onerror="this.parentElement.style.display='none'"
+      >
+    </div>
+
     <div class="hero-meta">
       <div class="hero-meta-row">
         <svg class="hmi" viewBox="0 0 16 16" fill="none">
@@ -530,18 +434,19 @@ details[open] summary::after{content:'−'}
         Para oficinas com faturamento acima de R$ 100 mil/mês
       </div>
     </div>
+
     <a href="https://form.typeform.com/to/NY2dpfCa" target="_blank" rel="noopener" class="btn-hero">
       Solicitar minha vaga na imersão →
     </a>
   </div>
 </section>
 
-<!-- ══════════ RECONHECIMENTO ══════════ -->
+<!-- ═══════════════════ RECONHECIMENTO ═══════════════════ -->
 <div class="media">
   <div class="wrap">
     <p class="eyebrow">Reconhecimento e presença</p>
     <div class="media-logos">
-      <span class="media-logo istoé">IstoÉ</span>
+      <span class="media-logo italic">IstoÉ</span>
       <span class="media-logo">Band</span>
       <span class="media-logo">ONU · Nações Unidas</span>
       <span class="media-logo">Bavaria BMW</span>
@@ -567,13 +472,13 @@ details[open] summary::after{content:'−'}
   </div>
 </div>
 
-<!-- ══════════ O PROBLEMA ══════════ -->
+<!-- ═══════════════════ O PROBLEMA ═══════════════════ -->
 <section class="section" id="problema">
   <div class="wrap">
     <div class="sh">
       <p class="eyebrow">O gargalo que ninguém te conta</p>
       <h2>Por que sua oficina trava — mesmo faturando mais de R$ 100 mil por mês?</h2>
-      <p class="lead">Você já venceu a primeira batalha: aprendeu a gerar receita. O desafio agora não é faturar mais — é transformar esse faturamento em <strong>lucro real, estrutura e liberdade.</strong></p>
+      <p class="lead">Você já venceu a primeira batalha: aprendeu a gerar receita. O desafio agora não é faturar mais — é transformar isso em <strong>lucro real, estrutura e liberdade.</strong></p>
     </div>
     <div class="ba">
       <div class="ba-col before">
@@ -604,69 +509,98 @@ details[open] summary::after{content:'−'}
   </div>
 </section>
 
-<!-- ══════════ O MÉTODO ══════════ -->
-<section class="section" id="metodo">
+<!-- ═══════════════════ O MÉTODO — dark ferrari ═══════════════════ -->
+<section class="section-ferrari" id="metodo">
   <div class="wrap">
     <div class="sh">
       <p class="eyebrow">Sistema Oficinas Master</p>
       <h2>Quatro pilares. Um método proprietário. Resultados aplicáveis em 90 dias.</h2>
-      <p class="lead">Mais de uma década transformando oficinas em empresas, sistematizado em quatro eixos que atuam juntos e se reforçam — do lucro à cultura.</p>
+      <p class="lead">Mais de uma década de aplicação em +1.000 oficinas, organizado em quatro eixos que atuam juntos.</p>
     </div>
+
+    <!-- speedometers as visual anchors -->
+    <div class="speedos">
+      <div class="speedo">
+        <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/velocimentro-1.webp" alt="Nível inicial" loading="lazy" onerror="this.parentElement.style.display='none'">
+        <div class="speedo-label">Onde você está</div>
+      </div>
+      <div class="speedo">
+        <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/velocimentro-2.webp" alt="Nível intermediário" loading="lazy" onerror="this.parentElement.style.display='none'">
+        <div class="speedo-label">Durante a imersão</div>
+      </div>
+      <div class="speedo">
+        <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/velocimentro-3.webp" alt="Nível máximo" loading="lazy" onerror="this.parentElement.style.display='none'">
+        <div class="speedo-label">Após implementar</div>
+      </div>
+    </div>
+
     <div class="pillars">
       <div class="pillar">
         <h3>Lucro</h3>
-        <p>Precificação correta, controle de margem, gestão de caixa e indicadores financeiros que revelam onde está o dinheiro da sua oficina.</p>
+        <p>Precificação correta, controle de margem, gestão de caixa e indicadores financeiros reais.</p>
         <div class="tags">
-          <span class="tag">R70/I30</span>
-          <span class="tag">TCMP2</span>
-          <span class="tag">PGE</span>
-          <span class="tag">MGV</span>
+          <span class="tag">R70/I30</span><span class="tag">TCMP2</span>
+          <span class="tag">PGE</span><span class="tag">MGV</span>
         </div>
       </div>
       <div class="pillar">
         <h3>Vendas</h3>
-        <p>Captação, conversão, ticket médio e previsibilidade de receita — para crescer com consistência, não por acaso.</p>
+        <p>Captação, conversão, ticket médio e previsibilidade de receita para crescer com consistência.</p>
         <div class="tags">
-          <span class="tag">GPS</span>
-          <span class="tag">CESP</span>
-          <span class="tag">3P's</span>
-          <span class="tag">Funil</span>
+          <span class="tag">GPS</span><span class="tag">CESP</span>
+          <span class="tag">3P's</span><span class="tag">PRL</span>
         </div>
       </div>
       <div class="pillar">
         <h3>Operação</h3>
-        <p>Processos de pátio, produtividade, controle de estoque e execução que funcionam mesmo quando o dono não está presente.</p>
+        <p>Pátio, processos, produtividade e execução que funcionam mesmo quando o dono não está.</p>
         <div class="tags">
-          <span class="tag">PAVE</span>
-          <span class="tag">QGP</span>
+          <span class="tag">PAVE</span><span class="tag">QGP</span>
           <span class="tag">COEX</span>
-          <span class="tag">PRL</span>
         </div>
       </div>
       <div class="pillar">
         <h3>Pessoas</h3>
-        <p>Contratação, liderança, desempenho, cultura e construção de um time que entrega resultado sem depender do dono.</p>
+        <p>Contratação, liderança, desempenho e cultura para montar um time de alta performance.</p>
         <div class="tags">
-          <span class="tag">EPI</span>
-          <span class="tag">CDC</span>
-          <span class="tag">Perfil comportamental</span>
+          <span class="tag">EPI</span><span class="tag">CDC</span>
+          <span class="tag">Comportamental</span>
         </div>
       </div>
     </div>
-    <div class="onu">
-      <p class="eyebrow">Reconhecimento Internacional</p>
-      <p>Somos a ÚNICA consultoria automotiva reconhecida internacionalmente pela ONU (Organização das Nações Unidas) pelos nossos esforços em geração de emprego, combate à fome e o desenvolvimento de oportunidades para o crescimento do país e do mundo. Isso não se compra — se constrói com resultado ao longo de anos.</p>
+
+    <!-- Ciclo image — shows how the method cycles -->
+    <div class="ciclo-wrap">
+      <img
+        src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/ciclo-copy.webp"
+        alt="Ciclo do Sistema Oficinas Master" loading="lazy"
+        style="opacity:.85"
+        onerror="this.parentElement.style.display='none'"
+      >
+    </div>
+
+    <!-- ONU recognition with badge -->
+    <div class="onu-block">
+      <img
+        src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/onu-copy.webp"
+        alt="Reconhecimento ONU" loading="lazy"
+        onerror="this.style.display='none'"
+      >
+      <div>
+        <p class="eyebrow">Reconhecimento Internacional</p>
+        <p>A ÚNICA consultoria automotiva reconhecida internacionalmente pela ONU pelos nossos esforços em geração de emprego, combate à fome e desenvolvimento de oportunidades para o crescimento do país e do mundo.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════ OS 2 DIAS ══════════ -->
+<!-- ═══════════════════ OS 2 DIAS ═══════════════════ -->
 <section class="section" id="programa">
   <div class="wrap">
     <div class="sh">
       <p class="eyebrow">A Experiência</p>
       <h2>Dois dias fora da operação para reconstruir sua empresa.</h2>
-      <p class="lead">Não é uma sala de aula. É um ambiente presencial de imersão com empresários no mesmo estágio que o seu — focado em aplicação, não em teoria.</p>
+      <p class="lead">Não é uma sala de aula. É um ambiente presencial de imersão com empresários no mesmo estágio — focado em aplicação, não em teoria.</p>
     </div>
     <div class="days">
       <div class="day">
@@ -699,13 +633,38 @@ details[open] summary::after{content:'−'}
   </div>
 </section>
 
-<!-- ══════════ CASES ══════════ -->
+<!-- ═══════════════════ GALLERY — fotos do evento ═══════════════════ -->
+<div class="gallery-section">
+  <div class="wrap">
+    <div class="sh">
+      <p class="eyebrow">Dentro da imersão</p>
+      <h2 style="font-size:1.4rem">Veja como é o ambiente — empresários, aplicação e transformação.</h2>
+    </div>
+  </div>
+  <div class="gallery-strip" role="region" aria-label="Fotos da imersão">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/1.webp" alt="Imersão Oficinas Master" loading="lazy">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/2.webp" alt="Imersão Oficinas Master" loading="lazy">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/3.webp" alt="Imersão Oficinas Master" loading="lazy">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/4.webp" alt="Imersão Oficinas Master" loading="lazy">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/5.webp" alt="Imersão Oficinas Master" loading="lazy">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/6.webp" alt="Imersão Oficinas Master" loading="lazy">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/7.webp" alt="Imersão Oficinas Master" loading="lazy">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/8.webp" alt="Imersão Oficinas Master" loading="lazy">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/9.webp" alt="Imersão Oficinas Master" loading="lazy">
+    <img src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/10.webp" alt="Imersão Oficinas Master" loading="lazy">
+  </div>
+  <div class="wrap">
+    <p class="gallery-hint">← deslize para ver mais →</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ CASES ═══════════════════ -->
 <section class="section" id="cases">
   <div class="wrap">
     <div class="sh">
       <p class="eyebrow">Resultados reais de egressos</p>
       <h2>O que aconteceu com donos de oficina que estavam no seu lugar.</h2>
-      <p class="lead">Não são promessas. São empresários reais, que aplicaram o método e construíram empresas — não apenas oficinas.</p>
+      <p class="lead">Não são promessas. São empresários reais que aplicaram o método e construíram empresas.</p>
     </div>
 
     <div class="stat-banner">
@@ -714,88 +673,78 @@ details[open] summary::after{content:'−'}
     </div>
 
     <div class="cases">
-
       <div class="case">
-        <div class="case-photo"
-          style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/MARCELO-NOVA-ERA.webp')">
-          <div class="case-photo-init">M</div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/MARCELO-NOVA-ERA.webp')">
+          <div class="case-init">M</div>
         </div>
         <div class="case-body">
-          <div class="case-name">Marcelo · Nova Era</div>
+          <div class="case-who">Marcelo · Nova Era</div>
           <div class="case-result">R$ 12 milhões/ano</div>
           <div class="case-desc">De mecânico que trabalhava 14 horas por dia a empresário com operação estruturada e previsível.</div>
         </div>
       </div>
-
       <div class="case">
-        <div class="case-photo"
-          style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/FABIO-ZACHI-.webp')">
-          <div class="case-photo-init">F</div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/FABIO-ZACHI-.webp')">
+          <div class="case-init">F</div>
         </div>
         <div class="case-body">
-          <div class="case-name">Fabio Zachi</div>
+          <div class="case-who">Fabio Zachi</div>
           <div class="case-result">R$ 54 milhões/ano</div>
-          <div class="case-desc">Um dos maiores faturamentos anuais entre os egressos da Oficinas Master. Empresa com gestão independente do dono.</div>
+          <div class="case-desc">Um dos maiores faturamentos anuais entre os egressos. Empresa com gestão independente do dono.</div>
         </div>
       </div>
-
       <div class="case">
-        <div class="case-photo"
-          style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/CIBELE-ZACHI.webp')">
-          <div class="case-photo-init">C</div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/CIBELE-ZACHI.webp')">
+          <div class="case-init">C</div>
         </div>
         <div class="case-body">
-          <div class="case-name">Cibele Zachi</div>
+          <div class="case-who">Cibele Zachi</div>
           <div class="case-result">150 colaboradores · 5 lojas</div>
-          <div class="case-desc">Expansão com sistema: cada nova loja foi aberta com processos, pessoas e gestão já estruturados.</div>
+          <div class="case-desc">Expansão com sistema: cada nova loja aberta com processos, pessoas e gestão já estruturados.</div>
         </div>
       </div>
-
       <div class="case">
-        <div class="case-photo"
-          style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/GABRIEL-BRANTES.webp')">
-          <div class="case-photo-init">G</div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/GABRIEL-BRANTES.webp')">
+          <div class="case-init">G</div>
         </div>
         <div class="case-body">
-          <div class="case-name">Gabriel Brantes · Bavaria BMW</div>
+          <div class="case-who">Gabriel Brantes · Bavaria BMW</div>
           <div class="case-result">Referência nacional desde 1987</div>
-          <div class="case-desc">Bavaria BMW — uma das oficinas mais reconhecidas do Brasil. Metodologia Oficinas Master aplicada na gestão e equipe.</div>
+          <div class="case-desc">Bavaria BMW — uma das oficinas mais reconhecidas do Brasil. Metodologia Oficinas Master na gestão e equipe.</div>
         </div>
       </div>
-
       <div class="case">
-        <div class="case-photo"
-          style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/GELSON-KOPLIN-.webp')">
-          <div class="case-photo-init">G</div>
+        <div class="case-photo" style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/GELSON-KOPLIN-.webp')">
+          <div class="case-init">G</div>
         </div>
         <div class="case-body">
-          <div class="case-name">Gelson Koplin</div>
-          <div class="case-result">3 franquias de pneus</div>
+          <div class="case-who">Gelson Koplin</div>
+          <div class="case-result">3 franquias premium</div>
           <div class="case-desc">1ª loja Michelin · 2ª loja Continental · 3ª loja Dunlop. Crescimento estruturado com pessoas e processos.</div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ══════════ MENTORES ══════════ -->
-<section class="section" id="mentores">
+<!-- ═══════════════════ MENTORES — dark bg-8 ═══════════════════ -->
+<section class="section-mentors" id="mentores">
   <div class="wrap">
     <div class="sh">
       <p class="eyebrow">Quem está na sua frente</p>
       <h2>Você vai aprender de quem viveu — não de quem estudou sobre.</h2>
+      <p class="lead">Os criadores do Sistema Oficinas Master. Mais de uma década de resultados no setor automotivo.</p>
     </div>
 
     <div class="mentor">
       <div class="mentor-photo"
-        style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2025/03/top-01.jpg')">
+        style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/sobre-rafa-copy.webp')">
         <div class="mentor-init">R</div>
       </div>
       <div class="mentor-body">
         <div class="mentor-name">Rafa Marrafon</div>
         <div class="mentor-role">Presidente · Oficinas Master Aceleradora</div>
-        <p class="mentor-bio">De mecânico a empresário. Presidente da Oficinas Master Aceleradora — empresa que cresceu 10× em 1 ano. Criou o Programa de Aceleração proprietário, que já treinou mais de mil pessoas em todo o Brasil. Business Coach e Mentor de mais de 100 empresas. Reconhecido pela IstoÉ como o maior especialista do Brasil em estrutura de oficinas que geram 8 dígitos de faturamento.</p>
+        <p class="mentor-bio">De mecânico a empresário. Presidente da Oficinas Master Aceleradora — empresa que cresceu 10× em 1 ano. Criou o Programa de Aceleração proprietário, que já treinou mais de 1.000 pessoas no Brasil. Business Coach e Mentor de mais de 100 empresas. Reconhecido pela Revista IstoÉ como o maior especialista do Brasil em estrutura de oficinas que geram 8 dígitos de faturamento.</p>
         <div class="mentor-stats">
           <div class="ms"><strong>+1.000</strong><span>Empresários treinados</span></div>
           <div class="ms"><strong>100+</strong><span>Empresas mentoradas</span></div>
@@ -805,13 +754,14 @@ details[open] summary::after{content:'−'}
     </div>
 
     <div class="mentor">
-      <div class="mentor-photo" style="background:var(--surface-2)">
+      <div class="mentor-photo"
+        style="background-image:url('https://oficinasmaster.com.br/wp-content/uploads/2024/01/sobre-fer-copy.webp')">
         <div class="mentor-init">F</div>
       </div>
       <div class="mentor-body">
         <div class="mentor-name">Fer Marrafon</div>
         <div class="mentor-role">Co-fundadora · Especialista em Pessoas</div>
-        <p class="mentor-bio">Co-fundadora da Oficinas Master. Especializada em perfil comportamental e comportamento humano. Ao longo da carreira, contribuiu para o crescimento e o sucesso de mais de 1.000 oficinas em todo o Brasil. Responsável pelo Pilar Pessoas do Sistema Oficinas Master — contratação, liderança, desempenho e cultura.</p>
+        <p class="mentor-bio">Co-fundadora da Oficinas Master. Especializada em perfil comportamental e comportamento humano. Contribuiu para o crescimento de mais de 1.000 oficinas em todo o Brasil. Responsável pelo Pilar Pessoas do Sistema — contratação, liderança, desempenho e cultura organizacional.</p>
         <div class="mentor-stats">
           <div class="ms"><strong>+1.000</strong><span>Oficinas impactadas</span></div>
           <div class="ms"><strong>Pessoas</strong><span>Especialidade central</span></div>
@@ -821,7 +771,7 @@ details[open] summary::after{content:'−'}
   </div>
 </section>
 
-<!-- ══════════ ENTREGA ══════════ -->
+<!-- ═══════════════════ ENTREGA ═══════════════════ -->
 <section class="section" id="entrega">
   <div class="wrap">
     <div class="sh">
@@ -831,7 +781,7 @@ details[open] summary::after{content:'−'}
     <ul class="delivs">
       <li class="deliv"><div class="dck">✓</div><span><strong>2 dias presenciais completos</strong> em Barueri – Alphaville com aplicação prática</span></li>
       <li class="deliv"><div class="dck">✓</div><span><strong>Metodologia proprietária completa</strong> — os 4 pilares do Sistema Oficinas Master</span></li>
-      <li class="deliv"><div class="dck">✓</div><span><strong>Diagnóstico empresarial</strong> — mapeamento dos gargalos reais da sua operação</span></li>
+      <li class="deliv"><div class="dck">✓</div><span><strong>Diagnóstico empresarial</strong> — mapeamento dos gargalos reais antes da imersão</span></li>
       <li class="deliv"><div class="dck">✓</div><span><strong>Plano de ação individual</strong> — o que implementar nos primeiros 90 dias</span></li>
       <li class="deliv"><div class="dck">✓</div><span><strong>Mentorias individuais</strong> com Rafa, Fer e especialistas convidados</span></li>
       <li class="deliv"><div class="dck">✓</div><span><strong>Networking qualificado</strong> — apenas donos com faturamento +R$ 100 mil/mês</span></li>
@@ -841,7 +791,7 @@ details[open] summary::after{content:'−'}
   </div>
 </section>
 
-<!-- ══════════ BÔNUS ══════════ -->
+<!-- ═══════════════════ BÔNUS ═══════════════════ -->
 <section class="section" id="bonus">
   <div class="wrap">
     <div class="sh">
@@ -852,17 +802,17 @@ details[open] summary::after{content:'−'}
       <div class="bonus">
         <div>
           <div class="bonus-title">Diagnóstico de Aceleração Empresarial</div>
-          <p class="bonus-desc">Reunião com um dos especialistas do Rafa Marrafon antes da imersão — para você chegar com clareza das áreas que precisam de melhoria. O mesmo diagnóstico usado dentro da operação de centenas de oficinas no Brasil.</p>
+          <p class="bonus-desc">Reunião com um especialista do Rafa Marrafon antes da imersão — clareza das áreas que precisam de melhoria. O mesmo diagnóstico usado na operação de centenas de oficinas no Brasil.</p>
         </div>
         <div class="bonus-price">
-          <div class="bonus-was">—</div>
+          <div class="bonus-was">&nbsp;</div>
           <div class="bonus-now">GRÁTIS</div>
         </div>
       </div>
       <div class="bonus">
         <div>
           <div class="bonus-title">Imersão On-line Rafa</div>
-          <p class="bonus-desc">Programa intensivo de 3 meses, projetado para donos de oficinas que desejam transformar seus negócios em casa, no seu ritmo — complementando o que foi aplicado na imersão presencial.</p>
+          <p class="bonus-desc">Programa intensivo de 3 meses para donos de oficinas que desejam transformar seus negócios no próprio ritmo — complementa o que foi aplicado na imersão presencial.</p>
         </div>
         <div class="bonus-price">
           <div class="bonus-was">R$997</div>
@@ -881,21 +831,20 @@ details[open] summary::after{content:'−'}
       </div>
     </div>
     <div class="bonus-total">
-      <span>Valor total dos bônus</span>
-      <strong>R$ 23.497 em bônus incluídos</strong>
+      <span>Valor total dos bônus incluídos</span>
+      <strong>R$ 23.497</strong>
     </div>
   </div>
 </section>
 
-<!-- ══════════ INVESTIMENTO ══════════ -->
+<!-- ═══════════════════ INVESTIMENTO ═══════════════════ -->
 <section class="section" id="investimento">
   <div class="wrap">
     <div class="sh">
       <p class="eyebrow">O investimento</p>
       <h2>Quanto custa não resolver o gargalo da sua empresa?</h2>
-      <p class="lead">Se sua oficina fatura R$ 100 mil/mês com 10% de margem, você tem R$ 10 mil de lucro. Aumentar essa margem em 15 pontos com o método certo já paga o investimento inteiro no primeiro mês.</p>
+      <p class="lead">Se sua oficina fatura R$ 100 mil/mês com 10% de margem, aumentar essa margem em 15 pontos com o método certo já paga o investimento inteiro no primeiro mês.</p>
     </div>
-
     <div class="value-box">
       <p class="eyebrow">O que você está recebendo</p>
       <div class="value-line"><span>2 dias presenciais + metodologia completa</span><strong>Incluído</strong></div>
@@ -906,13 +855,12 @@ details[open] summary::after{content:'−'}
       <div class="value-line"><span>Bônus: Mentoria On-line Rafa</span><strong>R$22.500 grátis</strong></div>
       <div class="value-line"><span>Garantia incondicional de 100%</span><strong>Incluído</strong></div>
     </div>
-
     <div class="price-box">
       <p class="price-eye">Investimento total na imersão</p>
       <div class="price-main">R$ 15.000</div>
-      <p class="price-note">À vista ou parcelado — condições apresentadas na sua aplicação</p>
+      <p class="price-note">À vista ou parcelado — condições apresentadas na aplicação</p>
       <div class="price-calc">
-        Se você gerar apenas R$ 1.250 adicionais de lucro por mês durante 12 meses, o investimento se paga integralmente — e você ainda fica com um sistema que continua gerando resultado.
+        Se você gerar apenas R$ 1.250 adicionais de lucro por mês durante 12 meses, o investimento se paga integralmente — e o sistema continua gerando resultado.
       </div>
       <a href="https://form.typeform.com/to/NY2dpfCa" target="_blank" rel="noopener" class="btn-primary">
         Solicitar minha vaga →
@@ -921,25 +869,26 @@ details[open] summary::after{content:'−'}
   </div>
 </section>
 
-<!-- ══════════ GARANTIA ══════════ -->
+<!-- ═══════════════════ GARANTIA ═══════════════════ -->
 <section class="section" id="garantia">
   <div class="wrap">
     <div class="guar">
-      <div class="guar-icon">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <path d="M11 2L3 6.5v6c0 4.75 3.4 9.2 8 10.25C16.6 21.7 20 17.25 20 12.5v-6L11 2z" stroke="#111318" stroke-width="2"/>
-          <path d="M7.5 11l2.5 2.5 5-5" stroke="#111318" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
+      <img
+        src="https://oficinasmaster.com.br/wp-content/uploads/2024/01/GARANTIA-copy.webp"
+        alt="Garantia incondicional" class="guar-badge" loading="lazy"
+        onerror="this.style.display='none'"
+      >
       <h2>Você não precisa assumir o risco sozinho.</h2>
-      <p>Temos não uma, mas duas garantias. Porque acreditamos que o conhecimento que será adquirido pode transformar a sua empresa — e estamos prontos para assumir o risco junto com você.</p>
+      <p style="font-size:.875rem;color:var(--text-2);line-height:1.7;max-width:44ch;margin:12px auto 0">
+        Temos não uma, mas duas garantias. Porque acreditamos que o conhecimento adquirido pode transformar a sua empresa — e estamos prontos para assumir o risco junto com você.
+      </p>
       <div class="guar-conditions">
         <div class="guar-cond">
           <strong>Garantia de Satisfação</strong>
           Se no final do evento você não estiver totalmente satisfeito com o conteúdo, procure nosso time — devolvemos 100% do seu dinheiro. Sem questionamento, sem burocracia.
         </div>
         <div class="guar-cond">
-          <strong>Garantia de Resultados</strong>
+          <strong>Garantia de Resultados (12 meses)</strong>
           Se você comprovadamente aplicar todo o nosso método e, no final de 12 meses, não tiver aumentado os seus lucros — devolvemos 100% do valor investido.
         </div>
       </div>
@@ -947,20 +896,20 @@ details[open] summary::after{content:'−'}
   </div>
 </section>
 
-<!-- ══════════ PARA QUEM ══════════ -->
+<!-- ═══════════════════ PARA QUEM ═══════════════════ -->
 <section class="section" id="para-quem">
   <div class="wrap">
     <div class="sh">
       <p class="eyebrow">Qualificação</p>
       <h2>Esta imersão é para você?</h2>
-      <p class="lead">Não vendemos para todo mundo. Essa é uma escolha deliberada: quanto mais qualificada a sala, mais rica é a experiência para quem participa.</p>
+      <p class="lead">Não vendemos para todo mundo. Essa é uma escolha deliberada: quanto mais qualificada a sala, mais rica é a experiência.</p>
     </div>
     <div class="fw">
       <div class="fw-col is">
         <h3>É para você se:</h3>
         <ul class="fw-list">
           <li>Sua oficina fatura acima de R$ 100 mil/mês</li>
-          <li>Quer crescer sem aumentar proporcionalmente a dor de cabeça</li>
+          <li>Quer crescer sem aumentar a dor de cabeça proporcionalmente</li>
           <li>Sua empresa ainda depende demais de você</li>
           <li>Quer transformar faturamento em lucro real</li>
           <li>Está disposto a implementar o que aprender</li>
@@ -982,7 +931,7 @@ details[open] summary::after{content:'−'}
   </div>
 </section>
 
-<!-- ══════════ FAQ ══════════ -->
+<!-- ═══════════════════ FAQ ═══════════════════ -->
 <section class="section" id="faq">
   <div class="wrap">
     <div class="sh">
@@ -992,27 +941,27 @@ details[open] summary::after{content:'−'}
     <div class="faq">
       <details>
         <summary>Para qual tipo de oficina é a imersão?</summary>
-        <div class="faq-body">Para donos e donas de oficinas automotivas — mecânica, elétrica, multimarcas, funilaria, revisão, pneus ou afins — com faturamento a partir de R$ 100 mil por mês. É um evento voltado a quem possui sede de crescimento e busca aperfeiçoar o negócio em habilidades empresariais e estratégias de crescimento.</div>
+        <div class="faq-body">Para donos e donas de oficinas automotivas — mecânica, elétrica, multimarcas, funilaria, revisão, pneus ou afins — com faturamento a partir de R$ 100 mil por mês. O fator decisivo é o estágio de crescimento em que o empresário se encontra.</div>
       </details>
       <details>
         <summary>Quantos dias dura a imersão?</summary>
-        <div class="faq-body">São 2 dias presenciais completos — 24 e 25 de setembro — em Barueri, Alphaville, São Paulo. Os dois dias são intensivos: diagnóstico, aplicação prática, plano de ação individual e mentorias individuais com especialistas.</div>
+        <div class="faq-body">São 2 dias presenciais completos — 24 e 25 de setembro — em Barueri, Alphaville, São Paulo. Os dois dias são intensivos: diagnóstico, aplicação prática, plano de ação individual e mentorias.</div>
       </details>
       <details>
         <summary>O que acontece se eu não ficar satisfeito?</summary>
-        <div class="faq-body">Você recebe 100% do investimento de volta, sem burocracia. A Oficinas Master oferece duas garantias: satisfação (se ao final do evento você não estiver satisfeito, devolvemos tudo) e resultado (se você aplicar o método completo e em 12 meses não aumentar seus lucros, também devolvemos tudo).</div>
+        <div class="faq-body">Você recebe 100% do investimento de volta, sem burocracia. A Oficinas Master oferece duas garantias: (1) satisfação — se ao final do evento não estiver satisfeito, devolvemos tudo; (2) resultado — se aplicar o método completo e em 12 meses não aumentar seus lucros, também devolvemos tudo.</div>
       </details>
       <details>
         <summary>Como funciona o processo de inscrição?</summary>
-        <div class="faq-body">Você preenche o formulário de aplicação. Nossa equipe analisa o perfil e entra em contato para uma conversa de qualificação. Se for um fit, você recebe as condições de pagamento e confirma sua vaga.</div>
+        <div class="faq-body">Você preenche o formulário de aplicação. Nossa equipe analisa o perfil e entra em contato para uma conversa de qualificação. Se for um fit, você recebe as condições e confirma sua vaga.</div>
       </details>
       <details>
         <summary>Posso parcelar o investimento?</summary>
-        <div class="faq-body">Sim. Oferecemos condições de parcelamento — consulte nossa equipe durante o processo de aplicação para conhecer as opções disponíveis para sua situação.</div>
+        <div class="faq-body">Sim. Oferecemos condições de parcelamento — consulte nossa equipe durante o processo de aplicação para conhecer as opções disponíveis.</div>
       </details>
       <details>
-        <summary>O que devo levar ou preparar antes do evento?</summary>
-        <div class="faq-body">Recomendamos trazer um bloco de notas, caneta e laptop ou tablet. Use roupas confortáveis e traga um agasalho, pois a temperatura pode variar. Após confirmar sua vaga, você receberá um diagnóstico pré-imersão para chegar preparado e aproveitar cada hora dos 2 dias.</div>
+        <summary>O que devo levar ou preparar?</summary>
+        <div class="faq-body">Recomendamos trazer um bloco de notas, caneta e laptop ou tablet. Use roupas confortáveis e traga agasalho, pois a temperatura pode variar. Após confirmar sua vaga, você recebe um diagnóstico pré-imersão para chegar preparado e aproveitar cada hora.</div>
       </details>
       <details>
         <summary>Onde acontece o evento?</summary>
@@ -1022,13 +971,13 @@ details[open] summary::after{content:'−'}
   </div>
 </section>
 
-<!-- ══════════ CTA FINAL ══════════ -->
+<!-- ═══════════════════ CTA FINAL ═══════════════════ -->
 <section class="cta-final" id="aplicar">
   <div class="wrap">
     <div class="sh">
       <p class="eyebrow" style="color:#D4883A">Solicite sua vaga</p>
-      <h2 style="font-size:clamp(1.55rem,5vw,2.3rem)">O próximo nível da sua empresa começa com uma decisão.</h2>
-      <p class="lead">Preencha o formulário. Nossa equipe entra em contato em até 24 horas para verificar elegibilidade e apresentar as condições de pagamento.</p>
+      <h2>O próximo nível da sua empresa começa com uma decisão.</h2>
+      <p class="lead">Preencha o formulário. Nossa equipe entra em contato em até 24 horas para verificar elegibilidade e apresentar as condições.</p>
     </div>
 
     <form class="cta-form" id="form-app" onsubmit="handleForm(event)">
@@ -1066,19 +1015,18 @@ details[open] summary::after{content:'−'}
         Solicitar minha vaga na Imersão →
       </button>
       <p class="form-note">
-        Vagas limitadas · Barueri – Alphaville – SP · 24 e 25 de setembro · R$ 15.000<br>
+        Vagas limitadas · Barueri – Alphaville · 24 e 25 de setembro · R$ 15.000<br>
         Não vendemos seu e-mail ou qualquer informação para terceiros.
       </p>
     </form>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="wrap">
     © 2025 Aceleradora Oficinas Master — CNPJ 37.815.934/0001-91<br>
     Avenida Nóbrega, 968, zona 04 – Maringá – PR<br>
-    <a href="#" style="color:rgba(245,242,236,.3)">Políticas de privacidade</a>
+    <a href="#">Políticas de privacidade</a>
   </div>
 </footer>
 
@@ -1090,12 +1038,11 @@ function handleForm(e) {
   btn.disabled = true;
   btn.style.opacity = '.7';
   setTimeout(() => {
-    // In production: send to backend or redirect to Typeform
     window.open('https://form.typeform.com/to/NY2dpfCa', '_blank');
     btn.textContent = '✓ Redirecionando... Entraremos em contato em até 24h.';
     btn.style.background = '#1A6030';
     btn.style.color = '#fff';
     btn.style.opacity = '1';
-  }, 800);
+  }, 700);
 }
 </script>
