@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mapa do DNA da Oficina (A4)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap">
+<style>
+@page{size:A4 landscape;margin:0}
+:root{--red:#F20D0D;--soft:#FDEFEF;--tint:#F7B3B3;--ink:#141414;--ink2:#4A4545;--line:#D9CFCF;--grey:#F3F1F1}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{font-family:"Archivo","Helvetica Neue",Arial,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:297mm;height:210mm;padding:7mm 9mm 6mm;display:flex;flex-direction:column;gap:3.5mm;overflow:hidden}
+
+/* header */
+.top{display:flex;align-items:center;gap:6mm}
+.brand{font-weight:900;font-style:italic;font-size:13pt;letter-spacing:-.02em;padding-right:6mm;border-right:2.2px solid var(--red);line-height:1}
+.brand span{color:var(--red)}
+.brand small{display:block;font-size:5pt;font-style:normal;letter-spacing:.3em;color:var(--red);margin-top:1mm;font-weight:700}
+.eyebrow{font-size:6.5pt;font-weight:700;letter-spacing:.28em;color:var(--ink2)}
+h1{font-size:19pt;font-weight:900;letter-spacing:-.01em;line-height:1.05}
+.meta{margin-left:auto;display:grid;grid-template-columns:auto 52mm;gap:1.6mm 2.5mm;align-items:end;font-size:7pt;font-weight:700}
+.meta .ln{border-bottom:1px solid var(--ink);height:4.2mm}
+
+.grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:5mm;min-height:0}
+.col{display:flex;flex-direction:column;gap:3mm;min-height:0}
+.block{border:1.4px solid var(--red);border-radius:3.2mm;overflow:hidden;display:flex;flex-direction:column}
+.grow{flex:1}
+.bh{background:var(--red);color:#fff;display:flex;align-items:center;gap:2.5mm;padding:1.8mm 3.5mm}
+.num{background:#fff;color:var(--red);font-weight:900;font-size:8pt;border-radius:1.2mm;padding:.3mm 1.6mm}
+.bh h2{font-size:9.5pt;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+.bb{padding:2.2mm 3.5mm 2.6mm;display:flex;flex-direction:column;gap:1.8mm;flex:1}
+.lead{font-size:6.8pt;line-height:1.35;color:var(--ink2)}
+.lead b{color:var(--ink)}
+.lbl{font-size:6.5pt;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+
+.field{border:1px solid var(--red);border-radius:1.8mm;height:7mm}
+
+/* table 01 */
+table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:1.8mm;overflow:hidden;table-layout:fixed}
+th{background:var(--ink);color:#fff;font-size:5.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-align:left;padding:1.6mm 2mm}
+td{border-top:1px solid var(--line);padding:1.2mm 2mm;vertical-align:top;font-size:6pt;height:10.5mm}
+td+td,th+th{border-left:1px solid var(--line)}
+td .tag{font-weight:800;color:var(--red);letter-spacing:.1em;font-size:5.5pt}
+td.ex{color:#9A8F8F;font-style:italic}
+tr.ex td{height:auto;padding:1mm 2mm;background:var(--soft)}
+
+/* roles */
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2mm;flex:1}
+.role{border:1px solid var(--line);border-radius:1.8mm;padding:1.8mm 2.2mm;display:flex;flex-direction:column;gap:1.2mm}
+.role h3{font-size:7.2pt;font-weight:800}
+.rline{display:flex;flex-direction:column;flex:1}
+.rline span{font-size:5.6pt;font-weight:800;letter-spacing:.12em;color:var(--red)}
+.rline i{flex:1;border-bottom:1px solid var(--line);min-height:4.5mm}
+.rline i+i{margin-top:0}
+
+/* pyramid */
+.pyr{display:grid;grid-template-columns:1fr 30mm 1.15fr;border:1px solid var(--line);border-radius:1.8mm;overflow:hidden}
+.pyr .h{background:var(--ink);color:#fff;font-size:5.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:1.6mm 2mm}
+.pyr .h.c{text-align:center}
+.pyr .c1{background:var(--grey);padding:1.6mm 2.2mm;font-size:6pt;line-height:1.3;border-top:1px solid #fff;height:11.5mm}
+.pyr .c1 b{display:block;font-size:6.3pt;letter-spacing:.1em;margin-bottom:.5mm}
+.pyr .c3{background:var(--soft);padding:1.4mm 2.2mm;border-top:1px solid #fff;display:flex;flex-direction:column}
+.pyr .c3 b{font-size:6pt;letter-spacing:.08em;color:var(--red)}
+.pyr .c3 i{flex:1;border-bottom:1px solid var(--tint)}
+.tri{grid-column:2;grid-row:2 / span 3;position:relative}
+.tri svg{position:absolute;inset:0;width:100%;height:100%}
+.tri .lab{position:absolute;left:0;right:0;text-align:center;font-size:6.5pt;font-weight:800}
+
+/* rituals */
+.rits{display:grid;grid-template-columns:repeat(4,1fr);gap:1.8mm}
+.rit{background:var(--soft);border-left:1.2mm solid var(--red);border-radius:0 1.5mm 1.5mm 0;padding:1.5mm 2mm;display:flex;flex-direction:column;gap:.7mm}
+.rit .f{font-size:5.3pt;font-weight:800;letter-spacing:.14em;color:var(--red)}
+.rit h4{font-size:6.8pt;font-weight:800}
+.rit p{font-size:5.6pt;line-height:1.3;color:var(--ink2)}
+.rit .when{display:flex;gap:1mm;align-items:center;font-size:5.5pt;font-weight:700;margin-top:auto;padding-top:.8mm}
+.rit .when i{flex:1;border-bottom:1px solid var(--tint);height:3mm}
+.box{width:2.6mm;height:2.6mm;border:1px solid var(--red);border-radius:.5mm;background:#fff;flex:none}
+
+/* thermometer */
+.th{display:grid;grid-template-columns:34mm 1fr;gap:1.1mm 3mm;align-items:center}
+.th .n{border-bottom:1px solid var(--ink);height:3.8mm;font-size:5.6pt;font-weight:800;color:var(--red);letter-spacing:.1em;display:flex;align-items:flex-end;padding-bottom:.4mm}
+.dots{display:grid;grid-template-columns:repeat(10,1fr);gap:1mm}
+.dots span{height:3.8mm;border:1px solid var(--tint);border-radius:1mm;font-size:5.4pt;display:flex;align-items:center;justify-content:center;color:#9A8F8F;font-weight:700}
+.dots span:nth-child(-n+4){background:#fff}
+.dots span:nth-child(n+5):nth-child(-n+7){background:var(--soft)}
+.dots span:nth-child(n+8){background:#FBDADA}
+.scale{grid-column:2;display:flex;justify-content:space-between;font-size:5pt;letter-spacing:.12em;color:var(--ink2);font-weight:700;text-transform:uppercase}
+.sum{display:flex;gap:3mm;align-items:center;border-top:1px dashed var(--line);padding-top:1.6mm;font-size:6.2pt}
+.sum b{font-weight:800}
+.sum .bx{border:1px solid var(--red);border-radius:1.2mm;width:14mm;height:6mm}
+.sum .ln{flex:1;border-bottom:1px solid var(--line);height:4mm}
+
+.callout{background:var(--soft);border-left:1.2mm solid var(--red);padding:1.3mm 3mm;border-radius:0 1.5mm 1.5mm 0}
+.callout .hl{color:var(--red);font-weight:800;font-size:7pt}
+.callout p{font-size:6.2pt;line-height:1.35;color:var(--ink2)}
+.quote{background:var(--red);color:#fff;border-radius:2.2mm;padding:2.4mm 4mm;text-align:center;font-weight:700;font-size:8pt}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div class="brand">oficinas <span>master</span><small>ACELERADORA</small></div>
+    <div>
+      <div class="eyebrow">IMERSÃO · MAPA 2</div>
+      <h1>MAPA DO DNA DA OFICINA</h1>
+    </div>
+    <div class="meta">
+      <span>Oficina</span><span class="ln"></span>
+      <span>Responsável</span><span class="ln"></span>
+      <span>Data</span><span class="ln" style="width:26mm"></span>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- LEFT -->
+    <div class="col">
+      <section class="block">
+        <div class="bh"><span class="num">01</span><h2>O DNA da Oficina</h2></div>
+        <div class="bb">
+          <p class="lead">Traga a <b>Missão, Visão e Valores</b> do Mapa 1. Cada valor precisa virar um <b>comportamento que dá para ver</b>. Um valor que ninguém consegue observar não vira cultura.</p>
+          <div class="lbl">Nosso DNA em uma frase</div>
+          <div class="field"></div>
+          <table>
+            <thead><tr><th style="width:27%">Valor</th><th>Comportamento observável</th><th style="width:30%">Como vamos medir</th></tr></thead>
+            <tbody>
+              <tr class="ex"><td class="ex">Ex.: Transparência</td><td class="ex">Todo orçamento sai com foto ou vídeo da peça</td><td class="ex">% de OS com mídia anexada</td></tr>
+              <tr><td><span class="tag">VALOR 1</span></td><td></td><td></td></tr>
+              <tr><td><span class="tag">VALOR 2</span></td><td></td><td></td></tr>
+              <tr><td><span class="tag">VALOR 3</span></td><td></td><td></td></tr>
+              <tr><td><span class="tag">VALOR 4</span></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="block grow">
+        <div class="bh"><span class="num">02</span><h2>Identidade por cargo</h2></div>
+        <div class="bb">
+          <p class="lead">As perguntas do Mapa 1, agora para cada função: <b>quem você é aqui dentro, o que você faz e o que você entrega?</b></p>
+          <div class="roles">
+            <div class="role"><h3>Mecânico</h3>
+              <div class="rline"><span>SOU</span><i></i><i></i></div>
+              <div class="rline"><span>FAÇO</span><i></i><i></i></div>
+              <div class="rline"><span>ENTREGO</span><i></i><i></i></div>
+            </div>
+            <div class="role"><h3>Consultor / Recepção</h3>
+              <div class="rline"><span>SOU</span><i></i><i></i></div>
+              <div class="rline"><span>FAÇO</span><i></i><i></i></div>
+              <div class="rline"><span>ENTREGO</span><i></i><i></i></div>
+            </div>
+            <div class="role"><h3>Gestor / Líder</h3>
+              <div class="rline"><span>SOU</span><i></i><i></i></div>
+              <div class="rline"><span>FAÇO</span><i></i><i></i></div>
+              <div class="rline"><span>ENTREGO</span><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col">
+      <section class="block">
+        <div class="bh"><span class="num">03</span><h2>Das crenças do dono à cultura do time</h2></div>
+        <div class="bb">
+          <p class="lead">O dono muda as crenças dele. <b>O DNA muda as crenças da equipe.</b> Escreva como cada crença aparece no seu time.</p>
+          <div class="pyr">
+            <div class="h">Crença do dono</div><div class="h c">Nível</div><div class="h">Na minha equipe vira…</div>
+            <div class="c1" style="grid-row:2"><b>MERECIMENTO</b>Ter uma oficina milionária, com patrimônio, lucro e crescimento</div>
+            <div class="tri">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="50,3 97,100 3,100" fill="#F7B3B3"/></svg>
+              <div class="lab" style="top:22%">TENHO</div>
+              <div class="lab" style="top:52%">FAÇO</div>
+              <div class="lab" style="top:83%">SOU</div>
+            </div>
+            <div class="c3" style="grid-row:2;grid-column:3"><b>RESULTADO + RECONHECIMENTO</b><i></i><i></i></div>
+            <div class="c1" style="grid-row:3"><b>CAPACIDADE</b>Ser capaz de gerir com resultado e entregar o extraordinário</div>
+            <div class="c3" style="grid-row:3;grid-column:3"><b>RITUAIS + COMPORTAMENTOS</b><i></i><i></i></div>
+            <div class="c1" style="grid-row:4"><b>IDENTIDADE</b>Ser um empresário/gestor de sucesso</div>
+            <div class="c3" style="grid-row:4;grid-column:3"><b>DNA ASSUMIDO PELO TIME</b><i></i><i></i></div>
+          </div>
+          <div class="callout">
+            <div class="hl">O time não entrega o resultado que ainda não é e não faz.</div>
+            <p>Se a equipe fosse e fizesse o DNA, a oficina já teria o resultado. A base da pirâmide vem primeiro.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="bh"><span class="num">04</span><h2>Rituais de aculturamento</h2></div>
+        <div class="bb">
+          <p class="lead">O estímulo certo, <b>na intensidade certa, pelo tempo certo</b>. Marque o que já roda e defina quando começa o resto.</p>
+          <div class="rits">
+            <div class="rit"><span class="f">DIÁRIO · 10 MIN</span><h4>Reunião do DNA</h4><p>Valor do dia + uma história real de quem viveu o valor.</p><div class="when"><span class="box"></span>Já fazemos</div><div class="when" style="padding-top:0;margin-top:0">Início:<i></i></div></div>
+            <div class="rit"><span class="f">SEMANAL</span><h4>Caso DNA</h4><p>Um caso real, bom ou ruim, discutido à luz dos valores.</p><div class="when"><span class="box"></span>Já fazemos</div><div class="when" style="padding-top:0;margin-top:0">Início:<i></i></div></div>
+            <div class="rit"><span class="f">MENSAL</span><h4>Destaque DNA</h4><p>Reconhecimento público de quem mais viveu os valores.</p><div class="when"><span class="box"></span>Já fazemos</div><div class="when" style="padding-top:0;margin-top:0">Início:<i></i></div></div>
+            <div class="rit"><span class="f">TRIMESTRAL</span><h4>Termômetro</h4><p>Reaplicar o bloco 05 e comparar resultados.</p><div class="when"><span class="box"></span>Já fazemos</div><div class="when" style="padding-top:0;margin-top:0">Início:<i></i></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block grow">
+        <div class="bh"><span class="num">05</span><h2>Termômetro do DNA</h2></div>
+        <div class="bb">
+          <p class="lead">De 1 a 10: <b>quanto a equipe vive cada valor hoje?</b> Circule a nota.</p>
+          <div class="th">
+            <div class="n">VALOR 1</div><div class="dots"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
+            <div class="n">VALOR 2</div><div class="dots"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
+            <div class="n">VALOR 3</div><div class="dots"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
+            <div class="n">VALOR 4</div><div class="dots"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
+            <div class="scale"><span>Não vive</span><span>Às vezes</span><span>Vive sempre</span></div>
+          </div>
+          <div class="sum"><b>Média</b><span class="bx"></span><b>Primeira ação:</b><span class="ln"></span></div>
+        </div>
+      </section>
+
+      <div class="quote">“Primeiro eu mudo quem eu sou. Depois o meu time muda quem ele é. Aí a oficina muda o que ela tem.”</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
