@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:plano-de-guerra": "node plano-de-guerra-2027/build.mjs",
+    "build:pea-2027": "node pea-2027/build.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },

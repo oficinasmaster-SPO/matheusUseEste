@@ -1,0 +1,861 @@
+<!--
+  PEA 2027 · PLANEJAMENTO ESTRATÉGICO DE ACELERAÇÃO · OFICINAS MASTER — Página de captação (lançamento semente)
+  ==========================================================================
+  COMO USAR NO WORDPRESS
+  1. Crie uma página com template de largura total / sem título (ex.: "Elementor Canvas",
+     "Largura total", "Sem cabeçalho e rodapé" — depende do tema).
+  2. Gutenberg: adicione o bloco "HTML personalizado" e cole TODO este arquivo.
+     Elementor: widget "HTML" em uma seção de largura total e sem espaçamento.
+  3. Edite o bloco PEA27_CONFIG logo abaixo (data do encontro, webhook, obrigado, WhatsApp).
+  4. Troque a URL da foto dos anfitriões (procure por "FOTO") e, se quiser, a foto de fundo do topo (procure por "FUNDO").
+  Todo o CSS fica isolado em #pea27 e não interfere no restante do site.
+  Não deixe linhas em branco ao editar (o WordPress pode inserir <p> nelas no editor clássico).
+-->
+<script>
+/* ====================== CONFIGURAÇÃO — edite aqui ====================== */
+window.PEA27_CONFIG = {
+  /* Data e hora do encontro no fuso de Brasília (-03:00). Deixe '' para esconder a contagem regressiva. */
+  eventDate: '2026-12-03T20:00:00-03:00', /* ATENÇÃO: data de EXEMPLO — troque pela data real */
+  eventDurationMin: 120,
+  /* Para onde vão os leads: n8n, Make, Zapier, RD Station, ActiveCampaign ou a API do seu CRM.
+     Vazio = modo demonstração (nada é enviado e um aviso aparece após a inscrição). */
+  webhookUrl: '',
+  /* 'form' = x-www-form-urlencoded sem CORS (n8n, Make, Zapier, RD Station)
+     'json' = JSON com CORS e verificação de resposta (API própria / CRM) */
+  webhookFormat: 'form',
+  /* Campos fixos enviados com cada lead. Ex. RD Station: { token_rdstation: 'SEU_TOKEN', identificador: 'pea-2027' } */
+  extraFields: {},
+  /* Página de obrigado. Se preenchida, o lead é redirecionado após a inscrição. */
+  redirectUrl: '',
+  /* Link do grupo do WhatsApp exibido na confirmação (usado quando não há redirectUrl). */
+  whatsappGroupUrl: '',
+  /* Link da política de privacidade (deixe '' para ocultar). */
+  privacyUrl: '/politica-de-privacidade/'
+};
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* ---------- Tokens + container de largura total (isolado do tema) ---------- */
+#pea27{--pea-sbw:0px;--pea-bg:#0A0A0B;--pea-bg2:#0E0E10;--pea-surface:#141417;--pea-line:rgba(255,255,255,.07);--pea-line2:rgba(255,255,255,.13);--pea-text:#F4F2ED;--pea-muted:#A8A6A0;--pea-dim:#7A7872;--pea-red:#D90429;--pea-red-hi:#FF2E46;--pea-paper:#F2F0EB;--pea-ink:#121212;--pea-ink-muted:#57554F;--pea-display:"Barlow Condensed","Arial Narrow","Roboto Condensed",Impact,sans-serif;--pea-sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--pea-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--pea-gutter:20px;--pea-max:1200px}
+#pea27{position:relative !important;display:block !important;width:calc(100vw - var(--pea-sbw)) !important;max-width:none !important;margin:0 calc(50% - 50vw + var(--pea-sbw) / 2) !important;padding:0 !important;overflow:hidden;background:var(--pea-bg);color:var(--pea-text);font-family:var(--pea-sans);font-size:16px;font-weight:400;line-height:1.6;letter-spacing:0;text-align:left;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+@media (min-width:768px){#pea27{--pea-gutter:32px}}
+/* ---------- Reset local (vence estilos comuns de temas sem afetar o site) ---------- */
+#pea27,#pea27 *,#pea27 *::before,#pea27 *::after{box-sizing:border-box}
+#pea27 :where(h1,h2,h3,h4,p,ul,ol,li,figure,figcaption,blockquote,form){margin:0;padding:0;border:0;background:none}
+#pea27 :where(ul,ol,li){list-style:none}
+#pea27 :where(ul,ol)>li::before,#pea27 blockquote::before,#pea27 blockquote::after{content:none}
+#pea27 :where(h1,h2,h3,h4){font-family:var(--pea-display);font-weight:800;font-style:normal;line-height:.98;letter-spacing:-.005em;text-transform:uppercase;color:inherit;text-wrap:balance}
+#pea27 :where(p,li,figcaption,blockquote){font:inherit;color:inherit;font-style:normal;quotes:none}
+#pea27 :where(a){color:inherit;text-decoration:none;box-shadow:none;border:0;background:none}
+#pea27 :where(strong,b){font-weight:700;color:inherit}
+#pea27 :where(em,i){font-style:normal}
+#pea27 :where(img,svg){display:block;max-width:none}
+#pea27 :where(button,input,select){font:inherit;color:inherit;margin:0;text-transform:none;letter-spacing:normal}
+#pea27 [hidden]{display:none !important}
+#pea27 ::selection{background:var(--pea-red);color:#fff}
+#pea27 a:focus-visible,#pea27 button:focus-visible{outline:2px solid var(--pea-red-hi);outline-offset:3px}
+#pea27 .pea27-i{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;width:20px;height:20px}
+#pea27 .pea27-wrap{width:100%;max-width:calc(var(--pea-max) + var(--pea-gutter) * 2);margin:0 auto;padding:0 var(--pea-gutter)}
+#pea27 .pea27-red{color:var(--pea-red-hi)}
+/* ---------- Tipografia base ---------- */
+#pea27 .pea27-eyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;font-family:var(--pea-mono);font-size:12px;font-weight:500;line-height:1.4;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-red-hi)}
+#pea27 .pea27-eyebrow::before{content:"";width:22px;height:1px;background:currentColor}
+#pea27 .pea27-h2{font-size:clamp(36px,4.8vw,64px);line-height:.96}
+#pea27 .pea27-h2 em{color:var(--pea-red-hi)}
+#pea27 .pea27-lead{font-size:clamp(17px,1.4vw,19px);line-height:1.6;color:var(--pea-muted);max-width:60ch}
+#pea27 .pea27-lead strong{color:var(--pea-text)}
+/* ---------- Botões ---------- */
+#pea27 .pea27-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:58px;padding:16px 26px;border:0;border-radius:4px;background:linear-gradient(180deg,#E8102F 0%,#C40325 100%);color:#fff;font-family:var(--pea-display);font-weight:700;font-size:19px;line-height:1.1;letter-spacing:.05em;text-transform:uppercase;text-align:center;text-decoration:none;cursor:pointer;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 14px 34px -12px rgba(217,4,41,.75);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;-webkit-appearance:none;appearance:none}
+#pea27 .pea27-btn::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-18deg);transition:left .7s ease;pointer-events:none}
+#pea27 .pea27-btn:hover{color:#fff;transform:translateY(-2px);filter:brightness(1.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 20px 44px -12px rgba(217,4,41,.9)}
+#pea27 .pea27-btn:hover::after{left:130%}
+#pea27 .pea27-btn:active{transform:translateY(0)}
+#pea27 .pea27-btn .pea27-i{width:20px;height:20px;stroke-width:2.2;transition:transform .2s ease}
+#pea27 .pea27-btn:hover .pea27-i{transform:translateX(4px)}
+#pea27 .pea27-btn--block{display:flex;width:100%}
+#pea27 .pea27-btn[disabled]{cursor:wait;transform:none;filter:saturate(.75) brightness(.92)}
+#pea27 .pea27-spin{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:pea27spin .7s linear infinite;flex:none}
+#pea27 .pea27-form.is-sending .pea27-spin{display:inline-block}
+#pea27 .pea27-form.is-sending .pea27-btn .pea27-i{display:none}
+/* ---------- Topo + Hero ---------- */
+#pea27 .pea27-hero{position:relative;isolation:isolate;background:radial-gradient(1100px 620px at 82% -12%,rgba(217,4,41,.24),transparent 62%),var(--pea-bg)}
+#pea27 .pea27-hero::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.11) 1.4px,transparent 1.9px);background-size:24px 24px;background-position:center top;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 62% 30%,#000 20%,transparent 78%);mask-image:radial-gradient(ellipse 80% 70% at 62% 30%,#000 20%,transparent 78%)}
+#pea27 .pea27-ghost{position:absolute;z-index:-1;right:-3vw;bottom:-.2em;font-family:var(--pea-display);font-weight:800;font-size:clamp(200px,32vw,500px);line-height:1;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.07);pointer-events:none;user-select:none;-webkit-user-select:none}
+#pea27 .pea27-hero-photo{position:absolute;inset:0;z-index:-3;background-position:center;background-size:cover;opacity:.32;filter:grayscale(1) contrast(1.1);-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 95%);mask-image:linear-gradient(180deg,#000 30%,transparent 95%);pointer-events:none}
+#pea27 .pea27-top{position:relative;border-bottom:1px solid var(--pea-line)}
+#pea27 .pea27-top-in{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px}
+@media (min-width:768px){#pea27 .pea27-top-in{min-height:64px}}
+#pea27 .pea27-logo{display:inline-flex;align-items:center;gap:10px;font-family:var(--pea-display);font-weight:800;font-size:19px;line-height:1;letter-spacing:.08em;text-transform:uppercase;color:var(--pea-text)}
+#pea27 .pea27-logo-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:6px;background:var(--pea-red);color:#fff;font-size:15px;letter-spacing:0}
+#pea27 .pea27-logo b{color:var(--pea-red-hi);font-weight:800}
+#pea27 .pea27-top-meta{display:flex;align-items:center;gap:20px;font-family:var(--pea-mono);font-size:11.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--pea-muted)}
+#pea27 .pea27-top-item{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+#pea27 .pea27-top-date{padding:6px 10px;border:1px solid var(--pea-line2);border-radius:3px;color:var(--pea-text)}
+#pea27 .pea27-top-cta{color:var(--pea-text);border-bottom:1px solid var(--pea-red-hi);padding-bottom:2px;transition:color .2s}
+#pea27 .pea27-top-cta:hover{color:var(--pea-red-hi)}
+#pea27 .pea27-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--pea-red-hi);animation:pea27pulse 2s infinite;flex:none}
+@media (max-width:767px){#pea27 .pea27-hide-sm{display:none}}
+@media (max-width:479px){#pea27 .pea27-hide-xs{display:none}}
+#pea27 .pea27-hero-body{padding-top:22px;padding-bottom:56px}
+@media (min-width:960px){#pea27 .pea27-hero-body{padding-top:64px;padding-bottom:104px}}
+#pea27 .pea27-hero-grid{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "card" "pitch" "meta";gap:24px}
+#pea27 .pea27-hero-intro{grid-area:intro}
+#pea27 .pea27-hero-pitch{grid-area:pitch}
+#pea27 .pea27-hero-meta{grid-area:meta}
+#pea27 .pea27-hero-grid>.pea27-card{grid-area:card}
+@media (min-width:960px){#pea27 .pea27-hero-grid{grid-template-columns:minmax(0,1.18fr) minmax(380px,.82fr);grid-template-areas:"intro card" "pitch card" "meta card";column-gap:64px;row-gap:28px}#pea27 .pea27-hero-intro{align-self:end}#pea27 .pea27-hero-pitch,#pea27 .pea27-hero-meta{align-self:start}#pea27 .pea27-hero-grid>.pea27-card{align-self:center}}
+#pea27 .pea27-lockup{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+#pea27 .pea27-plate{display:inline-block;flex:none;padding:3px;border-radius:8px;background:#F4F2ED;box-shadow:0 14px 30px -12px rgba(0,0,0,.9),inset 0 -2px 0 rgba(0,0,0,.18);transform:rotate(-2deg)}
+#pea27 .pea27-plate-in{display:block;border:2px solid #151515;border-radius:6px;overflow:hidden}
+#pea27 .pea27-plate-band{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:2px 7px;background:var(--pea-red);font-family:var(--pea-mono);font-size:7.5px;font-weight:600;line-height:1.35;letter-spacing:.16em;text-transform:uppercase;color:#fff}
+#pea27 .pea27-plate-band i{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.75)}
+#pea27 .pea27-plate-chars{display:block;padding:3px 12px 1px;font-family:var(--pea-display);font-weight:800;font-size:32px;line-height:1;letter-spacing:.07em;text-align:center;color:#151515;white-space:nowrap}
+#pea27 .pea27-lockup-name{font-family:var(--pea-display);font-weight:800;font-size:16px;line-height:1.08;letter-spacing:.08em;text-transform:uppercase;color:var(--pea-text)}
+#pea27 .pea27-lockup-name b{color:var(--pea-red-hi);font-weight:800}
+@media (min-width:768px){#pea27 .pea27-lockup{margin-bottom:20px}#pea27 .pea27-plate-chars{font-size:38px}#pea27 .pea27-lockup-name{font-size:19px}}
+#pea27 .pea27-kicker{margin-bottom:16px;font-family:var(--pea-mono);font-size:11.5px;font-weight:500;line-height:1.5;letter-spacing:.12em;text-transform:uppercase;color:var(--pea-muted)}
+#pea27 .pea27-h1{margin-bottom:0;font-size:clamp(34px,6vw,80px);line-height:.93;letter-spacing:-.01em;color:var(--pea-text)}
+#pea27 .pea27-promise{margin-top:20px;padding:4px 0 4px 18px;border-left:2px solid var(--pea-red);font-size:17px;line-height:1.6;color:var(--pea-text);max-width:60ch}
+#pea27 .pea27-promise strong{color:var(--pea-red-hi)}
+#pea27 .pea27-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--pea-line2);border:1px solid var(--pea-line2);border-radius:4px;overflow:hidden}
+#pea27 .pea27-fact{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#0D0D0F}
+#pea27 .pea27-fact .pea27-i{width:22px;height:22px;color:var(--pea-red-hi)}
+#pea27 .pea27-fact small{display:block;font-family:var(--pea-mono);font-size:10.5px;font-weight:500;line-height:1.3;letter-spacing:.12em;text-transform:uppercase;color:var(--pea-dim)}
+#pea27 .pea27-fact b{display:block;margin-top:2px;font-family:var(--pea-display);font-weight:700;font-size:19px;line-height:1.15;letter-spacing:.03em;text-transform:uppercase;color:var(--pea-text)}
+#pea27 .pea27-byline{display:flex;align-items:center;gap:12px;margin-top:22px;font-size:15px;color:var(--pea-muted)}
+#pea27 .pea27-byline::before{content:"";width:28px;height:2px;background:var(--pea-red);flex:none}
+#pea27 .pea27-byline strong{color:var(--pea-text)}
+/* ---------- Card do formulário ---------- */
+#pea27 .pea27-card{position:relative;padding:26px 18px 22px;background:linear-gradient(180deg,#17171B 0%,#111114 100%);border:1px solid var(--pea-line2);border-radius:4px;box-shadow:0 30px 80px -24px rgba(0,0,0,.85);scroll-margin-top:84px}
+@media (min-width:480px){#pea27 .pea27-card{padding:32px 28px 28px}}
+#pea27 .pea27-card::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:6px;border-radius:4px 4px 0 0;background:repeating-linear-gradient(-45deg,var(--pea-red) 0 9px,#151518 9px 18px);pointer-events:none}
+#pea27 .pea27-card.is-flash{animation:pea27flash .9s ease-out 2}
+#pea27 .pea27-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;font-family:var(--pea-mono);font-size:10.5px;font-weight:500;line-height:1.3;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;color:var(--pea-dim)}
+@media (min-width:480px){#pea27 .pea27-card-head{font-size:11px;letter-spacing:.12em}}
+#pea27 .pea27-live{display:inline-flex;align-items:center;gap:8px;color:var(--pea-red-hi)}
+#pea27 .pea27-card-title{margin-bottom:6px;font-size:32px;line-height:1;color:var(--pea-text)}
+#pea27 .pea27-card-sub{margin-bottom:18px;font-size:14.5px;line-height:1.5;color:var(--pea-muted)}
+@media (max-width:959px){#pea27 #pea27-inscricao{display:flex;flex-direction:column}#pea27 #pea27-inscricao .pea27-count{order:1;margin:20px 0 0}#pea27 #pea27-inscricao .pea27-card-sub{display:none}#pea27 #pea27-inscricao .pea27-card-title{margin-bottom:14px;font-size:28px}}
+#pea27 .pea27-count{margin-bottom:20px}
+#pea27 .pea27-count-label{display:block;margin-bottom:8px;font-family:var(--pea-mono);font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-dim)}
+#pea27 .pea27-count-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+#pea27 .pea27-count-cell{padding:9px 4px 8px;text-align:center;background:rgba(255,255,255,.035);border:1px solid var(--pea-line);border-radius:3px}
+#pea27 .pea27-count-cell b{display:block;font-family:var(--pea-display);font-weight:700;font-size:32px;line-height:1;color:var(--pea-text);font-variant-numeric:tabular-nums}
+#pea27 .pea27-count-cell span{display:block;margin-top:4px;font-family:var(--pea-mono);font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-dim)}
+@media (max-width:479px){#pea27 .pea27-count{margin-bottom:16px}#pea27 .pea27-count-label{margin-bottom:6px}#pea27 .pea27-count-cell{padding:7px 2px 6px}#pea27 .pea27-count-cell b{font-size:24px}#pea27 .pea27-count-cell span{font-size:8.5px}}
+#pea27 .pea27-count-live{display:none;align-items:center;gap:10px;padding:12px 14px;border:1px solid rgba(255,46,70,.4);border-radius:3px;background:rgba(217,4,41,.1);font-family:var(--pea-display);font-weight:700;font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--pea-text)}
+#pea27 .pea27-count.is-live .pea27-count-grid{display:none}
+#pea27 .pea27-count.is-live .pea27-count-live{display:flex}
+#pea27 .pea27-form{display:grid;gap:14px}
+#pea27 .pea27-field{display:grid;gap:6px}
+#pea27 .pea27-label{display:block;font-family:var(--pea-mono);font-size:11px;font-weight:500;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;color:var(--pea-muted)}
+#pea27 .pea27-input{display:block;width:100%;max-width:none;height:52px;margin:0;padding:0 16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.15);border-radius:4px;box-shadow:none;outline:0;color:var(--pea-text);font-family:var(--pea-sans);font-size:16px;font-weight:400;line-height:1.2;transition:border-color .2s,box-shadow .2s,background-color .2s;-webkit-appearance:none;appearance:none}
+#pea27 .pea27-input::placeholder{color:#64625D;opacity:1}
+#pea27 .pea27-input:hover{border-color:rgba(255,255,255,.26)}
+#pea27 .pea27-input:focus{border-color:var(--pea-red-hi);box-shadow:0 0 0 3px rgba(217,4,41,.3);background-color:#0E0E11;outline:0}
+#pea27 .pea27-input[aria-invalid="true"]{border-color:#FF6B6B}
+#pea27 .pea27-input:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #0B0B0D inset;-webkit-text-fill-color:#F4F2ED;caret-color:#F4F2ED}
+#pea27 select.pea27-input{padding-right:44px;cursor:pointer;background-color:#0B0B0D;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A8A6A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;background-size:16px}
+#pea27 select.pea27-input:invalid{color:#64625D}
+#pea27 select.pea27-input option{background:#151518;color:#F4F2ED}
+#pea27 .pea27-err{font-size:13px;line-height:1.35;color:#FF8A8A}
+#pea27 .pea27-err:empty{display:none}
+#pea27 .pea27-suggest{justify-self:start;padding:0;border:0;background:none;box-shadow:none;font-family:var(--pea-sans);font-size:13px;font-weight:400;color:var(--pea-muted);text-align:left;cursor:pointer}
+#pea27 .pea27-suggest b{color:var(--pea-text);text-decoration:underline;text-underline-offset:3px}
+#pea27 .pea27-hp{position:absolute !important;left:-10000px !important;width:1px;height:1px;overflow:hidden}
+#pea27 .pea27-form-msg{padding:10px 12px;border:1px solid rgba(255,107,107,.45);border-radius:4px;background:rgba(255,107,107,.08);font-size:14px;line-height:1.45;color:#FFB3B3}
+#pea27 .pea27-form .pea27-btn{margin-top:4px;gap:10px;padding:16px 20px;font-size:18px;letter-spacing:.035em}
+#pea27 .pea27-note{font-size:13px;line-height:1.5;color:var(--pea-muted);text-align:center;text-wrap:balance}
+#pea27 .pea27-note .pea27-i{display:inline-block;width:14px;height:14px;margin:0 6px 0 0;vertical-align:-2px;color:var(--pea-red-hi)}
+#pea27 .pea27-legal{font-size:11.5px;line-height:1.5;color:var(--pea-dim);text-align:center}
+#pea27 .pea27-legal a{text-decoration:underline;text-underline-offset:2px}
+#pea27 .pea27-legal a:hover{color:var(--pea-text)}
+/* ---------- Confirmação ---------- */
+#pea27 .pea27-success{padding:6px 0 2px;text-align:center}
+#pea27 .pea27-success-icon{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 14px;border:1px solid rgba(74,222,128,.4);border-radius:50%;background:rgba(34,197,94,.12);color:#4ADE80}
+#pea27 .pea27-success-icon .pea27-i{width:28px;height:28px;stroke-width:2.4}
+#pea27 .pea27-success-tag{display:block;margin-bottom:8px;font-family:var(--pea-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#4ADE80}
+#pea27 .pea27-success-title{margin-bottom:14px;font-size:34px;line-height:1;color:var(--pea-text);outline:0}
+#pea27 .pea27-success-text{margin-bottom:16px;font-size:15px;line-height:1.55;color:var(--pea-muted)}
+#pea27 .pea27-progress-label{display:flex;justify-content:space-between;margin-bottom:6px;font-family:var(--pea-mono);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--pea-muted)}
+#pea27 .pea27-progress{height:8px;margin-bottom:16px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+#pea27 .pea27-progress i{display:block;width:90%;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pea-red),var(--pea-red-hi))}
+#pea27 .pea27-btn--wa{background:linear-gradient(180deg,#2BDA6F 0%,#1FAF56 100%);color:#062712;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 14px 34px -12px rgba(37,211,102,.6)}
+#pea27 .pea27-btn--wa:hover{color:#062712;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 20px 44px -12px rgba(37,211,102,.75)}
+#pea27 .pea27-cal{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:14px;color:var(--pea-text);text-decoration:underline;text-underline-offset:3px}
+#pea27 .pea27-cal .pea27-i{width:16px;height:16px;color:var(--pea-red-hi)}
+#pea27 .pea27-demo{margin-top:16px;padding:10px 12px;border:1px dashed rgba(255,214,102,.55);border-radius:4px;font-size:12.5px;line-height:1.45;color:#FFD666}
+/* ---------- Faixa animada ---------- */
+#pea27 .pea27-ticker{position:relative;overflow:hidden;padding:7px 0;background:#121215;color:var(--pea-text)}
+#pea27 .pea27-ticker::before,#pea27 .pea27-ticker::after{content:"";position:absolute;left:0;right:0;height:7px;background:repeating-linear-gradient(-45deg,var(--pea-red) 0 10px,#0A0A0B 10px 20px)}
+#pea27 .pea27-ticker::before{top:0}
+#pea27 .pea27-ticker::after{bottom:0}
+#pea27 .pea27-ticker-track{display:flex;width:max-content;animation:pea27ticker 42s linear infinite}
+#pea27 .pea27-ticker-group{display:flex;align-items:center;flex:none}
+#pea27 .pea27-ticker-group span{padding:14px 22px;font-family:var(--pea-display);font-weight:700;font-size:18px;line-height:1;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+#pea27 .pea27-ticker-group .pea27-i{width:14px;height:14px;stroke-width:2;color:var(--pea-red-hi)}
+/* ---------- Seções ---------- */
+#pea27 .pea27-sec{position:relative;padding:80px 0}
+@media (min-width:960px){#pea27 .pea27-sec{padding:120px 0}}
+#pea27 .pea27-sec-head{display:grid;gap:20px;margin-bottom:48px}
+#pea27 .pea27-sec-head .pea27-h2{max-width:20ch}
+@media (min-width:960px){#pea27 .pea27-split{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:end;column-gap:64px}}
+#pea27 .pea27-context{background:var(--pea-bg2);border-top:1px solid var(--pea-line)}
+#pea27 .pea27-fronts{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:640px){#pea27 .pea27-fronts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1024px){#pea27 .pea27-fronts{grid-template-columns:repeat(4,minmax(0,1fr))}}
+#pea27 .pea27-front{display:flex;flex-direction:column;justify-content:space-between;gap:36px;padding:24px 22px 26px;background:var(--pea-surface);border:1px solid var(--pea-line);border-radius:4px;transition:border-color .25s ease,transform .25s ease,background-color .25s ease}
+#pea27 .pea27-front:hover{border-color:rgba(255,46,70,.5);background-color:#17171B;transform:translateY(-3px)}
+#pea27 .pea27-front-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#pea27 .pea27-front-icon{display:grid;place-items:center;width:54px;height:54px;border:1px solid rgba(255,46,70,.3);border-radius:50%;background:radial-gradient(circle,rgba(255,46,70,.24),rgba(255,46,70,.04) 70%);color:var(--pea-red-hi)}
+#pea27 .pea27-front-icon .pea27-i{width:26px;height:26px;filter:drop-shadow(0 0 6px rgba(255,46,70,.85))}
+#pea27 .pea27-panel-label{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-family:var(--pea-mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-muted)}
+#pea27 .pea27-front-tag{font-family:var(--pea-mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-dim)}
+#pea27 .pea27-front h3{font-size:25px;line-height:1.04;color:var(--pea-text)}
+@media (max-width:639px){#pea27 .pea27-front{gap:18px;padding:20px}#pea27 .pea27-front h3{font-size:23px}}
+#pea27 .pea27-os{margin-top:56px;border:1px solid var(--pea-line2);border-radius:4px;background:linear-gradient(180deg,rgba(217,4,41,.07),rgba(217,4,41,0) 45%),var(--pea-surface);overflow:hidden}
+#pea27 .pea27-os-bar{white-space:nowrap;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-bottom:1px solid var(--pea-line2);font-family:var(--pea-mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-dim)}
+#pea27 .pea27-os-bar b{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--pea-red-hi)}
+#pea27 .pea27-os-body{display:grid;gap:28px;padding:28px 20px}
+@media (min-width:960px){#pea27 .pea27-os-body{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px;padding:48px}}
+#pea27 .pea27-os-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--pea-line2)}
+#pea27 .pea27-os-field{min-width:0;padding:12px 12px 13px;border-right:1px solid var(--pea-line)}
+#pea27 .pea27-os-field:last-child{border-right:0}
+#pea27 .pea27-os-field small{display:block;font-family:var(--pea-mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--pea-dim)}
+#pea27 .pea27-os-field b{display:block;margin-top:3px;font-family:var(--pea-display);font-weight:700;font-size:15px;line-height:1.1;letter-spacing:.03em;text-transform:uppercase;color:var(--pea-text)}
+@media (min-width:768px){#pea27 .pea27-os-field{padding:14px 20px 15px}#pea27 .pea27-os-field b{font-size:19px}}
+#pea27 .pea27-os-label{display:block;margin-bottom:14px;font-family:var(--pea-mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-red-hi)}
+#pea27 .pea27-os-title{font-size:clamp(26px,2.6vw,36px);line-height:1.02;color:var(--pea-text)}
+#pea27 .pea27-pain{display:flex;align-items:flex-start;gap:14px;padding:15px 0;border-bottom:1px solid var(--pea-line);font-size:17px;line-height:1.45;color:var(--pea-text)}
+#pea27 .pea27-pain:first-child{padding-top:0}
+#pea27 .pea27-pain:last-child{padding-bottom:0;border-bottom:0}
+#pea27 .pea27-x{display:grid;place-items:center;width:26px;height:26px;margin-top:-1px;border-radius:3px;background:rgba(217,4,41,.16);color:var(--pea-red-hi);flex:none}
+#pea27 .pea27-x .pea27-i{width:14px;height:14px;stroke-width:2.6}
+#pea27 .pea27-quote{max-width:1040px;margin-top:80px}
+#pea27 .pea27-quote p{font-family:var(--pea-display);font-weight:800;font-size:clamp(30px,4vw,56px);line-height:1;letter-spacing:-.005em;text-transform:uppercase;color:var(--pea-dim)}
+#pea27 .pea27-quote p+p{margin-top:12px;color:var(--pea-text)}
+#pea27 .pea27-decisions{background:var(--pea-bg)}
+#pea27 .pea27-decisions .pea27-lead{margin-top:4px}
+#pea27 .pea27-dec-list{border-top:1px solid var(--pea-line2)}
+#pea27 .pea27-dec{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;padding:32px 0;border-bottom:1px solid var(--pea-line2)}
+#pea27 .pea27-dec::before{content:"";position:absolute;left:0;top:-1px;width:0;height:2px;background:var(--pea-red);transition:width .6s cubic-bezier(.2,.7,.2,1)}
+#pea27 .pea27-dec:hover::before{width:100%}
+@media (min-width:768px){#pea27 .pea27-dec{grid-template-columns:150px minmax(0,1fr);column-gap:32px;row-gap:14px;padding:40px 0}#pea27 .pea27-dec-num{grid-row:span 2}#pea27 .pea27-dec p{grid-column:2}}
+@media (min-width:1024px){#pea27 .pea27-dec{grid-template-columns:190px minmax(0,1.1fr) minmax(0,.9fr);column-gap:48px;align-items:start}#pea27 .pea27-dec-num{grid-row:auto}#pea27 .pea27-dec p{grid-column:auto;padding-top:26px}}
+#pea27 .pea27-dec-num{font-family:var(--pea-display);font-weight:800;font-size:clamp(64px,8vw,116px);line-height:.8;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1.5px var(--pea-red-hi);transition:color .35s ease}
+#pea27 .pea27-dec:hover .pea27-dec-num{color:var(--pea-red)}
+#pea27 .pea27-dec-tag{display:block;margin-bottom:10px;font-family:var(--pea-mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-red-hi)}
+#pea27 .pea27-dec h3{font-size:clamp(26px,2.5vw,34px);line-height:1.02;color:var(--pea-text)}
+#pea27 .pea27-dec p{font-size:17px;line-height:1.6;color:var(--pea-muted)}
+#pea27 .pea27-cta{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:56px;text-align:center}
+#pea27 .pea27-cta .pea27-btn{max-width:100%}
+/* ---------- Seção clara ---------- */
+#pea27 .pea27-light{background:var(--pea-paper);color:var(--pea-ink)}
+#pea27 .pea27-light .pea27-eyebrow{color:var(--pea-red)}
+#pea27 .pea27-light .pea27-h2{color:var(--pea-ink)}
+#pea27 .pea27-light .pea27-h2 em{color:var(--pea-red)}
+#pea27 .pea27-light .pea27-lead{margin-top:20px;color:var(--pea-ink-muted)}
+#pea27 .pea27-imagine-grid{display:grid;gap:40px}
+@media (min-width:960px){#pea27 .pea27-imagine-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:72px;align-items:start}}
+#pea27 .pea27-checks{padding:6px 24px 8px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:4px;box-shadow:0 30px 60px -32px rgba(0,0,0,.28)}
+#pea27 .pea27-checks-head{display:flex;justify-content:space-between;gap:12px;padding:16px 0 12px;border-bottom:2px solid var(--pea-ink);font-family:var(--pea-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-ink)}
+#pea27 .pea27-checks-head span+span{color:var(--pea-red)}
+#pea27 .pea27-check{display:flex;align-items:flex-start;gap:14px;padding:18px 0;border-bottom:1px solid rgba(0,0,0,.08);font-size:17px;line-height:1.45;color:var(--pea-ink)}
+#pea27 .pea27-check:last-child{border-bottom:0}
+#pea27 .pea27-check-icon{display:grid;place-items:center;width:26px;height:26px;margin-top:-1px;border-radius:3px;background:var(--pea-red);color:#fff;flex:none}
+#pea27 .pea27-check-icon .pea27-i{width:15px;height:15px;stroke-width:2.6}
+#pea27 .pea27-statement{display:grid;gap:18px;margin-top:72px;padding-top:40px;border-top:1px solid rgba(0,0,0,.12)}
+@media (min-width:960px){#pea27 .pea27-statement{grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:64px;align-items:end}}
+#pea27 .pea27-statement-big{font-family:var(--pea-display);font-weight:800;font-size:clamp(32px,4.2vw,58px);line-height:.98;text-transform:uppercase;color:var(--pea-ink)}
+#pea27 .pea27-statement-big span{color:var(--pea-red)}
+#pea27 .pea27-statement-sub{font-size:18px;line-height:1.55;color:var(--pea-ink-muted)}
+/* ---------- Anfitriões ---------- */
+#pea27 .pea27-hosts{background:var(--pea-bg2)}
+#pea27 .pea27-hosts-grid{display:grid;gap:56px;align-items:center}
+@media (min-width:960px){#pea27 .pea27-hosts-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:88px}}
+#pea27 .pea27-photo{position:relative;width:calc(100% - 14px);max-width:500px;aspect-ratio:4/5}
+#pea27 .pea27-photo::before{content:"";position:absolute;inset:14px -14px -14px 14px;border:1px solid var(--pea-red);border-radius:4px}
+#pea27 .pea27-photo-frame{position:relative;width:100%;height:100%;overflow:hidden;border:1px solid var(--pea-line2);border-radius:4px;background:radial-gradient(120% 80% at 75% 5%,rgba(217,4,41,.38),transparent 60%),linear-gradient(160deg,#1C1C21,#0C0C0F)}
+#pea27 .pea27-photo-frame::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:40px 40px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);mask-image:linear-gradient(180deg,#000,transparent 85%)}
+#pea27 .pea27-photo.has-photo .pea27-photo-frame::after{display:none}
+#pea27 .pea27-photo-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--pea-display);font-weight:800;font-size:clamp(120px,15vw,210px);line-height:1;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.2)}
+#pea27 .pea27-photo-ph i{-webkit-text-stroke-color:rgba(255,46,70,.75)}
+#pea27 .pea27-photo img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center top;border-radius:0;box-shadow:none}
+#pea27.pea27-js .pea27-photo img{opacity:0;transition:opacity .5s ease}
+#pea27.pea27-js .pea27-photo img.is-ok{opacity:1}
+#pea27 .pea27-photo figcaption{position:absolute;left:16px;bottom:16px;z-index:2;display:grid;gap:3px;padding:10px 14px;border:1px solid var(--pea-line2);border-left:2px solid var(--pea-red);border-radius:3px;background:rgba(10,10,11,.82);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#pea27 .pea27-photo figcaption span{font-family:var(--pea-mono);font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--pea-dim)}
+#pea27 .pea27-photo figcaption b{font-family:var(--pea-display);font-weight:800;font-size:20px;line-height:1;letter-spacing:.06em;text-transform:uppercase;color:var(--pea-text)}
+#pea27 .pea27-host-role{margin:14px 0 26px;font-family:var(--pea-mono);font-size:12px;font-weight:500;line-height:1.5;letter-spacing:.12em;text-transform:uppercase;color:var(--pea-muted)}
+#pea27 .pea27-host-text p.pea27-host-p{font-size:17px;line-height:1.7;color:var(--pea-muted);max-width:60ch}
+#pea27 .pea27-host-text p.pea27-host-p+p.pea27-host-p{margin-top:16px}
+#pea27 .pea27-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}
+#pea27 .pea27-tag{padding:8px 12px;border:1px solid var(--pea-line2);border-radius:3px;background:rgba(255,255,255,.02);font-family:var(--pea-mono);font-size:11.5px;font-weight:500;line-height:1.2;letter-spacing:.1em;text-transform:uppercase;color:var(--pea-text)}
+/* ---------- Chamada final ---------- */
+#pea27 .pea27-final{isolation:isolate;overflow:hidden;background:radial-gradient(900px 520px at 12% 100%,rgba(217,4,41,.24),transparent 62%),var(--pea-bg)}
+#pea27 .pea27-final::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.1) 1.4px,transparent 1.9px);background-size:24px 24px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 20% 80%,#000 15%,transparent 75%);mask-image:radial-gradient(ellipse 70% 70% at 20% 80%,#000 15%,transparent 75%)}
+#pea27 .pea27-gauge{position:absolute;z-index:-1;left:60px;bottom:-200px;width:520px;height:520px;pointer-events:none;display:none}
+@media (min-width:960px){#pea27 .pea27-gauge{display:block}}
+#pea27 .pea27-gauge svg{width:100%;height:100%}
+#pea27 .pea27-g-ring{fill:none;stroke:rgba(255,255,255,.1);stroke-width:3}
+#pea27 .pea27-g-red{fill:none;stroke:rgba(255,46,70,.55);stroke-width:7}
+#pea27 .pea27-g-ticks{fill:none;stroke:rgba(255,255,255,.15);stroke-width:2}
+#pea27 .pea27-g-nums text{fill:rgba(255,255,255,.15);font-family:var(--pea-display);font-weight:700;font-size:26px;text-anchor:middle}
+#pea27 .pea27-g-unit{fill:rgba(255,255,255,.13);font-family:var(--pea-mono);font-size:11px;letter-spacing:.2em;text-anchor:middle}
+#pea27 .pea27-g-needle{fill:none;stroke:rgba(255,46,70,.65);stroke-width:4;stroke-linecap:round}
+#pea27 .pea27-g-hub{fill:#1A1A1E;stroke:rgba(255,46,70,.5);stroke-width:2}
+#pea27 .pea27-final-grid{display:grid;gap:44px}
+@media (min-width:960px){#pea27 .pea27-final-grid{grid-template-columns:minmax(0,1.1fr) minmax(380px,.9fr);gap:72px;align-items:center}}
+#pea27 .pea27-final-text .pea27-h2{margin-bottom:28px}
+#pea27 .pea27-final-text p.pea27-final-p{font-size:18px;line-height:1.65;color:var(--pea-muted);max-width:56ch}
+#pea27 .pea27-final-text p.pea27-final-p+p.pea27-final-p{margin-top:16px}
+#pea27 .pea27-final-text p.pea27-final-q{padding:4px 0 4px 18px;border-left:2px solid var(--pea-red);color:var(--pea-text);font-weight:500}
+#pea27 .pea27-final-text strong{color:var(--pea-text)}
+/* ---------- Rodapé ---------- */
+#pea27 .pea27-foot{padding:44px 0 40px;border-top:1px solid var(--pea-line);background:#070708}
+#pea27 .pea27-foot-grid{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 32px}
+#pea27 .pea27-foot-tag{font-family:var(--pea-display);font-weight:700;font-size:18px;line-height:1.2;letter-spacing:.1em;text-transform:uppercase;color:var(--pea-text)}
+#pea27 .pea27-foot-tag span{margin:0 8px;color:var(--pea-red-hi)}
+#pea27 .pea27-foot-slogan{font-size:15px;color:var(--pea-muted)}
+#pea27 .pea27-foot-legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid var(--pea-line);font-size:12.5px;color:var(--pea-dim)}
+#pea27 .pea27-foot-legal a{text-decoration:underline;text-underline-offset:2px}
+#pea27 .pea27-foot-legal a:hover{color:var(--pea-text)}
+@media (max-width:959px){#pea27 .pea27-foot{padding-bottom:110px}}
+/* ---------- Barra fixa no celular ---------- */
+#pea27 .pea27-sticky{position:fixed;left:0;right:0;bottom:0;z-index:99990;display:flex;align-items:center;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--pea-line2);background:rgba(10,10,11,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transform:translateY(110%);visibility:hidden;transition:transform .35s ease,visibility 0s linear .35s}
+#pea27 .pea27-sticky.is-on{transform:translateY(0);visibility:visible;transition:transform .35s ease}
+#pea27 .pea27-sticky-text{flex:1;min-width:0;line-height:1.2}
+#pea27 .pea27-sticky-text b{display:block;font-family:var(--pea-display);font-weight:800;font-size:17px;letter-spacing:.08em;text-transform:uppercase;color:var(--pea-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pea27 .pea27-sticky-text span{display:block;margin-top:2px;font-family:var(--pea-mono);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--pea-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pea27 .pea27-sticky .pea27-btn{flex:none;min-height:46px;padding:12px 16px;font-size:16px}
+@media (min-width:960px){#pea27 .pea27-sticky{display:none}}
+/* ---------- Animações ---------- */
+#pea27.pea27-anim [data-pea27-reveal]{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--d,0) * 90ms)}
+#pea27.pea27-anim [data-pea27-reveal].is-in{opacity:1;transform:none}
+@keyframes pea27pulse{0%{box-shadow:0 0 0 0 rgba(255,46,70,.55)}70%{box-shadow:0 0 0 9px rgba(255,46,70,0)}100%{box-shadow:0 0 0 0 rgba(255,46,70,0)}}
+@keyframes pea27ticker{to{transform:translateX(-33.3333%)}}
+@keyframes pea27flash{0%{box-shadow:0 0 0 0 rgba(255,46,70,.65),0 30px 80px -24px rgba(0,0,0,.85)}100%{box-shadow:0 0 0 22px rgba(255,46,70,0),0 30px 80px -24px rgba(0,0,0,.85)}}
+@keyframes pea27spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){#pea27 *,#pea27 *::before,#pea27 *::after{animation:none !important;transition:none !important}}
+</style>
+<div id="pea27" class="pea27">
+<!-- ============================== HERO ============================== -->
+<header class="pea27-hero">
+  <!-- FUNDO DO TOPO (opcional): para usar uma foto de oficina, troque none por url('URL-DA-FOTO') -->
+  <div class="pea27-hero-photo" style="background-image:none" aria-hidden="true"></div>
+  <div class="pea27-top">
+    <div class="pea27-wrap pea27-top-in">
+      <a class="pea27-logo" href="#pea27-inscricao" data-pea27-goto aria-label="Oficinas Master: ir para a inscrição"><span class="pea27-logo-mark">OM</span><span>Oficinas <b>Master</b></span></a>
+      <div class="pea27-top-meta">
+        <span class="pea27-top-item pea27-hide-sm"><i class="pea27-dot"></i>Encontro online e gratuito</span>
+        <span class="pea27-top-item pea27-top-date" data-pea27-date="curta">Online e gratuito</span>
+        <a class="pea27-top-item pea27-top-cta pea27-hide-sm" href="#pea27-inscricao" data-pea27-goto>Garantir vaga</a>
+      </div>
+    </div>
+  </div>
+  <div class="pea27-wrap pea27-hero-body">
+    <div class="pea27-hero-grid">
+      <div class="pea27-hero-intro">
+        <div class="pea27-lockup">
+          <span class="pea27-plate" role="img" aria-label="PEA 2027"><span class="pea27-plate-in"><span class="pea27-plate-band"><i></i>Oficinas Master<i></i></span><span class="pea27-plate-chars">PEA 2027</span></span></span>
+          <span class="pea27-lockup-name">Planejamento<br>Estratégico de<br><b>Aceleração 2027</b></span>
+        </div>
+        <p class="pea27-kicker">Encontro online e gratuito para donos de oficinas mecânicas</p>
+        <h1 class="pea27-h1">2027 vai mudar as regras do jogo para as oficinas. <span class="pea27-red">A sua está preparada?</span></h1>
+      </div>
+      <div class="pea27-card" id="pea27-inscricao" data-pea27-card>
+        <div class="pea27-card-head"><span>// Inscrição gratuita</span><span class="pea27-live"><i class="pea27-dot"></i>Vagas limitadas</span></div>
+        <h2 class="pea27-card-title">Garanta sua vaga</h2>
+        <p class="pea27-card-sub">Preencha os dados abaixo e receba as informações de acesso ao encontro.</p>
+        <div class="pea27-count" data-pea27-countdown hidden>
+          <span class="pea27-count-label">O encontro começa em</span>
+          <div class="pea27-count-grid">
+            <div class="pea27-count-cell"><b data-u="d">00</b><span>dias</span></div>
+            <div class="pea27-count-cell"><b data-u="h">00</b><span>horas</span></div>
+            <div class="pea27-count-cell"><b data-u="m">00</b><span>min</span></div>
+            <div class="pea27-count-cell"><b data-u="s">00</b><span>seg</span></div>
+          </div>
+          <div class="pea27-count-live"><i class="pea27-dot"></i>Acontecendo agora</div>
+        </div>
+        <form class="pea27-form" data-pea27-form="topo" novalidate>
+          <div class="pea27-field"><label class="pea27-label" for="pea27-nome-topo">Seu nome</label><input class="pea27-input" id="pea27-nome-topo" name="nome" type="text" autocomplete="name" placeholder="Como podemos te chamar?" required><span class="pea27-err" aria-live="polite"></span></div>
+          <div class="pea27-field"><label class="pea27-label" for="pea27-tel-topo">Telefone (WhatsApp)</label><input class="pea27-input" id="pea27-tel-topo" name="telefone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(00) 00000-0000" required><span class="pea27-err" aria-live="polite"></span></div>
+          <div class="pea27-field"><label class="pea27-label" for="pea27-email-topo">Seu melhor e-mail</label><input class="pea27-input" id="pea27-email-topo" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="voce@suaoficina.com.br" required><button class="pea27-suggest" type="button" hidden></button><span class="pea27-err" aria-live="polite"></span></div>
+          <div class="pea27-hp" aria-hidden="true"><label>Deixe este campo em branco <input type="text" name="site_empresa" tabindex="-1" autocomplete="off"></label></div>
+          <p class="pea27-form-msg" role="alert" hidden></p>
+          <button class="pea27-btn pea27-btn--block" type="submit"><span class="pea27-spin" aria-hidden="true"></span><span>Quero preparar minha oficina para 2027</span><svg class="pea27-i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <p class="pea27-note"><svg class="pea27-i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>100% online e gratuito | Vagas limitadas à capacidade da transmissão</p>
+          <p class="pea27-legal">Ao se inscrever, você concorda em receber comunicações da Oficinas Master sobre o encontro por e-mail e WhatsApp. <a href="/politica-de-privacidade/" data-pea27-privacy target="_blank" rel="noopener">Política de privacidade</a></p>
+        </form>
+        <div class="pea27-success" hidden>
+          <div class="pea27-success-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+          <span class="pea27-success-tag">Inscrição confirmada</span>
+          <h3 class="pea27-success-title" tabindex="-1">Você está dentro<span data-pea27-name></span>!</h3>
+          <div data-pea27-wa-block hidden>
+            <div class="pea27-progress-label"><span>Falta 1 passo</span><span>90%</span></div>
+            <div class="pea27-progress"><i></i></div>
+            <p class="pea27-success-text">Entre no grupo exclusivo do WhatsApp para receber o link de acesso e os avisos do encontro.</p>
+            <a class="pea27-btn pea27-btn--wa pea27-btn--block" href="#" data-pea27-wa target="_blank" rel="noopener">Entrar no grupo do WhatsApp<svg class="pea27-i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <p class="pea27-success-text" data-pea27-mail-msg>As informações de acesso ao encontro serão enviadas para o seu e-mail e WhatsApp.</p>
+          <a class="pea27-cal" href="#" data-pea27-cal target="_blank" rel="noopener" hidden><svg class="pea27-i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Adicionar à minha agenda</a>
+          <p class="pea27-demo" data-pea27-demo hidden>Modo demonstração: nenhum dado foi enviado. Configure o <b>webhookUrl</b> no PEA27_CONFIG para receber os leads.</p>
+        </div>
+      </div>
+      <div class="pea27-hero-pitch">
+        <p class="pea27-lead">Novos desafios tributários, falta de mão de obra, custos cada vez maiores e mudanças no mercado automotivo podem impactar diretamente o lucro da sua oficina.</p>
+        <p class="pea27-promise">Descubra as <strong>5 decisões estratégicas</strong> que todo dono de oficina precisa conhecer antes de 2027 para proteger sua margem, aumentar a produtividade e preparar o negócio para crescer com mais previsibilidade.</p>
+      </div>
+      <div class="pea27-hero-meta">
+        <ul class="pea27-facts">
+          <li class="pea27-fact"><svg class="pea27-i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span><small data-pea27-date="semana">Data</small><b data-pea27-date="dia">Em breve</b></span></li>
+          <li class="pea27-fact"><svg class="pea27-i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span><small>Horário de Brasília</small><b data-pea27-date="hora">A confirmar</b></span></li>
+          <li class="pea27-fact"><svg class="pea27-i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19 5a10 10 0 0 1 0 14M5 19A10 10 0 0 1 5 5"/></svg><span><small>Formato</small><b>100% online</b></span></li>
+          <li class="pea27-fact"><svg class="pea27-i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M20 12v8.5H4V12"/><path d="M2.5 7.5h19V12h-19z"/><path d="M12 20.5V7.5"/><path d="M12 7.5H8a2.5 2.5 0 1 1 0-5c3 0 4 5 4 5zM12 7.5h4a2.5 2.5 0 1 0 0-5c-3 0-4 5-4 5z"/></svg><span><small>Investimento</small><b>Gratuito</b></span></li>
+        </ul>
+        <p class="pea27-byline"><span>Com <strong>Rafa e Fer Marrafon</strong> — Oficinas Master</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="pea27-ghost" aria-hidden="true">2027</div>
+</header>
+<div class="pea27-ticker" aria-hidden="true">
+  <div class="pea27-ticker-track">
+    <div class="pea27-ticker-group"><span>Reforma tributária</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Falta de mão de obra</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Custos em alta</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Veículos mais tecnológicos</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Margem sob pressão</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>PEA 2027</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+    <div class="pea27-ticker-group"><span>Reforma tributária</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Falta de mão de obra</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Custos em alta</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Veículos mais tecnológicos</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Margem sob pressão</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>PEA 2027</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+    <div class="pea27-ticker-group"><span>Reforma tributária</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Falta de mão de obra</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Custos em alta</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Veículos mais tecnológicos</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>Margem sob pressão</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg><span>PEA 2027</span><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+  </div>
+</div>
+<!-- ============================== CENÁRIO ============================== -->
+<section class="pea27-sec pea27-context" aria-labelledby="pea27-ctx-title">
+  <div class="pea27-wrap">
+    <div class="pea27-sec-head pea27-split" data-pea27-reveal>
+      <div><span class="pea27-eyebrow">01 — Diagnóstico do mercado</span><h2 class="pea27-h2" id="pea27-ctx-title">O que funcionou até aqui pode não ser suficiente em <em>2027.</em></h2></div>
+      <p class="pea27-lead">O mercado automotivo está passando por transformações que exigem cada vez mais preparo dos empresários.</p>
+    </div>
+    <p class="pea27-panel-label" data-pea27-reveal><i class="pea27-dot"></i>4 luzes acesas no painel do setor</p>
+    <div class="pea27-fronts" data-pea27-reveal>
+      <article class="pea27-front"><div class="pea27-front-top"><span class="pea27-front-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M12 3.5L2.5 20h19z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.2" r=".7" fill="currentColor"/></svg></span><span class="pea27-front-tag">Alerta 01</span></div><h3>A reforma tributária avança.</h3></article>
+      <article class="pea27-front"><div class="pea27-front-top"><span class="pea27-front-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span class="pea27-front-tag">Alerta 02</span></div><h3>A contratação de profissionais qualificados continua sendo um desafio.</h3></article>
+      <article class="pea27-front"><div class="pea27-front-top"><span class="pea27-front-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><g transform="translate(0 1.5)"><path d="M6 9h2.5L10 7h4l1.5 2h2l1.5 1.5H21v4.5h-2l-1.5 1.5h-9L6 14z"/><path d="M3 11v4M3 13h3M10 4.5h4M12 4.5V7"/></g></svg></span><span class="pea27-front-tag">Alerta 03</span></div><h3>Os veículos estão mais tecnológicos.</h3></article>
+      <article class="pea27-front"><div class="pea27-front-top"><span class="pea27-front-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"/><path d="M2.5 21h13M6.5 8h5"/><path d="M14 11h2a1.5 1.5 0 0 1 1.5 1.5V16a1.5 1.5 0 0 0 3 0V8.5L18 6"/></svg></span><span class="pea27-front-tag">Alerta 04</span></div><h3>E os custos pressionam o resultado das empresas.</h3></article>
+    </div>
+    <div class="pea27-os" data-pea27-reveal>
+      <div class="pea27-os-bar"><span>Ordem de serviço<span class="pea27-hide-xs"> · Nº PEA-2027</span></span><b><i class="pea27-dot"></i>Em diagnóstico</b></div>
+      <div class="pea27-os-fields"><div class="pea27-os-field"><small>Cliente</small><b>Dono de oficina</b></div><div class="pea27-os-field"><small>Veículo</small><b>Sua empresa</b></div><div class="pea27-os-field"><small>Prazo</small><b>Antes de 2027</b></div></div>
+      <div class="pea27-os-body">
+        <h3 class="pea27-os-title">Enquanto isso, muitos donos de oficinas continuam enfrentando os mesmos problemas:</h3>
+        <div><span class="pea27-os-label">Sintomas relatados</span><ul>
+          <li class="pea27-pain"><span class="pea27-x"><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>A oficina fatura, mas o dinheiro não sobra.</li>
+          <li class="pea27-pain"><span class="pea27-x"><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>O proprietário precisa resolver praticamente tudo.</li>
+          <li class="pea27-pain"><span class="pea27-x"><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Faltam profissionais preparados para acompanhar a demanda.</li>
+          <li class="pea27-pain"><span class="pea27-x"><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>A equipe trabalha muito, mas a produtividade não acompanha.</li>
+          <li class="pea27-pain"><span class="pea27-x"><svg class="pea27-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Não existem metas claras nem indicadores confiáveis para orientar o crescimento.</li>
+        </ul></div>
+      </div>
+    </div>
+    <blockquote class="pea27-quote" data-pea27-reveal>
+      <p>O problema não é apenas o que vai acontecer em 2027.</p>
+      <p>É entrar em um novo ano <span class="pea27-red">sem um plano</span> para enfrentar esses desafios.</p>
+    </blockquote>
+  </div>
+</section>
+<!-- ============================== AS 5 DECISÕES ============================== -->
+<section class="pea27-sec pea27-decisions" aria-labelledby="pea27-dec-title">
+  <div class="pea27-wrap">
+    <div class="pea27-sec-head" data-pea27-reveal>
+      <div><span class="pea27-eyebrow">02 — O encontro</span><h2 class="pea27-h2" id="pea27-dec-title">As 5 decisões que podem definir os resultados da sua oficina em <em>2027</em></h2></div>
+      <p class="pea27-lead">Neste encontro estratégico, você vai descobrir:</p>
+    </div>
+    <ol class="pea27-dec-list">
+      <li class="pea27-dec" data-pea27-reveal><span class="pea27-dec-num" aria-hidden="true">01</span><div><span class="pea27-dec-tag">Decisão 01 · Economia e tributos</span><h3>Como preparar sua oficina para as mudanças econômicas e tributárias de 2027</h3></div><p>Entenda os principais pontos de atenção e por que eles precisam entrar no planejamento financeiro do seu negócio.</p></li>
+      <li class="pea27-dec" data-pea27-reveal><span class="pea27-dec-num" aria-hidden="true">02</span><div><span class="pea27-dec-tag">Decisão 02 · Lucro e margem</span><h3>Como proteger seu lucro mesmo com a pressão dos custos</h3></div><p>Descubra por que faturar mais não significa necessariamente ganhar mais dinheiro e quais decisões precisam ser avaliadas para preservar suas margens.</p></li>
+      <li class="pea27-dec" data-pea27-reveal><span class="pea27-dec-num" aria-hidden="true">03</span><div><span class="pea27-dec-tag">Decisão 03 · Equipe e produtividade</span><h3>Como enfrentar a falta de mão de obra e melhorar a produtividade</h3></div><p>Entenda o que diferencia oficinas que dependem de contratar mais pessoas daquelas que conseguem aproveitar melhor sua capacidade produtiva.</p></li>
+      <li class="pea27-dec" data-pea27-reveal><span class="pea27-dec-num" aria-hidden="true">04</span><div><span class="pea27-dec-tag">Decisão 04 · Comercial</span><h3>Como criar uma operação comercial mais previsível</h3></div><p>Identifique os pontos que precisam de atenção para melhorar o aproveitamento dos orçamentos, o relacionamento com clientes e a geração de oportunidades.</p></li>
+      <li class="pea27-dec" data-pea27-reveal><span class="pea27-dec-num" aria-hidden="true">05</span><div><span class="pea27-dec-tag">Decisão 05 · Plano de 90 dias</span><h3>Como definir um plano estratégico para os primeiros 90 dias de 2027</h3></div><p>Saiba quais prioridades, metas e indicadores precisam orientar o crescimento da sua oficina no início do próximo ano.</p></li>
+    </ol>
+    <div class="pea27-cta" data-pea27-reveal>
+      <a class="pea27-btn" href="#pea27-inscricao" data-pea27-goto>Quero garantir minha participação gratuita<svg class="pea27-i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <p class="pea27-note"><svg class="pea27-i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>100% online e gratuito | Vagas limitadas à capacidade da transmissão</p>
+    </div>
+  </div>
+</section>
+<!-- ============================== FIM DO IMPROVISO ============================== -->
+<section class="pea27-sec pea27-light" aria-labelledby="pea27-img-title">
+  <div class="pea27-wrap">
+    <div class="pea27-imagine-grid">
+      <div data-pea27-reveal>
+        <span class="pea27-eyebrow">03 — O objetivo</span>
+        <h2 class="pea27-h2" id="pea27-img-title">2027 não precisa ser mais um ano de <em>improviso.</em></h2>
+        <p class="pea27-lead">Imagine começar o próximo ano sabendo:</p>
+      </div>
+      <div class="pea27-checks" data-pea27-reveal style="--d:1"><p class="pea27-checks-head"><span>Checklist de revisão</span><span>PEA 2027</span></p><ul>
+        <li class="pea27-check"><span class="pea27-check-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span>Qual faturamento sua oficina precisa alcançar para atingir seu objetivo de lucro.</li>
+        <li class="pea27-check"><span class="pea27-check-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span>Quais setores estão limitando o crescimento da empresa.</li>
+        <li class="pea27-check"><span class="pea27-check-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span>Onde você precisa melhorar a produtividade.</li>
+        <li class="pea27-check"><span class="pea27-check-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span>Como organizar as prioridades financeiras, comerciais e operacionais.</li>
+        <li class="pea27-check"><span class="pea27-check-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span>Quais indicadores acompanhar para tomar decisões com mais segurança.</li>
+      </ul></div>
+    </div>
+    <div class="pea27-statement" data-pea27-reveal>
+      <p class="pea27-statement-big">Uma oficina mais lucrativa não começa apenas com mais clientes. <span>Começa com decisões melhores.</span></p>
+      <p class="pea27-statement-sub">E é sobre essas decisões que vamos conversar neste encontro.</p>
+    </div>
+  </div>
+</section>
+<!-- ============================== ANFITRIÕES ============================== -->
+<section class="pea27-sec pea27-hosts" aria-labelledby="pea27-host-title">
+  <div class="pea27-wrap pea27-hosts-grid">
+    <figure class="pea27-photo" data-pea27-reveal>
+      <div class="pea27-photo-frame">
+        <div class="pea27-photo-ph" aria-hidden="true">R<i>&amp;</i>F</div>
+        <!-- FOTO: cole no src a URL da foto (WordPress > Mídia > Copiar URL). Proporção ideal 4:5, ex. 1000x1250 px. -->
+        <img src="" alt="Rafa e Fer Marrafon, da Oficinas Master" width="1000" height="1250" loading="lazy" decoding="async" data-pea27-photo>
+      </div>
+      <figcaption><span>Anfitriões</span><b>Rafa &amp; Fer Marrafon</b></figcaption>
+    </figure>
+    <div class="pea27-host-text" data-pea27-reveal style="--d:1">
+      <span class="pea27-eyebrow">04 — Quem vai conduzir esse encontro?</span>
+      <h2 class="pea27-h2" id="pea27-host-title">Rafa e Fer <em>Marrafon</em></h2>
+      <p class="pea27-host-role">Oficinas Master — Aceleradora de Oficinas Mecânicas</p>
+      <p class="pea27-host-p">Rafa e Fer Marrafon atuam no desenvolvimento de empresários do setor de reparação automotiva, com foco em gestão, vendas, processos, produtividade e crescimento empresarial.</p>
+      <p class="pea27-host-p">Neste encontro, vão compartilhar uma visão estratégica sobre os principais desafios de 2027 e os pontos que todo empresário precisa considerar ao planejar o futuro da sua oficina.</p>
+      <ul class="pea27-tags"><li class="pea27-tag">Gestão</li><li class="pea27-tag">Vendas</li><li class="pea27-tag">Processos</li><li class="pea27-tag">Produtividade</li><li class="pea27-tag">Crescimento empresarial</li></ul>
+    </div>
+  </div>
+</section>
+<!-- ============================== CHAMADA FINAL ============================== -->
+<section class="pea27-sec pea27-final" id="pea27-final" aria-labelledby="pea27-final-title">
+  <div class="pea27-gauge" aria-hidden="true"><svg viewBox="0 0 400 400" aria-hidden="true"><path class="pea27-g-ring" d="M72.7 327.3A180 180 0 1 1 379.1 182.4"/><path class="pea27-g-red" d="M379.1 182.4A180 180 0 0 1 327.3 327.3"/><path class="pea27-g-ticks" d="M93.9 306.1L78.4 321.6M71.5 295.3L61.8 302.5M58.9 275.4L48.3 281.1M49.4 253.9L38.1 257.9M52.9 229.3L31.3 233.6M40.2 207.9L28.2 208.4M40.8 184.3L28.8 183.1M44.8 161.1L33.2 158.2M61.4 142.6L41.1 134.2M62.8 117.7L52.5 111.6M76.3 98.5L67.0 90.9M92.6 81.4L84.5 72.6M116.7 75.3L104.4 57.0M131.6 55.4L126.5 44.5M153.6 46.9L150.1 35.4M176.5 41.7L174.8 29.9M200.0 50.0L200.0 28.0M223.5 41.7L225.2 29.9M246.4 46.9L249.9 35.4M268.4 55.4L273.5 44.5M283.3 75.3L295.6 57.0M307.4 81.4L315.5 72.6M323.7 98.5L333.0 90.9M337.2 117.7L347.5 111.6M338.6 142.6L358.9 134.2M355.2 161.1L366.8 158.2M359.2 184.3L371.2 183.1M359.8 207.9L371.8 208.4M347.1 229.3L368.7 233.6M350.6 253.9L361.9 257.9M341.1 275.4L351.7 281.1M328.5 295.3L338.2 302.5M306.1 306.1L321.6 321.6"/><g class="pea27-g-nums"><text x="110.9" y="298.1">0</text><text x="76.4" y="233.6">1</text><text x="83.6" y="160.8">2</text><text x="130.0" y="104.2">3</text><text x="200.0" y="83.0">4</text><text x="270.0" y="104.2">5</text><text x="316.4" y="160.8">6</text><text x="323.6" y="233.6">7</text><text x="289.1" y="298.1">8</text></g><text class="pea27-g-unit" x="200" y="268">RPM x1000</text><path class="pea27-g-needle" d="M200 200L349.1 216.2"/><circle class="pea27-g-hub" cx="200" cy="200" r="12"/></svg></div>
+  <div class="pea27-wrap pea27-final-grid">
+    <div class="pea27-final-text" data-pea27-reveal>
+      <span class="pea27-eyebrow">05 — Sua decisão</span>
+      <h2 class="pea27-h2" id="pea27-final-title">Sua oficina está preparada para <em>2027?</em></h2>
+      <p class="pea27-final-p">O próximo ano vai exigir decisões importantes.</p>
+      <p class="pea27-final-p pea27-final-q">A pergunta é: você vai começar 2027 com um plano ou continuar resolvendo os problemas conforme eles aparecem?</p>
+      <p class="pea27-final-p">Participe do <strong>PEA 2027 — Planejamento Estratégico de Aceleração</strong>, um encontro exclusivo para donos de oficinas que desejam construir uma empresa mais estruturada, rentável e preparada para crescer.</p>
+    </div>
+    <div class="pea27-card" id="pea27-inscricao-final" data-pea27-card data-pea27-reveal style="--d:1">
+      <div class="pea27-card-head"><span>// Inscrição gratuita</span><span class="pea27-live"><i class="pea27-dot"></i>Vagas limitadas</span></div>
+      <h3 class="pea27-card-title">Garanta sua vaga</h3>
+      <p class="pea27-card-sub">Inscreva-se gratuitamente e receba as informações de acesso ao encontro.</p>
+      <div class="pea27-count" data-pea27-countdown hidden>
+        <span class="pea27-count-label">O encontro começa em</span>
+        <div class="pea27-count-grid">
+          <div class="pea27-count-cell"><b data-u="d">00</b><span>dias</span></div>
+          <div class="pea27-count-cell"><b data-u="h">00</b><span>horas</span></div>
+          <div class="pea27-count-cell"><b data-u="m">00</b><span>min</span></div>
+          <div class="pea27-count-cell"><b data-u="s">00</b><span>seg</span></div>
+        </div>
+        <div class="pea27-count-live"><i class="pea27-dot"></i>Acontecendo agora</div>
+      </div>
+      <form class="pea27-form" data-pea27-form="final" novalidate>
+        <div class="pea27-field"><label class="pea27-label" for="pea27-nome-final">Seu nome</label><input class="pea27-input" id="pea27-nome-final" name="nome" type="text" autocomplete="name" placeholder="Como podemos te chamar?" required><span class="pea27-err" aria-live="polite"></span></div>
+        <div class="pea27-field"><label class="pea27-label" for="pea27-tel-final">Telefone (WhatsApp)</label><input class="pea27-input" id="pea27-tel-final" name="telefone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(00) 00000-0000" required><span class="pea27-err" aria-live="polite"></span></div>
+        <div class="pea27-field"><label class="pea27-label" for="pea27-email-final">Seu melhor e-mail</label><input class="pea27-input" id="pea27-email-final" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="voce@suaoficina.com.br" required><button class="pea27-suggest" type="button" hidden></button><span class="pea27-err" aria-live="polite"></span></div>
+        <div class="pea27-hp" aria-hidden="true"><label>Deixe este campo em branco <input type="text" name="site_empresa" tabindex="-1" autocomplete="off"></label></div>
+        <p class="pea27-form-msg" role="alert" hidden></p>
+        <button class="pea27-btn pea27-btn--block" type="submit"><span class="pea27-spin" aria-hidden="true"></span><span>Sim, quero participar gratuitamente</span><svg class="pea27-i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <p class="pea27-note"><svg class="pea27-i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>100% online e gratuito | Vagas limitadas à capacidade da transmissão</p>
+        <p class="pea27-legal">Ao se inscrever, você concorda em receber comunicações da Oficinas Master sobre o encontro por e-mail e WhatsApp. <a href="/politica-de-privacidade/" data-pea27-privacy target="_blank" rel="noopener">Política de privacidade</a></p>
+      </form>
+      <div class="pea27-success" hidden>
+        <div class="pea27-success-icon"><svg class="pea27-i" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+        <span class="pea27-success-tag">Inscrição confirmada</span>
+        <h3 class="pea27-success-title" tabindex="-1">Você está dentro<span data-pea27-name></span>!</h3>
+        <div data-pea27-wa-block hidden>
+          <div class="pea27-progress-label"><span>Falta 1 passo</span><span>90%</span></div>
+          <div class="pea27-progress"><i></i></div>
+          <p class="pea27-success-text">Entre no grupo exclusivo do WhatsApp para receber o link de acesso e os avisos do encontro.</p>
+          <a class="pea27-btn pea27-btn--wa pea27-btn--block" href="#" data-pea27-wa target="_blank" rel="noopener">Entrar no grupo do WhatsApp<svg class="pea27-i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <p class="pea27-success-text" data-pea27-mail-msg>As informações de acesso ao encontro serão enviadas para o seu e-mail e WhatsApp.</p>
+        <a class="pea27-cal" href="#" data-pea27-cal target="_blank" rel="noopener" hidden><svg class="pea27-i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Adicionar à minha agenda</a>
+        <p class="pea27-demo" data-pea27-demo hidden>Modo demonstração: nenhum dado foi enviado. Configure o <b>webhookUrl</b> no PEA27_CONFIG para receber os leads.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============================== RODAPÉ ============================== -->
+<footer class="pea27-foot">
+  <div class="pea27-wrap">
+    <div class="pea27-foot-grid">
+      <a class="pea27-logo" href="#pea27-inscricao" data-pea27-goto aria-label="Oficinas Master: ir para a inscrição"><span class="pea27-logo-mark">OM</span><span>Oficinas <b>Master</b></span></a>
+      <p class="pea27-foot-tag">PEA 2027 · Planejamento Estratégico de Aceleração<span>|</span>Oficinas Master</p>
+      <p class="pea27-foot-slogan">O nosso negócio é acelerar o seu.</p>
+    </div>
+    <div class="pea27-foot-legal"><span>© 2026 Oficinas Master. Todos os direitos reservados.</span><a href="/politica-de-privacidade/" data-pea27-privacy target="_blank" rel="noopener">Política de privacidade</a></div>
+  </div>
+</footer>
+<div class="pea27-sticky" data-pea27-sticky>
+  <div class="pea27-sticky-text"><b>PEA 2027</b><span>Online e gratuito</span></div>
+  <a class="pea27-btn" href="#pea27-inscricao" data-pea27-goto>Garantir vaga</a>
+</div>
+</div>
+<script>
+/* PEA 2027 — comportamento da página (não precisa editar) */
+(function () {
+  'use strict';
+  var root = document.getElementById('pea27');
+  if (!root || root.getAttribute('data-pea27-ready')) return;
+  root.setAttribute('data-pea27-ready', '1');
+  var C = Object.assign({ eventDate: '', eventDurationMin: 120, webhookUrl: '', webhookFormat: 'form', extraFields: {}, redirectUrl: '', whatsappGroupUrl: '', privacyUrl: '' }, window.PEA27_CONFIG || {});
+  var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var hasIO = 'IntersectionObserver' in window;
+  var done = false;
+  root.classList.add('pea27-js');
+  function all(sel, ctx) { return Array.prototype.slice.call((ctx || root).querySelectorAll(sel)); }
+  /* Largura total sem rolagem horizontal: desconta a barra de rolagem do navegador */
+  function fitWidth() {
+    var sb = window.innerWidth - document.documentElement.clientWidth;
+    root.style.setProperty('--pea-sbw', (sb > 0 ? sb : 0) + 'px');
+  }
+  fitWidth();
+  window.addEventListener('resize', fitWidth);
+  /* Data do encontro */
+  var ev = C.eventDate ? new Date(C.eventDate) : null;
+  if (ev && isNaN(ev.getTime())) ev = null;
+  if (ev) {
+    var tz = { timeZone: 'America/Sao_Paulo' };
+    var fmt = function (o) { return new Intl.DateTimeFormat('pt-BR', Object.assign({}, tz, o)).format(ev); };
+    var hm = new Intl.DateTimeFormat('pt-BR', Object.assign({ hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }, tz)).formatToParts(ev);
+    var part = function (type) { var p = hm.filter(function (x) { return x.type === type; })[0]; return p ? p.value : ''; };
+    var hora = parseInt(part('hour'), 10) + 'h' + (part('minute') !== '00' ? part('minute') : '');
+    var semana = fmt({ weekday: 'long' });
+    semana = semana.charAt(0).toUpperCase() + semana.slice(1);
+    var dia = fmt({ day: '2-digit', month: 'long' });
+    var texts = { dia: dia, semana: semana, hora: hora, curta: fmt({ day: '2-digit', month: '2-digit' }) + ' · ' + hora, longa: semana + ', ' + dia + ' · ' + hora + ' (Brasília)' };
+    all('[data-pea27-date]').forEach(function (el) { var t = texts[el.getAttribute('data-pea27-date')]; if (t) el.textContent = t; });
+  }
+  /* Contagem regressiva */
+  var counters = all('[data-pea27-countdown]');
+  var timer = null;
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+  function tick() {
+    var diff = ev.getTime() - Date.now();
+    if (diff < -C.eventDurationMin * 60000) { counters.forEach(function (c) { c.hidden = true; }); clearInterval(timer); return; }
+    var s = Math.max(0, Math.floor(diff / 1000));
+    var v = { d: Math.floor(s / 86400), h: Math.floor((s % 86400) / 3600), m: Math.floor((s % 3600) / 60), s: s % 60 };
+    counters.forEach(function (box) {
+      box.classList.toggle('is-live', diff <= 0);
+      all('[data-u]', box).forEach(function (b) { var t = pad(v[b.getAttribute('data-u')]); if (b.textContent !== t) b.textContent = t; });
+    });
+  }
+  if (ev && counters.length) { counters.forEach(function (c) { c.hidden = false; }); tick(); timer = setInterval(tick, 1000); }
+  /* UTMs: guarda a última origem com parâmetros para enviar junto com o lead */
+  var TRACK_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid'];
+  var utm = {};
+  try { utm = JSON.parse(window.localStorage.getItem('pea27_utm') || '{}') || {}; } catch (e) { utm = {}; }
+  (function () {
+    var q = new URLSearchParams(window.location.search), fresh = {}, found = false;
+    TRACK_KEYS.forEach(function (k) { var val = q.get(k); if (val) { fresh[k] = val; found = true; } });
+    if (found) { utm = fresh; try { window.localStorage.setItem('pea27_utm', JSON.stringify(fresh)); } catch (e) { /* armazenamento indisponível */ } }
+  })();
+  /* Links de política de privacidade */
+  all('[data-pea27-privacy]').forEach(function (a) { if (C.privacyUrl) a.setAttribute('href', C.privacyUrl); else a.hidden = true; });
+  /* Validação e máscara */
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var TYPOS = { 'gmial.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gamil.com': 'gmail.com', 'gmail.co': 'gmail.com', 'gmail.com.br': 'gmail.com', 'gmaill.com': 'gmail.com', 'hotmial.com': 'hotmail.com', 'hotmal.com': 'hotmail.com', 'hotmai.com': 'hotmail.com', 'hotmail.co': 'hotmail.com', 'hotnail.com': 'hotmail.com', 'outlok.com': 'outlook.com', 'outloo.com': 'outlook.com', 'outlook.co': 'outlook.com', 'yaho.com.br': 'yahoo.com.br', 'yahoo.com.b': 'yahoo.com.br', 'iclod.com': 'icloud.com', 'icloud.co': 'icloud.com' };
+  function phoneDigits(val) {
+    var d = String(val).replace(/\D/g, '');
+    if (d.length > 11 && d.indexOf('55') === 0) d = d.slice(2);
+    return d.slice(0, 11);
+  }
+  function maskPhone(val) {
+    var d = phoneDigits(val);
+    if (d.length > 10) return '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
+    if (d.length > 6) return '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6);
+    if (d.length > 2) return '(' + d.slice(0, 2) + ') ' + d.slice(2);
+    return d.length ? '(' + d : '';
+  }
+  function check(input) {
+    var val = input.value.trim(), msg = '';
+    if (input.name === 'nome' && (val.length < 2 || !/[A-Za-zÀ-ÿ]/.test(val))) msg = 'Informe seu nome.';
+    if (input.name === 'email' && !EMAIL_RE.test(val)) msg = 'Informe um e-mail válido.';
+    if (input.name === 'telefone') { var d = phoneDigits(val); if (d.length < 10 || d.charAt(0) === '0') msg = 'Informe um telefone válido com DDD.'; }
+    var err = input.parentNode.querySelector('.pea27-err');
+    input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    if (err) err.textContent = msg;
+    return !msg;
+  }
+  function suggestEmail(input, btn) {
+    var val = input.value.trim().toLowerCase(), at = val.lastIndexOf('@'), fix = at > 0 ? TYPOS[val.slice(at + 1)] : null;
+    if (!fix) { btn.hidden = true; return; }
+    var s = val.slice(0, at + 1) + fix;
+    btn.textContent = 'Você quis dizer ';
+    var b = document.createElement('b'); b.textContent = s; btn.appendChild(b); btn.appendChild(document.createTextNode('?'));
+    btn.setAttribute('data-value', s);
+    btn.hidden = false;
+  }
+  /* Envio do lead */
+  function collect(form) {
+    var f = form.elements;
+    var digits = phoneDigits(f.telefone.value);
+    var data = {
+      nome: f.nome.value.trim(),
+      email: f.email.value.trim().toLowerCase(),
+      telefone: '55' + digits,
+      telefone_formatado: maskPhone(digits),
+      evento: 'pea-2027',
+      formulario: form.getAttribute('data-pea27-form'),
+      pagina: window.location.href.split('#')[0],
+      referrer: document.referrer || '',
+      data_inscricao: new Date().toISOString()
+    };
+    Object.keys(utm).forEach(function (k) { data[k] = utm[k]; });
+    Object.keys(C.extraFields || {}).forEach(function (k) { data[k] = C.extraFields[k]; });
+    return data;
+  }
+  function send(data) {
+    if (!C.webhookUrl) {
+      if (window.console) console.warn('[PEA27] webhookUrl não configurado: modo demonstração, nenhum dado foi enviado.', data);
+      return new Promise(function (resolve) { setTimeout(resolve, 600); });
+    }
+    var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    var guard = ctrl ? setTimeout(function () { ctrl.abort(); }, 15000) : null;
+    var opts = { method: 'POST' };
+    if (ctrl) opts.signal = ctrl.signal;
+    if (C.webhookFormat === 'json') {
+      opts.headers = { 'Content-Type': 'application/json' };
+      opts.body = JSON.stringify(data);
+    } else {
+      var body = new URLSearchParams();
+      Object.keys(data).forEach(function (k) { body.append(k, data[k]); });
+      opts.body = body;
+      opts.mode = 'no-cors';
+    }
+    return fetch(C.webhookUrl, opts).then(function (res) {
+      clearTimeout(guard);
+      if (C.webhookFormat === 'json' && !res.ok) throw new Error('HTTP ' + res.status);
+    }, function (err) { clearTimeout(guard); throw err; });
+  }
+  function track(data) {
+    try { if (typeof window.fbq === 'function') window.fbq('track', 'Lead', { content_name: 'PEA 2027' }); } catch (e) { /* pixel ausente */ }
+    try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { event_label: 'pea-2027', form_location: data.formulario }); } catch (e) { /* gtag ausente */ }
+    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'pea27_lead', form_location: data.formulario }); } catch (e) { /* dataLayer indisponível */ }
+  }
+  function calendarUrl() {
+    var end = new Date(ev.getTime() + C.eventDurationMin * 60000);
+    var f = function (d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); };
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + encodeURIComponent('PEA 2027 · Planejamento Estratégico de Aceleração | Oficinas Master') +
+      '&dates=' + f(ev) + '/' + f(end) +
+      '&details=' + encodeURIComponent('Encontro online e gratuito com Rafa e Fer Marrafon. As informações de acesso serão enviadas por e-mail e WhatsApp.') +
+      '&location=' + encodeURIComponent('Online');
+  }
+  function showSuccess(form, data, demo) {
+    done = true;
+    updateSticky();
+    var first = (data.nome || '').split(/\s+/)[0] || '';
+    if (first) first = first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
+    var redirecting = !!C.redirectUrl && !demo;
+    all('[data-pea27-card]').forEach(function (card) {
+      var f = card.querySelector('form'), ok = card.querySelector('.pea27-success');
+      if (!f || !ok) return;
+      f.hidden = true;
+      ok.hidden = false;
+      all('[data-pea27-name]', ok).forEach(function (n) { n.textContent = first ? ', ' + first : ''; });
+      var waBlock = ok.querySelector('[data-pea27-wa-block]'), wa = ok.querySelector('[data-pea27-wa]');
+      var mail = ok.querySelector('[data-pea27-mail-msg]'), cal = ok.querySelector('[data-pea27-cal]'), demoMsg = ok.querySelector('[data-pea27-demo]');
+      if (C.whatsappGroupUrl && !redirecting) { waBlock.hidden = false; wa.setAttribute('href', C.whatsappGroupUrl); mail.hidden = true; }
+      if (redirecting) mail.textContent = 'Redirecionando para o próximo passo...';
+      if (ev && cal && !redirecting) { cal.setAttribute('href', calendarUrl()); cal.hidden = false; }
+      if (demoMsg) demoMsg.hidden = !demo;
+    });
+    var title = form.parentNode.querySelector('.pea27-success-title');
+    if (title) { try { title.focus({ preventScroll: true }); } catch (e) { title.focus(); } }
+    if (redirecting) setTimeout(function () { window.location.href = C.redirectUrl; }, 700);
+  }
+  all('form[data-pea27-form]').forEach(function (form) {
+    var fields = all('.pea27-input', form);
+    var tel = form.querySelector('[name="telefone"]');
+    var email = form.querySelector('[name="email"]');
+    var sugg = form.querySelector('.pea27-suggest');
+    var msg = form.querySelector('.pea27-form-msg');
+    var btn = form.querySelector('button[type="submit"]');
+    tel.addEventListener('input', function () { tel.value = maskPhone(tel.value); });
+    email.addEventListener('blur', function () { suggestEmail(email, sugg); });
+    sugg.addEventListener('click', function () { email.value = sugg.getAttribute('data-value'); sugg.hidden = true; check(email); email.focus(); });
+    fields.forEach(function (el) {
+      el.addEventListener('blur', function () { if (el.value.trim() || form.classList.contains('pea27-tried')) check(el); });
+      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', function () { if (el.getAttribute('aria-invalid') === 'true') check(el); });
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form.classList.contains('is-sending')) return;
+      form.classList.add('pea27-tried');
+      var firstBad = null;
+      fields.forEach(function (el) { if (!check(el) && !firstBad) firstBad = el; });
+      if (firstBad) { firstBad.focus(); return; }
+      msg.hidden = true;
+      var data = collect(form);
+      var trap = form.querySelector('.pea27-hp input');
+      if (trap && trap.value) { showSuccess(form, data, false); return; }
+      form.classList.add('is-sending');
+      btn.disabled = true;
+      form.setAttribute('aria-busy', 'true');
+      send(data).then(function () {
+        track(data);
+        showSuccess(form, data, !C.webhookUrl);
+      }).catch(function (err) {
+        if (window.console) console.error('[PEA27] Falha ao enviar a inscrição:', err);
+        msg.textContent = 'Não foi possível concluir sua inscrição agora. Verifique sua conexão e tente novamente.';
+        msg.hidden = false;
+      }).then(function () {
+        form.classList.remove('is-sending');
+        btn.disabled = false;
+        form.removeAttribute('aria-busy');
+      });
+    });
+  });
+  /* Botões que levam ao formulário */
+  all('[data-pea27-goto]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = (a.getAttribute('href') || '').replace('#', '');
+      var target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      target.classList.remove('is-flash');
+      void target.offsetWidth;
+      target.classList.add('is-flash');
+    });
+  });
+  /* Barra fixa no celular: aparece depois do topo e some ao chegar na chamada final */
+  var sticky = root.querySelector('[data-pea27-sticky]');
+  var heroEl = root.querySelector('.pea27-hero'), finalEl = root.querySelector('#pea27-final');
+  var heroVisible = true, finalReached = false;
+  function updateSticky() { if (sticky) sticky.classList.toggle('is-on', !heroVisible && !finalReached && !done); }
+  if (sticky && heroEl && hasIO) {
+    var so = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.target === heroEl) heroVisible = en.isIntersecting;
+        if (en.target === finalEl) finalReached = en.isIntersecting || en.boundingClientRect.top < 0;
+      });
+      updateSticky();
+    });
+    so.observe(heroEl);
+    if (finalEl) so.observe(finalEl);
+  }
+  /* Foto dos anfitriões: mantém o placeholder enquanto não houver imagem válida */
+  all('[data-pea27-photo]').forEach(function (img) {
+    var fig = img.closest('.pea27-photo');
+    function ok() { img.classList.add('is-ok'); if (fig) fig.classList.add('has-photo'); }
+    function bad() { img.hidden = true; }
+    if (!img.getAttribute('src')) { bad(); return; }
+    if (img.complete) { if (img.naturalWidth) ok(); else bad(); return; }
+    img.addEventListener('load', ok);
+    img.addEventListener('error', bad);
+  });
+  /* Animação de entrada das seções */
+  if (!reduceMotion && hasIO) {
+    root.classList.add('pea27-anim');
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); ro.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    all('[data-pea27-reveal]').forEach(function (el) { ro.observe(el); });
+  }
+})();
+</script>
